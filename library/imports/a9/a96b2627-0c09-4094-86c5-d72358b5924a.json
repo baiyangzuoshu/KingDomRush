@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "ModalWaiting_atlas0",
+    "texture": "f0dd1b77-0ee6-4f99-8738-4f57871b2f66",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      615,
+      510
+    ],
+    "offset": [
+      -204.5,
+      1
+    ],
+    "originalSize": [
+      1024,
+      512
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

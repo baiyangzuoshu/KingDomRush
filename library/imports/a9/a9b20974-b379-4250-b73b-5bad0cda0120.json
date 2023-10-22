@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "TreeView_atlas0",
+    "texture": "559ef65e-6c81-43b9-bf2c-e393c4e7bf47",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      253,
+      239
+    ],
+    "offset": [
+      -1.5,
+      8.5
+    ],
+    "originalSize": [
+      256,
+      256
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

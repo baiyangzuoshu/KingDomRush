@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "Joystick_atlas0",
+    "texture": "3d168a7a-be6a-4c0e-a380-2381560340ae",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      178,
+      238
+    ],
+    "offset": [
+      -39,
+      9
+    ],
+    "originalSize": [
+      256,
+      256
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

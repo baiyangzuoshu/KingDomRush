@@ -1,0 +1,17 @@
+{
+  "__type__": "cc.SpriteAtlas",
+  "_name": "entryGame.plist",
+  "_objFlags": 0,
+  "_native": "",
+  "_spriteFrames": {
+    "1": {
+      "__uuid__": "5ddff844-f6d9-40cf-ae74-3b6e09b62e23"
+    },
+    "2": {
+      "__uuid__": "1b2161a7-5ab3-457c-a136-b5044d07acff"
+    },
+    "3": {
+      "__uuid__": "916e402b-09a5-4165-82ab-3ca42139c03d"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "PullToRefresh_atlas0",
+    "texture": "fc8f2d90-7106-4a01-8963-49ecd1ecec86",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      128,
+      126
+    ],
+    "offset": [
+      -64,
+      1
+    ],
+    "originalSize": [
+      256,
+      128
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

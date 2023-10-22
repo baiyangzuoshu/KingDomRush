@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "ScrollPane_atlas0",
+    "texture": "16fa5170-a566-4de0-b337-01707de1f699",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      86,
+      90
+    ],
+    "offset": [
+      -21,
+      19
+    ],
+    "originalSize": [
+      128,
+      128
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

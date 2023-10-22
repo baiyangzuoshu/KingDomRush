@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "MainMenu_atlas0",
+    "texture": "9e428723-ae99-4d76-a8da-cfd7e4e097b0",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      124,
+      124
+    ],
+    "offset": [
+      -2,
+      2
+    ],
+    "originalSize": [
+      128,
+      128
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}
