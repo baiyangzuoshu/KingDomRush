@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "pao4_4",
+    "texture": "d8cb26f2-035b-4146-a02d-683baaa0f697",
+    "atlas": "",
+    "rect": [
+      2,
+      4,
+      86,
+      63
+    ],
+    "offset": [
+      0,
+      -1.5
+    ],
+    "originalSize": [
+      90,
+      68
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

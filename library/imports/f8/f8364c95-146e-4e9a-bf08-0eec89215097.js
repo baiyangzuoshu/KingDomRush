@@ -87,30 +87,8 @@ var ResManagerPro = /** @class */ (function (_super) {
     };
     ResManagerPro.prototype.Init = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var bundle, textData;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        // 测试代码
-                        cc.assetManager.loadBundle("Scenes", function (err, bundle) {
-                            if (err) {
-                                console.log(err);
-                                return;
-                            }
-                            console.log(bundle);
-                            var infos = bundle.getDirWithPath("", cc.SceneAsset);
-                            console.log(infos);
-                        });
-                        return [4 /*yield*/, this.IE_LoadBundle("Sounds")];
-                    case 1:
-                        bundle = _a.sent();
-                        console.log(bundle);
-                        return [4 /*yield*/, this.IE_GetAsset("data", "map", cc.TextAsset)];
-                    case 2:
-                        textData = _a.sent();
-                        console.log(textData.text);
-                        return [2 /*return*/];
-                }
+                return [2 /*return*/];
             });
         });
     };

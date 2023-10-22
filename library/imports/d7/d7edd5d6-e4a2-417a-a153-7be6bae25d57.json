@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "pass_dlg",
+    "texture": "38d679b4-4aa2-4f5e-a5db-4f6171ade73c",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      592,
+      446
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      592,
+      446
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "a3_dead_09",
+    "texture": "f453a24b-ff15-48db-a681-b09e792229a7",
+    "atlas": "",
+    "rect": [
+      30,
+      15,
+      58,
+      58
+    ],
+    "offset": [
+      5,
+      -7
+    ],
+    "originalSize": [
+      108,
+      74
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

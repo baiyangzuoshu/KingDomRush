@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "skill5_down",
+    "texture": "0aefe904-0618-4dde-b8f5-c68dcccd1445",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      31,
+      37
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      31,
+      37
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "fashi_1",
+    "texture": "d26aaaec-6a8c-4c0d-bfa2-6c9ce2ce421a",
+    "atlas": "",
+    "rect": [
+      4,
+      17,
+      72,
+      48
+    ],
+    "offset": [
+      0,
+      -6
+    ],
+    "originalSize": [
+      80,
+      70
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

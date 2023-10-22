@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "upgrade_over",
+    "texture": "06c80db0-83d3-4e8e-ac47-5c4f037d5863",
+    "atlas": "",
+    "rect": [
+      9,
+      2,
+      90,
+      81
+    ],
+    "offset": [
+      0,
+      2.5
+    ],
+    "originalSize": [
+      108,
+      90
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

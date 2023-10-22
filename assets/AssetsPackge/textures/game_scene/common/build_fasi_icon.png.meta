@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "97e9e284-dfe9-4030-8f68-9004b93337e6",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 46,
+  "height": 44,
+  "platformSettings": {},
+  "subMetas": {
+    "build_fasi_icon": {
+      "ver": "1.0.6",
+      "uuid": "6d3658d6-b103-498d-989c-f809f88e3e98",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "97e9e284-dfe9-4030-8f68-9004b93337e6",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0.5,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 46,
+      "height": 43,
+      "rawWidth": 46,
+      "rawHeight": 44,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

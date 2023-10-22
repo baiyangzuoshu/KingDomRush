@@ -29,22 +29,22 @@ export class ResManagerPro extends cc.Component {
 
     public async Init() {
         // 测试代码
-        cc.assetManager.loadBundle("Scenes", (err, bundle: cc.AssetManager.Bundle)=>{
-            if(err) {
-                console.log(err);
-                return;
-            }
+        // cc.assetManager.loadBundle("Scenes", (err, bundle: cc.AssetManager.Bundle)=>{
+        //     if(err) {
+        //         console.log(err);
+        //         return;
+        //     }
 
-            console.log(bundle);
-            var infos = bundle.getDirWithPath("", cc.SceneAsset);
-            console.log(infos)
-        });
+        //     console.log(bundle);
+        //     var infos = bundle.getDirWithPath("", cc.SceneAsset);
+        //     console.log(infos)
+        // });
 
-        var bundle = await this.IE_LoadBundle("Sounds"); 
-        console.log(bundle);
+        // var bundle = await this.IE_LoadBundle("Sounds"); 
+        // console.log(bundle);
 
-        var textData: cc.TextAsset = await this.IE_GetAsset("data", "map", cc.TextAsset) as any; 
-        console.log(textData.text);
+        // var textData: cc.TextAsset = await this.IE_GetAsset("data", "map", cc.TextAsset) as any; 
+        // console.log(textData.text);
     }
 
     private async IE_LoadAllAssetsInBundle(bundle: cc.AssetManager.Bundle, assetType) {

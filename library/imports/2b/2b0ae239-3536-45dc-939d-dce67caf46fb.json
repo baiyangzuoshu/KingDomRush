@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "decal_arrow",
+    "texture": "a4c493c8-922b-48da-98ec-6ee12215c475",
+    "atlas": "",
+    "rect": [
+      0,
+      1,
+      16,
+      7
+    ],
+    "offset": [
+      0,
+      -0.5
+    ],
+    "originalSize": [
+      16,
+      8
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

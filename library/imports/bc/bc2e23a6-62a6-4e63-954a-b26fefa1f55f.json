@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "bom7",
+    "texture": "f98d6900-38d4-435a-bd1d-d9f4c93dbeda",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      49,
+      65
+    ],
+    "offset": [
+      -0.5,
+      2.5
+    ],
+    "originalSize": [
+      50,
+      70
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

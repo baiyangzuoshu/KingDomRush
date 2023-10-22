@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "failed_dlg",
+    "texture": "c0b40609-688d-4a4c-b600-0700bd1c72dc",
+    "atlas": "",
+    "rect": [
+      2,
+      2,
+      524,
+      313
+    ],
+    "offset": [
+      -2.5,
+      3
+    ],
+    "originalSize": [
+      533,
+      323
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "bing4_2",
+    "texture": "acbfcc6a-3c0a-4ce2-bdb0-4abc963fd7d7",
+    "atlas": "",
+    "rect": [
+      2,
+      2,
+      74,
+      66
+    ],
+    "offset": [
+      -1,
+      0
+    ],
+    "originalSize": [
+      80,
+      70
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

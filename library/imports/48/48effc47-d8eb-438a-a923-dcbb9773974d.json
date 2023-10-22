@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "lifebar_bg_small",
+    "texture": "d2391cd9-a199-4134-a3c2-25700fcce0a6",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      20,
+      2
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      20,
+      2
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

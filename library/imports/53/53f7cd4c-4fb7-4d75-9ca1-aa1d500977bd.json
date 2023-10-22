@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "arrow_down_02",
+    "texture": "42888910-55ea-4718-b8cc-f8c426f19a3a",
+    "atlas": "",
+    "rect": [
+      2,
+      0,
+      12,
+      18
+    ],
+    "offset": [
+      -1,
+      0
+    ],
+    "originalSize": [
+      18,
+      18
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "gui_bottom",
+    "texture": "d8c57298-03de-49a1-823e-1ba044bc7daf",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      700,
+      35
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      700,
+      35
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

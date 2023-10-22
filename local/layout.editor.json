@@ -13,13 +13,13 @@
         "type": "dock-h",
         "children": [
           {
-            "width": 255.84375,
-            "height": 922,
+            "width": 256,
+            "height": 919.5,
             "type": "dock-v",
             "children": [
               {
-                "width": 255.84375,
-                "height": 544.515625,
+                "width": 256,
+                "height": 543.515625,
                 "type": "panel",
                 "active": 0,
                 "children": [
@@ -27,8 +27,8 @@
                 ]
               },
               {
-                "width": 255.84375,
-                "height": 374.484375,
+                "width": 256,
+                "height": 372.984375,
                 "type": "panel",
                 "active": 0,
                 "children": [
@@ -38,8 +38,8 @@
             ]
           },
           {
-            "width": 380.796875,
-            "height": 922,
+            "width": 381,
+            "height": 919.5,
             "type": "panel",
             "active": 0,
             "children": [
@@ -48,13 +48,13 @@
             ]
           },
           {
-            "width": 1261.359375,
-            "height": 922,
+            "width": 1261,
+            "height": 919.5,
             "type": "dock-v",
             "children": [
               {
-                "width": 1261.359375,
-                "height": 569.078125,
+                "width": 1261,
+                "height": 567.4375,
                 "type": "panel",
                 "active": 0,
                 "children": [
@@ -62,8 +62,8 @@
                 ]
               },
               {
-                "width": 1261.359375,
-                "height": 349.90625,
+                "width": 1261,
+                "height": 349.046875,
                 "type": "panel",
                 "active": 0,
                 "children": [
@@ -87,7 +87,8 @@
         "game-window"
       ]
     },
-    " common-asset-worker-worker": {}
+    " common-asset-worker-worker": {},
+    " load-media-worker": {}
   },
   "panels": {
     "project-settings": {

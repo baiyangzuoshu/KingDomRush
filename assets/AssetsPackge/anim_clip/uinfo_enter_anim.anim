@@ -1,0 +1,45 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "uinfo_enter_anim",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.9166666666666666,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            0,
+            -456
+          ]
+        },
+        {
+          "frame": 0.6666666666666666,
+          "value": [
+            0,
+            -114
+          ]
+        },
+        {
+          "frame": 0.75,
+          "value": [
+            0,
+            -114
+          ]
+        },
+        {
+          "frame": 0.9166666666666666,
+          "value": [
+            0,
+            -128
+          ]
+        }
+      ]
+    }
+  },
+  "events": []
+}

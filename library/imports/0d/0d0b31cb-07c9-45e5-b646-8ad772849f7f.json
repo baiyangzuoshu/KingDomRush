@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "buildbar",
+    "texture": "d1506724-d926-42d9-9bc7-2d1232cf03e1",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      54,
+      8
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      54,
+      8
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "back_over",
+    "texture": "6ae2bfea-9749-4f72-b462-561fdc282092",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      56,
+      57
+    ],
+    "offset": [
+      -1,
+      0.5
+    ],
+    "originalSize": [
+      60,
+      60
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

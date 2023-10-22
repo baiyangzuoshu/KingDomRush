@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "arrow_idle_down",
+    "texture": "91893fb8-9c44-4361-8666-5c7a3aa685ff",
+    "atlas": "",
+    "rect": [
+      2,
+      4,
+      15,
+      14
+    ],
+    "offset": [
+      0.5,
+      -2
+    ],
+    "originalSize": [
+      18,
+      18
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "walk4_5",
+    "texture": "38d44969-2f01-4d1d-ae61-0df440e4bcde",
+    "atlas": "",
+    "rect": [
+      22,
+      11,
+      17,
+      20
+    ],
+    "offset": [
+      3,
+      -1
+    ],
+    "originalSize": [
+      55,
+      40
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

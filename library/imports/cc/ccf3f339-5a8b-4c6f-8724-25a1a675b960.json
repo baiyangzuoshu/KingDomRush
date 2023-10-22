@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "dlg_bg1",
+    "texture": "6d84235b-e466-4008-a0f3-99eb89330dc8",
+    "atlas": "",
+    "rect": [
+      2,
+      1,
+      340,
+      417
+    ],
+    "offset": [
+      -2.5,
+      3
+    ],
+    "originalSize": [
+      349,
+      425
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

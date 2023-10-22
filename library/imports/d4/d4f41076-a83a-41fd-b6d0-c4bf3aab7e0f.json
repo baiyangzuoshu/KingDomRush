@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "close_bt_up",
+    "texture": "e3547c57-f823-42a2-9139-afc2d54d0f07",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      58,
+      50
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      58,
+      50
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

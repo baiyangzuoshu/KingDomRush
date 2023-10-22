@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "game_star",
+    "texture": "6880f3c1-24eb-498e-83fa-d220895c2b6e",
+    "atlas": "",
+    "rect": [
+      2,
+      3,
+      19,
+      15
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      23,
+      21
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

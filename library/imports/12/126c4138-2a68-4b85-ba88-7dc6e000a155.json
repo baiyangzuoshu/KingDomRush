@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "a5_walk_23",
+    "texture": "4116bae9-6018-4d2e-a6b3-8bb49ba90a3c",
+    "atlas": "",
+    "rect": [
+      16,
+      13,
+      41,
+      38
+    ],
+    "offset": [
+      -3.5,
+      -1
+    ],
+    "originalSize": [
+      80,
+      62
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

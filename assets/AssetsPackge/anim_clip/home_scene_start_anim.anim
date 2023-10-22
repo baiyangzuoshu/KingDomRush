@@ -1,0 +1,128 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "home_scene_start_anim",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 1.42,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "about_btton_root": {
+        "props": {
+          "active": [
+            {
+              "frame": 0,
+              "value": false
+            },
+            {
+              "frame": 1.25,
+              "value": true
+            }
+          ],
+          "position": [
+            {
+              "frame": 1.25,
+              "value": [
+                0,
+                -69
+              ]
+            },
+            {
+              "frame": 1.4166666666666667,
+              "value": [
+                0,
+                -161
+              ]
+            }
+          ]
+        }
+      },
+      "start_button_root": {
+        "props": {
+          "active": [
+            {
+              "frame": 0,
+              "value": false
+            },
+            {
+              "frame": 0.8333333333333334,
+              "value": true
+            }
+          ],
+          "position": [
+            {
+              "frame": 0.8333333333333334,
+              "value": [
+                0,
+                84.6
+              ]
+            },
+            {
+              "frame": 1.1666666666666667,
+              "value": [
+                0,
+                -43.400000000000006
+              ]
+            },
+            {
+              "frame": 1.4166666666666667,
+              "value": [
+                0,
+                -50.4
+              ]
+            }
+          ]
+        }
+      },
+      "logo": {
+        "props": {
+          "scaleX": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.5833333333333334,
+              "value": 1.2
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": 1.2
+            },
+            {
+              "frame": 0.75,
+              "value": 1
+            }
+          ],
+          "scaleY": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.5833333333333334,
+              "value": 1.2
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": 1.2
+            },
+            {
+              "frame": 0.75,
+              "value": 1
+            }
+          ],
+          "active": [
+            {
+              "frame": 0,
+              "value": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}

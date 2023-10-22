@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "start_over",
+    "texture": "5f13374d-4885-4e45-8db0-4a285f9edab1",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      197,
+      93
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      199,
+      96
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

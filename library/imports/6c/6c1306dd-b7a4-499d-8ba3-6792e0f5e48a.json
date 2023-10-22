@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "options_overlay_buttons_0003",
+    "texture": "9306760d-b9ec-46dc-8746-1cfc6a8406a3",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      62,
+      55
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      62,
+      56
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

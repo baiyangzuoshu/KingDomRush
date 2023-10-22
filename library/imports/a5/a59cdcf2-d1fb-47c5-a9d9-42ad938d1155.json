@@ -1,0 +1,63 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "road_skill_upgrade_config",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.75,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "anim_root": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
+                596
+              ]
+            },
+            {
+              "frame": 0.08333333333333333,
+              "value": [
+                0,
+                596
+              ]
+            },
+            {
+              "frame": 0.5,
+              "value": [
+                0,
+                -20
+              ]
+            },
+            {
+              "frame": 0.75,
+              "value": [
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      },
+      "mask": {
+        "props": {
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.08333333333333333,
+              "value": 128
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}

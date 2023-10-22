@@ -29,11 +29,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var EventManager_1 = require("../FrameWork/manager/EventManager");
-var ResManager_1 = require("../FrameWork/manager/ResManager");
-var ResManagerPro_1 = require("../FrameWork/manager/ResManagerPro");
-var UIManager_1 = require("../FrameWork/manager/UIManager");
-var Enum_1 = require("./Enum");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var GameApp = /** @class */ (function (_super) {
     __extends(GameApp, _super);
@@ -50,36 +45,9 @@ var GameApp = /** @class */ (function (_super) {
         return GameApp_1._instance;
     };
     GameApp.prototype.enterGame = function () {
-        UIManager_1.UIManager.getInstance().showUI("Login", this.canvas);
-    };
-    GameApp.prototype.test = function () {
-        ResManagerPro_1.ResManagerPro.Instance.Init();
     };
     GameApp.prototype.startGame = function () {
-        var _this = this;
         //加载资源
-        var pkg = {
-            "prefabs": cc.Prefab,
-            "img": cc.SpriteFrame,
-            "Sounds": cc.AudioClip,
-            "data": cc.TextAsset,
-            "proto": cc.TextAsset,
-            "UI": cc.BufferAsset
-            //"UI":[{assetType:cc.BufferAsset,urls:["Bag"]},{assetType:cc.SpriteFrame,urls:["Bag_atlas0"]}],
-        };
-        this.progressBar.progress = 0;
-        ResManager_1.ResManager.getInstance().parsePkg(pkg, function (cur, total) {
-            console.log("cur total", cur, total);
-            _this.progressBar.progress = cur * 1.0 / total;
-        }, function () {
-            console.log("end");
-            //加载游戏
-            _this.progressBar.node.active = false;
-            //测试1
-            //this.enterGame()
-            //测试2
-            _this.test();
-        });
     };
     GameApp.prototype.onLoad = function () {
         if (null === GameApp_1._instance) {
@@ -90,24 +58,8 @@ var GameApp = /** @class */ (function (_super) {
             return;
         }
         this.canvas = cc.find("Canvas");
-        this.progressBar = this.canvas.getChildByName("ProgressBar").getComponent(cc.ProgressBar);
+        this.progressBar = this.canvas.getChildByName("myProgressBar").getComponent(cc.ProgressBar);
         this.progressBar.progress = 0;
-        this.node.on(cc.Node.EventType.TOUCH_START, this.touchStart, this, true);
-        this.node.on(cc.Node.EventType.TOUCH_MOVE, this.touchMoved, this, true);
-        this.node.on(cc.Node.EventType.TOUCH_END, this.touchEnded, this, true);
-        this.node.on(cc.Node.EventType.TOUCH_CANCEL, this.touchCancel, this, true);
-    };
-    GameApp.prototype.touchStart = function (e) {
-        EventManager_1.EventManager.getInstance().emit(Enum_1.default.EventName.TouchStart, e);
-    };
-    GameApp.prototype.touchMoved = function (e) {
-        EventManager_1.EventManager.getInstance().emit(Enum_1.default.EventName.TouchMoved, e);
-    };
-    GameApp.prototype.touchEnded = function (e) {
-        EventManager_1.EventManager.getInstance().emit(Enum_1.default.EventName.TouchEnded, e);
-    };
-    GameApp.prototype.touchCancel = function (e) {
-        EventManager_1.EventManager.getInstance().emit(Enum_1.default.EventName.TouchCancel, e);
     };
     GameApp.prototype.start = function () {
     };
