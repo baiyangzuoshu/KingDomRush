@@ -27,14 +27,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 24
+        "__id__": 23
       },
       {
-        "__id__": 25
+        "__id__": 24
       }
     ],
     "_prefab": {
-      "__id__": 26
+      "__id__": 25
     },
     "_opacity": 255,
     "_color": {
@@ -215,7 +215,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 23
+      "__id__": 22
     },
     "_opacity": 255,
     "_color": {
@@ -595,13 +595,9 @@
       }
     ],
     "_active": true,
-    "_components": [
-      {
-        "__id__": 21
-      }
-    ],
+    "_components": [],
     "_prefab": {
-      "__id__": 22
+      "__id__": 21
     },
     "_opacity": 255,
     "_color": {
@@ -863,17 +859,6 @@
     },
     "fileId": "68yzcgcc9AiYr7wl4bdZ80",
     "sync": false
-  },
-  {
-    "__type__": "264d3TUF0ZFjL8S3iM7GtEe",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 14
-    },
-    "_enabled": true,
-    "door_state": 0,
-    "anim_duration": 0.4
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "infantry_actor",
+    "_name": "",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "infantry_actor",
+    "_name": "arrow_bullet",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -48,8 +48,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        33.7,
-        -124,
+        33,
+        -116,
         0,
         0,
         0,
@@ -100,8 +100,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 35,
-      "height": 23
+      "width": 20,
+      "height": 6
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -153,10 +153,10 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "e3aacde7-594c-412e-8afd-751ac0418b6e"
+      "__uuid__": "dc5e9328-bb38-4ae5-9115-e333a2fad102"
     },
     "_type": 0,
-    "_sizeMode": 2,
+    "_sizeMode": 1,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -165,7 +165,7 @@
     },
     "_fillStart": 0,
     "_fillRange": 0,
-    "_isTrimmedMode": false,
+    "_isTrimmedMode": true,
     "_atlas": null,
     "_id": ""
   },
@@ -177,7 +177,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "04c9bcn+TNH3L6skjQKw2Ra",
+    "fileId": "d3733VI/xBC/661FH3fA0Xq",
     "sync": false
   },
   {

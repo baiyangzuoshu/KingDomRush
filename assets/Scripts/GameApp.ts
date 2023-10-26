@@ -24,9 +24,15 @@ export default class GameApp extends cc.Component {
         
     }
 
-    public startGame():void{
+    public async startGame():Promise<void>{
         //加载资源
-        
+        this.progressBar.progress=0.1;
+        await ResManagerPro.Instance.IE_LoadBundleAndAllAssets("prefabs",cc.Prefab);
+        this.progressBar.progress=0.5;
+        await ResManagerPro.Instance.IE_LoadBundleAndAllAssets("Sounds",cc.AudioClip);
+        this.progressBar.progress=0.8;
+        await ResManagerPro.Instance.IE_LoadBundleAndAllAssets("textures",cc.SpriteFrame);
+        this.progressBar.progress=1;
     }
 
     onLoad () {
@@ -41,10 +47,7 @@ export default class GameApp extends cc.Component {
         this.canvas=cc.find("Canvas")
         this.progressBar=this.canvas.getChildByName("myProgressBar").getComponent(cc.ProgressBar)
         this.progressBar.progress=0
-        
     }
-
-    
 
     start () {
 

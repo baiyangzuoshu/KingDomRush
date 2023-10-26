@@ -1,6 +1,6 @@
 "use strict";
-cc._RF.push(module, '5793429Aw9D4JuuHFxHR+QU', 'GameLanch ');
-// Scripts/GameLanch .ts
+cc._RF.push(module, '5793429Aw9D4JuuHFxHR+QU', 'GameLanch');
+// Scripts/GameLanch.ts
 
 "use strict";
 // Learn TypeScript:
