@@ -11,7 +11,10 @@ import FGUIManager from "../FrameWork/manager/FGUIManager";
 import { ResManager } from "../FrameWork/manager/ResManager";
 import { ResManagerPro } from "../FrameWork/manager/ResManagerPro";
 import { UIManager } from "../FrameWork/manager/UIManager";
+import { UIManagerPro } from "../FrameWork/manager/UIManagerPro";
+import GameDataManager from "./Data/GameDataManager";
 import GameApp from "./GameApp";
+import PlayerSoundManager from "./Manager/PlayerSoundManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -28,8 +31,11 @@ export default class GameLanch extends cc.Component {
          this.addComponent(ResManager)
          this.addComponent(UIManager)
          this.addComponent(ResManagerPro)
+         this.addComponent(UIManagerPro)
          //游戏
          this.addComponent(GameApp)
+         this.addComponent(GameDataManager)
+         this.addComponent(PlayerSoundManager)
     }
 
     start () {

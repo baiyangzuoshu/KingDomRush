@@ -51,7 +51,7 @@ export class EventManager extends cc.Component {
         }
     }
 
-    emit(eventName:string,data:any):void{
+    emit(eventName:string,data:any={}):void{
         if(!this.eventMap[eventName]){
             return
         }

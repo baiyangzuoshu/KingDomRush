@@ -832,7 +832,11 @@
       "__id__": 17
     },
     "_enabled": true,
-    "_materials": [],
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
@@ -940,10 +944,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
-    "component": "home_scene",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "goto_about",
     "customEventData": ""
@@ -1321,7 +1323,11 @@
       "__id__": 30
     },
     "_enabled": true,
-    "_materials": [],
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
@@ -1429,10 +1435,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
-    "component": "home_scene",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "start_game",
     "customEventData": ""
@@ -1974,9 +1978,7 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
+    "target": null,
     "component": "",
     "_componentId": "",
     "handler": "close_uinfo_dlg",
@@ -2270,10 +2272,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
-    "component": "home_scene",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "on_user_entry_click",
     "customEventData": "0"
@@ -3532,10 +3532,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
-    "component": "home_scene",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "on_user_entry_click",
     "customEventData": "1"
@@ -4794,10 +4792,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
-    "component": "home_scene",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "on_user_entry_click",
     "customEventData": "2"
@@ -5985,9 +5981,7 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 148
-    },
+    "target": null,
     "component": "",
     "_componentId": "",
     "handler": "on_switch_click",
@@ -6179,9 +6173,7 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 153
-    },
+    "target": null,
     "component": "",
     "_componentId": "",
     "handler": "on_switch_click",

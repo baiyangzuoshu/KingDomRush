@@ -560,10 +560,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
-    "component": "abount_scene",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "goto_home",
     "customEventData": ""

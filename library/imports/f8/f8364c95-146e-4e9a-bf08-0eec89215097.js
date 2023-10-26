@@ -175,7 +175,7 @@ var ResManagerPro = /** @class */ (function (_super) {
                     case 1:
                         bundle = (_a.sent());
                         if (bundle === null) {
-                            // console.log("bundle load err: " + bundleName);
+                            console.log("bundle load err: " + bundleName);
                             return [2 /*return*/];
                         }
                         _a.label = 2;
@@ -199,14 +199,14 @@ var ResManagerPro = /** @class */ (function (_super) {
                     case 1:
                         bundle = (_a.sent());
                         if (bundle === null) {
-                            // console.log("bundle load err: " + bundleName);
+                            console.log("bundle load err: " + bundleName);
                             return [2 /*return*/];
                         }
                         _a.label = 2;
                     case 2:
                         assetData = bundle.get(assetPath, assetType);
                         if (assetData) {
-                            return [2 /*return*/, assetData]; // 修改了没有返回资源的bug
+                            return [2 /*return*/, assetData];
                         }
                         return [4 /*yield*/, this.IE_LoadAssetInBundle(bundle, assetPath, assetType)];
                     case 3:
@@ -220,7 +220,7 @@ var ResManagerPro = /** @class */ (function (_super) {
         cc.assetManager.releaseAsset(assetData);
     };
     ResManagerPro.prototype.ReleaseAllAssetInBundle = function (bundleName) {
-        var bundle = cc.assetManager.getBundle("bundleName");
+        var bundle = cc.assetManager.getBundle(bundleName);
         if (bundle === null) {
             return;
         }

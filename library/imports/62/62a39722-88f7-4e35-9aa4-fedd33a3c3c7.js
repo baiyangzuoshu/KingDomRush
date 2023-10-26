@@ -66,6 +66,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ResManagerPro_1 = require("../FrameWork/manager/ResManagerPro");
+var UIManagerPro_1 = require("../FrameWork/manager/UIManagerPro");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var GameApp = /** @class */ (function (_super) {
     __extends(GameApp, _super);
@@ -77,11 +78,23 @@ var GameApp = /** @class */ (function (_super) {
         // update (dt) {}
     }
     GameApp_1 = GameApp;
-    // LIFE-CYCLE CALLBACKS:
+    GameApp.prototype.onLoad = function () {
+        if (null === GameApp_1._instance) {
+            GameApp_1._instance = this;
+        }
+        else {
+            this.destroy();
+            return;
+        }
+        this.canvas = cc.find("Canvas");
+        this.progressBar = this.canvas.getChildByName("myProgressBar").getComponent(cc.ProgressBar);
+        this.progressBar.progress = 0;
+    };
     GameApp.getInstance = function () {
         return GameApp_1._instance;
     };
     GameApp.prototype.enterGame = function () {
+        UIManagerPro_1.UIManagerPro.getInstance().showPrefab("HomeUI");
     };
     GameApp.prototype.startGame = function () {
         return __awaiter(this, void 0, Promise, function () {
@@ -102,22 +115,11 @@ var GameApp = /** @class */ (function (_super) {
                     case 3:
                         _a.sent();
                         this.progressBar.progress = 1;
+                        this.enterGame();
                         return [2 /*return*/];
                 }
             });
         });
-    };
-    GameApp.prototype.onLoad = function () {
-        if (null === GameApp_1._instance) {
-            GameApp_1._instance = this;
-        }
-        else {
-            this.destroy();
-            return;
-        }
-        this.canvas = cc.find("Canvas");
-        this.progressBar = this.canvas.getChildByName("myProgressBar").getComponent(cc.ProgressBar);
-        this.progressBar.progress = 0;
     };
     GameApp.prototype.start = function () {
     };

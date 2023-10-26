@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets\\Scripts\\EventName.ts"],"names":[],"mappings":";;;;;;;AAAA,IAAY,MAEX;AAFD,WAAY,MAAM;IACd,yCAA+B,CAAA;AACnC,CAAC,EAFW,MAAM,GAAN,cAAM,KAAN,cAAM,QAEjB","file":"","sourceRoot":"/","sourcesContent":["export enum HomeUI{\n    open_the_door = \"open_the_door\",\n}"]}
