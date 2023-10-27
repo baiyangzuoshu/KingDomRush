@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "level1_map",
+    "_name": "levelmap1",
     "_objFlags": 0,
     "_native": "",
     "data": {

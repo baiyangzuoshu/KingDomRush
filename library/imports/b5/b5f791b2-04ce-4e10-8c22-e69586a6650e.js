@@ -64,6 +64,8 @@ var GameDataManager = /** @class */ (function (_super) {
             4: [0, 1, 1, 2, 2, 3],
             5: [0, 2, 3, 3, 3, 4],
         };
+        _this.is_game_started = false; // 是否在游戏中
+        _this.is_game_paused = false; // 游戏是否暂停
         return _this;
     }
     GameDataManager.prototype.onLoad = function () {

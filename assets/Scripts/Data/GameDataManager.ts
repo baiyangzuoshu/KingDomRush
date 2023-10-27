@@ -68,8 +68,8 @@ export default class GameDataManager extends cc.Component {
         5: [0, 2, 3, 3, 3, 4],  // 技能步兵
     }
     cur_playing_level: 0 // 保存当前我们正在游戏的关卡的索引
-    is_game_started: false // 是否在游戏中
-    is_game_paused: false// 游戏是否暂停
+    is_game_started:boolean= false // 是否在游戏中
+    is_game_paused:boolean= false// 游戏是否暂停
     ememy_set: Array<any>
     map_road_set:any 
     // 清除敌人的集合敌人的集合
@@ -150,7 +150,7 @@ export default class GameDataManager extends cc.Component {
         this.cur_playing_level = level;
     }
 
-    get_cur_level() {
+    get_cur_level():number{
         return this.cur_playing_level;
     }
 

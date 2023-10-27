@@ -111,7 +111,6 @@ var UpgradeConfig = /** @class */ (function (_super) {
         var i, j, level;
         for (i = 0; i < level_config_data.length; i++) {
             level = level_config_data[i];
-            console.log(GameDataManager_1.default.getInstance().tower_skills_upgrade_config);
             for (j = 0; j <= level; j++) {
                 var consume = GameDataManager_1.default.getInstance().tower_skills_upgrade_config[i][j];
                 last_star -= consume;
