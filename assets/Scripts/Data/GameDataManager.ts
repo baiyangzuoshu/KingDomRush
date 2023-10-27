@@ -58,7 +58,7 @@ export default class GameDataManager extends cc.Component {
 
     user_data:any
     cur_user: 0 // 默认为0;
-    tower_skills_upgrade_config: {
+    tower_skills_upgrade_config:any= {
         0: [0, 1, 1, 2, 2, 3], // 弓箭塔 
         1: [0, 1, 1, 2, 2, 3], // 步兵塔
         2: [0, 1, 1, 2, 2, 3], // 术士塔;

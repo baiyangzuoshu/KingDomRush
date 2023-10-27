@@ -55,7 +55,16 @@ key: tower_skills_upgrade_config
 var GameDataManager = /** @class */ (function (_super) {
     __extends(GameDataManager, _super);
     function GameDataManager() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.tower_skills_upgrade_config = {
+            0: [0, 1, 1, 2, 2, 3],
+            1: [0, 1, 1, 2, 2, 3],
+            2: [0, 1, 1, 2, 2, 3],
+            3: [0, 1, 1, 3, 3, 3],
+            4: [0, 1, 1, 2, 2, 3],
+            5: [0, 2, 3, 3, 3, 4],
+        };
+        return _this;
     }
     GameDataManager.prototype.onLoad = function () {
         if (null === GameDataManager._instance) {

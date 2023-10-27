@@ -34,7 +34,7 @@ export class UIControl extends cc.Component {
     buttonAddClickEvent(url:string,func:Function,target:any):void{
         let node=this.getChildByUrl(url)
         if(!node){
-            console.error("buttonAddClickEvent url=",url)
+            console.error("buttonAddClickEvent not found url=",url)
             return
         }
 

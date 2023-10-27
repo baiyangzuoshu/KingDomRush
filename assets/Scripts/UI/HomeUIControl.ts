@@ -10,6 +10,7 @@ import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
 import { UIManagerPro } from "../../FrameWork/manager/UIManagerPro";
 import { UIControl } from "../../FrameWork/ui/UIControl";
 import GameDataManager from "../Data/GameDataManager";
+import { ViewUI } from "../Enum";
 import { HomeUI } from "../EventName";
 import AudioSwich from "../Tools/AudioSwich";
 import LoadingDoor from "../Tools/LoadingDoor";
@@ -172,7 +173,7 @@ export default class HomeUIControl extends UIControl {
         this.loading_door.close_the_door(function() {
             this.scheduleOnce(function() {
                 //cc.director.loadScene("abount_scene");  
-                UIManagerPro.getInstance().showPrefab("AboutUI");  
+                UIManagerPro.getInstance().showPrefab(ViewUI.AboutUI);  
             }, 0.5);
         }.bind(this));
     }
@@ -200,7 +201,7 @@ export default class HomeUIControl extends UIControl {
         this.loading_door.close_the_door(function() {
             this.scheduleOnce(function() {
                 //cc.director.loadScene("roadmap_scene"); 
-                UIManagerPro.getInstance().showPrefab("RoadMapUI");   
+                UIManagerPro.getInstance().showPrefab(ViewUI.RoadMapUI);   
             }, 0.5);
         }.bind(this));
     }

@@ -7,6 +7,7 @@
 
 import { ResManagerPro } from "../FrameWork/manager/ResManagerPro";
 import { UIManagerPro } from "../FrameWork/manager/UIManagerPro";
+import { ViewUI } from "./Enum";
 
 const {ccclass, property} = cc._decorator;
 
@@ -35,7 +36,7 @@ export default class GameApp extends cc.Component {
     private progressBar:cc.ProgressBar=null
 
     public enterGame():void{
-        UIManagerPro.getInstance().showPrefab("HomeUI");
+        UIManagerPro.getInstance().showPrefab(ViewUI.HomeUI);
     }
 
     public async startGame():Promise<void>{

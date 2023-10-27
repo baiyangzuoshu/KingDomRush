@@ -54,7 +54,7 @@ var LoadingDoor = /** @class */ (function (_super) {
     };
     LoadingDoor.prototype._set_door_state = function (state) {
         this.door_state = state;
-        var win_size = cc.director.getWinSize();
+        var win_size = cc.winSize;
         if (this.door_state === 0) { // 关门
             this.l_door.x = 2;
             this.r_door.x = -2;
@@ -74,7 +74,7 @@ var LoadingDoor = /** @class */ (function (_super) {
         if (this.door_state === 0) {
             return;
         }
-        var win_size = cc.director.getWinSize();
+        var win_size = cc.winSize;
         this.door_state = 0;
         this.l_door.x = -win_size.width * 0.5;
         this.r_door.x = win_size.width * 0.5;
@@ -98,7 +98,7 @@ var LoadingDoor = /** @class */ (function (_super) {
         this.door_state = 1;
         this.l_door.x = 2;
         this.r_door.x = -2;
-        var win_size = cc.director.getWinSize();
+        var win_size = cc.winSize;
         var m1 = cc.moveBy(this.anim_duration, -win_size.width * 0.5 - 2, 0);
         this.l_door.runAction(m1);
         var m2 = cc.moveBy(this.anim_duration, win_size.width * 0.5 + 2, 0);

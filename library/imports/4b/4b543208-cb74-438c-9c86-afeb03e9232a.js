@@ -1,6 +1,6 @@
 "use strict";
-cc._RF.push(module, 'caa56WHZ45F37Op8GVbchuS', 'AboutUIControl');
-// Scripts/UI/AboutUIControl.ts
+cc._RF.push(module, '4b543IIy3RDjJyGr+sD6SMq', 'LevelEntryInfo');
+// Scripts/Tools/LevelEntryInfo.ts
 
 "use strict";
 // Learn TypeScript:
@@ -29,50 +29,45 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var EventManager_1 = require("../../FrameWork/manager/EventManager");
-var UIManagerPro_1 = require("../../FrameWork/manager/UIManagerPro");
 var UIControl_1 = require("../../FrameWork/ui/UIControl");
-var Enum_1 = require("../Enum");
-var EventName_1 = require("../EventName");
-var LoadingDoor_1 = require("../Tools/LoadingDoor");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
-var AboutUIControl = /** @class */ (function (_super) {
-    __extends(AboutUIControl, _super);
-    function AboutUIControl() {
+var LevelEntryInfo = /** @class */ (function (_super) {
+    __extends(LevelEntryInfo, _super);
+    function LevelEntryInfo() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.loading_door = null;
-        _this.go_back = false;
+        _this.star_set = [];
+        _this.star_num = 0;
         return _this;
     }
     // LIFE-CYCLE CALLBACKS:
-    AboutUIControl.prototype.onLoad = function () {
+    LevelEntryInfo.prototype.onLoad = function () {
         _super.prototype.onLoad.call(this);
-        this.loading_door = this.getChildByUrl("anchor-center/loading_door").addComponent(LoadingDoor_1.default);
-        this.loading_door.setData(0, 0.4);
-        this.buttonAddClickEvent("anchor-center/back_bt", this.goto_home, this);
+        this.star_set[0] = this.getChildByUrl("star1/star");
+        this.star_set[1] = this.getChildByUrl("star2/star");
+        this.star_set[2] = this.getChildByUrl("star3/star");
     };
-    // 打开这个门;
-    AboutUIControl.prototype.start = function () {
-        this.loading_door.open_the_door(null);
+    LevelEntryInfo.prototype.setData = function (star_num) {
+        this.star_num = star_num;
+        this.show_level_star_info(this.star_num);
     };
-    // 跳转到home场景;
-    AboutUIControl.prototype.goto_home = function () {
-        if (this.go_back === true) { // 使用变量挡住在播放动画时候的 按钮多次点击。
+    // 显示我们当前关卡的成绩，几颗星
+    LevelEntryInfo.prototype.show_level_star_info = function (star_num) {
+        if (star_num < 0 || star_num > 3) {
             return;
         }
-        // 播放按钮的音效
-        //sound_manager.play_effect("resources/sounds/click.wav");
-        this.go_back = true;
-        this.loading_door.close_the_door(function () {
-            UIManagerPro_1.UIManagerPro.getInstance().closePrefab(Enum_1.ViewUI.AboutUI);
-            EventManager_1.EventManager.getInstance().emit(EventName_1.HomeUI.open_the_door);
-        }.bind(this));
+        var i;
+        for (i = 0; i < star_num; i++) {
+            this.star_set[i].active = true;
+        }
+        for (; i < 3; i++) {
+            this.star_set[i].active = false;
+        }
     };
-    AboutUIControl = __decorate([
+    LevelEntryInfo = __decorate([
         ccclass
-    ], AboutUIControl);
-    return AboutUIControl;
+    ], LevelEntryInfo);
+    return LevelEntryInfo;
 }(UIControl_1.UIControl));
-exports.default = AboutUIControl;
+exports.default = LevelEntryInfo;
 
 cc._RF.pop();

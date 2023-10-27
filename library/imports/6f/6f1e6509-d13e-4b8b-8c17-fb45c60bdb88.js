@@ -70,6 +70,7 @@ var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
 var UIManagerPro_1 = require("../../FrameWork/manager/UIManagerPro");
 var UIControl_1 = require("../../FrameWork/ui/UIControl");
 var GameDataManager_1 = require("../Data/GameDataManager");
+var Enum_1 = require("../Enum");
 var EventName_1 = require("../EventName");
 var AudioSwich_1 = require("../Tools/AudioSwich");
 var LoadingDoor_1 = require("../Tools/LoadingDoor");
@@ -235,7 +236,7 @@ var HomeUIControl = /** @class */ (function (_super) {
         this.loading_door.close_the_door(function () {
             this.scheduleOnce(function () {
                 //cc.director.loadScene("abount_scene");  
-                UIManagerPro_1.UIManagerPro.getInstance().showPrefab("AboutUI");
+                UIManagerPro_1.UIManagerPro.getInstance().showPrefab(Enum_1.ViewUI.AboutUI);
             }, 0.5);
         }.bind(this));
     };
@@ -261,7 +262,7 @@ var HomeUIControl = /** @class */ (function (_super) {
         this.loading_door.close_the_door(function () {
             this.scheduleOnce(function () {
                 //cc.director.loadScene("roadmap_scene"); 
-                UIManagerPro_1.UIManagerPro.getInstance().showPrefab("RoadMapUI");
+                UIManagerPro_1.UIManagerPro.getInstance().showPrefab(Enum_1.ViewUI.RoadMapUI);
             }, 0.5);
         }.bind(this));
     };

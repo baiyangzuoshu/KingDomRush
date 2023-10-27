@@ -9,6 +9,7 @@ import { EventManager } from "../../FrameWork/manager/EventManager";
 import { UIManager } from "../../FrameWork/manager/UIManager";
 import { UIManagerPro } from "../../FrameWork/manager/UIManagerPro";
 import { UIControl } from "../../FrameWork/ui/UIControl";
+import { ViewUI } from "../Enum";
 import { HomeUI } from "../EventName";
 import LoadingDoor from "../Tools/LoadingDoor";
 
@@ -44,7 +45,7 @@ export default class AboutUIControl extends UIControl {
         
         this.go_back = true;
         this.loading_door.close_the_door(function(){
-            UIManagerPro.getInstance().closePrefab("AboutUI");
+            UIManagerPro.getInstance().closePrefab(ViewUI.AboutUI);
             EventManager.getInstance().emit(HomeUI.open_the_door);
         }.bind(this));
     }

@@ -53,7 +53,7 @@ var UIControl = /** @class */ (function (_super) {
     UIControl.prototype.buttonAddClickEvent = function (url, func, target) {
         var node = this.getChildByUrl(url);
         if (!node) {
-            console.error("buttonAddClickEvent url=", url);
+            console.error("buttonAddClickEvent not found url=", url);
             return;
         }
         var btn = node.getComponent(cc.Button);

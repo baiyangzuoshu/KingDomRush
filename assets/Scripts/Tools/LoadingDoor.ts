@@ -34,7 +34,7 @@ export default class LoadingDoor extends UIControl {
     _set_door_state(state) {
         this.door_state = state;
         
-        var win_size = cc.director.getWinSize();
+        var win_size = cc.winSize;
         
         if (this.door_state === 0) { // 关门
             this.l_door.x = 2;
@@ -59,7 +59,7 @@ export default class LoadingDoor extends UIControl {
             return;
         } 
         
-        var win_size = cc.director.getWinSize();
+        var win_size = cc.winSize;
         this.door_state = 0;
         this.l_door.x = -win_size.width * 0.5;
         this.r_door.x = win_size.width * 0.5;
@@ -91,7 +91,7 @@ export default class LoadingDoor extends UIControl {
         this.r_door.x = -2;
         
 
-        var win_size = cc.director.getWinSize();
+        var win_size = cc.winSize;
         var m1 = cc.moveBy(this.anim_duration, -win_size.width * 0.5 - 2, 0);
         this.l_door.runAction(m1);
         
