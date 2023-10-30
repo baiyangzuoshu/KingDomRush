@@ -66,6 +66,145 @@ var GameDataManager = /** @class */ (function (_super) {
         };
         _this.is_game_started = false; // 是否在游戏中
         _this.is_game_paused = false; // 游戏是否暂停
+        _this.warlock_bullet_params = [
+            {
+                speed: 200,
+                attack: 10,
+            },
+            {
+                speed: 200,
+                attack: 10
+            },
+            {
+                speed: 200,
+                attack: 10
+            },
+            {
+                speed: 200,
+                attack: 10
+            },
+        ];
+        _this.arrow_tower_params = [
+            {
+                search_R: 100,
+                build_chip: 100,
+            },
+            {
+                search_R: 120,
+                build_chip: 220,
+            },
+            {
+                search_R: 140,
+                build_chip: 340
+            },
+            {
+                search_R: 160,
+                build_chip: 540
+            },
+        ];
+        _this.cannon_bullet = [
+            {
+                speed: 200,
+                attack: 10,
+                bomb_R: 30,
+            },
+            {
+                speed: 200,
+                attack: 20,
+                bomb_R: 30,
+            },
+            {
+                speed: 200,
+                attack: 30,
+                bomb_R: 30,
+            },
+            {
+                speed: 200,
+                attack: 30,
+                bomb_R: 30,
+            },
+            {
+                speed: 200,
+                attack: 10,
+                bomb_R: 30,
+            },
+        ];
+        _this.cannon_tower_params = [
+            {
+                search_R: 100,
+                build_chip: 200,
+            },
+            {
+                search_R: 120,
+                build_chip: 400,
+            },
+            {
+                search_R: 140,
+                build_chip: 600,
+            },
+            {
+                search_R: 160,
+                build_chip: 900,
+            },
+        ];
+        _this.infantry_actor = [
+            {
+                speed: 50,
+                attack: 10,
+                blood: 100,
+            },
+            {
+                speed: 50,
+                attack: 10,
+                blood: 100,
+            },
+            {
+                speed: 50,
+                attack: 10,
+                blood: 100,
+            },
+            {
+                speed: 50,
+                attack: 10,
+                blood: 100,
+            },
+        ];
+        _this.infantry_tower_params = [
+            {
+                search_R: 100,
+                build_chip: 150,
+            },
+            {
+                search_R: 120,
+                build_chip: 300,
+            },
+            {
+                search_R: 140,
+                build_chip: 450,
+            },
+            {
+                search_R: 160,
+                build_chip: 600,
+            },
+        ];
+        _this.warlock_tower_params = [
+            {
+                search_R: 100,
+                build_chip: 150,
+            },
+            {
+                search_R: 120,
+                build_chip: 300,
+            },
+            {
+                search_R: 140,
+                build_chip: 450,
+            },
+            {
+                search_R: 160,
+                build_chip: 600,
+            },
+        ];
         return _this;
     }
     GameDataManager.prototype.onLoad = function () {

@@ -136,6 +136,7 @@ var RoadMapUIControl = /** @class */ (function (_super) {
             // end 
         }
         // end 
+        console.log("newest_level = " + this.newest_level);
         for (; i < this.level_num; i++) {
             this.passed_entry[i].active = false;
         }
@@ -161,6 +162,7 @@ var RoadMapUIControl = /** @class */ (function (_super) {
     };
     // end 
     RoadMapUIControl.prototype._goto_game_scene = function (level) {
+        console.log("goto game scene at level:", level);
         // 保存当前可以游戏的关卡,保存到GameDataManager.getInstance()里面，游戏场景就可以直接访问的到；
         GameDataManager_1.default.getInstance().set_cur_level(level);
         // end 
@@ -181,7 +183,8 @@ var RoadMapUIControl = /** @class */ (function (_super) {
     };
     // end 
     // 已经挑战的关卡点击进入
-    RoadMapUIControl.prototype.on_passed_entry_click = function (level) {
+    RoadMapUIControl.prototype.on_passed_entry_click = function (t, data) {
+        var level = parseInt(data);
         if (this.outside === true) {
             return;
         }

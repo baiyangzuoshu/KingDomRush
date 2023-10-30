@@ -65,10 +65,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var EventManager_1 = require("../../FrameWork/manager/EventManager");
 var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
 var UIControl_1 = require("../../FrameWork/ui/UIControl");
 var GameDataManager_1 = require("../Data/GameDataManager");
+var EventName_1 = require("../EventName");
 var Checkout_1 = require("../Game/Checkout");
+var GuiTowerBuilder_1 = require("../Game/GuiTowerBuilder");
 var TowerBuilder_1 = require("../Game/TowerBuilder");
 var LoadingDoor_1 = require("../Tools/LoadingDoor");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
@@ -99,16 +102,65 @@ var GameUIControl = /** @class */ (function (_super) {
         _this.cur_gen_now = 0;
         _this.cur_schedule_time = 0;
         _this.enemy_prefabs = [];
+        _this.gui_tower_builder = null;
         return _this;
     }
     // use this for initialization
     GameUIControl.prototype.onLoad = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var i, mapPrefab, ememy1, ememy2, ememy3, ememy4, ememy5, ememy6, ememy7, map_level;
+            var map_level;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _super.prototype.onLoad.call(this);
+                        // 以后随机播放背景音乐;
+                        //sound_manager.play_music("resources/sounds/music/game_bg1.mp3", true);
+                        // end
+                        return [4 /*yield*/, this.loadData()];
+                    case 1:
+                        // 以后随机播放背景音乐;
+                        //sound_manager.play_music("resources/sounds/music/game_bg1.mp3", true);
+                        // end
+                        _a.sent();
+                        this.door = this.getChildByUrl("loading_door").addComponent(LoadingDoor_1.default);
+                        this.door.setData(0, 0.4);
+                        this.go_back = false;
+                        this.pause_root = this.getChildByUrl("anchor-center/pause_root");
+                        this.pause_root.active = false;
+                        this.setting_root = this.getChildByUrl("anchor-center/setting_root");
+                        this.setting_root.active = false;
+                        this.gui_tower_builder = this.getChildByUrl("gui_tower_builder").addComponent(GuiTowerBuilder_1.default);
+                        this.blood_label = this.getChildByUrl("anchor-lt/ugame_root/blood_label").getComponent(cc.Label);
+                        this.uchip_label = this.getChildByUrl("anchor-lt/ugame_root/uchip_label").getComponent(cc.Label);
+                        this.round_label = this.getChildByUrl("anchor-lt/ugame_root/round_label").getComponent(cc.Label);
+                        this.blood = 0;
+                        this.game_started = false;
+                        GameDataManager_1.default.getInstance().is_game_paused = false;
+                        this.map_root = this.getChildByUrl("map_root");
+                        this.checkout = this.getChildByUrl("checkout").addComponent(Checkout_1.default);
+                        map_level = GameDataManager_1.default.getInstance().get_cur_level();
+                        if (map_level >= this.game_map_set.length) {
+                            map_level = this.game_map_set.length - 1;
+                        }
+                        this.game_map = cc.instantiate(this.game_map_set[map_level]);
+                        this.node.addChild(this.game_map);
+                        this.game_map.zIndex = -100;
+                        this.map_tag_root = this.game_map.getChildByName("tag_root");
+                        EventManager_1.EventManager.getInstance().addEventListener(EventName_1.GameUI.show_tower_builder, this.show_tower_builder, this);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    GameUIControl.prototype.onDestroy = function () {
+        EventManager_1.EventManager.getInstance().removeEventListener(EventName_1.GameUI.show_tower_builder, this.show_tower_builder, this);
+    };
+    GameUIControl.prototype.loadData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var i, mapPrefab, ememy1, ememy2, ememy3, ememy4, ememy5, ememy6, ememy7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
                         i = 1;
                         _a.label = 1;
                     case 1:
@@ -149,31 +201,6 @@ var GameUIControl = /** @class */ (function (_super) {
                         this.enemy_prefabs.push(ememy5);
                         this.enemy_prefabs.push(ememy6);
                         this.enemy_prefabs.push(ememy7);
-                        this.door = this.getChildByUrl("loading_door").addComponent(LoadingDoor_1.default);
-                        this.door.setData(0, 0.4);
-                        this.go_back = false;
-                        this.pause_root = this.getChildByUrl("anchor-center/pause_root");
-                        this.pause_root.active = false;
-                        this.setting_root = this.getChildByUrl("anchor-center/setting_root");
-                        this.setting_root.active = false;
-                        this.blood_label = this.getChildByUrl("anchor-lt/ugame_root/blood_label").getComponent(cc.Label);
-                        this.uchip_label = this.getChildByUrl("anchor-lt/ugame_root/uchip_label").getComponent(cc.Label);
-                        this.round_label = this.getChildByUrl("anchor-lt/ugame_root/round_label").getComponent(cc.Label);
-                        this.blood = 0;
-                        this.game_started = false;
-                        GameDataManager_1.default.getInstance().is_game_paused = false;
-                        this.map_root = this.getChildByUrl("map_root");
-                        this.checkout = this.getChildByUrl("checkout").addComponent(Checkout_1.default);
-                        map_level = GameDataManager_1.default.getInstance().get_cur_level();
-                        // this.game_map = this.getChildByUrl("level1_map");
-                        if (map_level >= this.game_map_set.length) {
-                            map_level = this.game_map_set.length - 1;
-                        }
-                        this.game_map = cc.instantiate(this.game_map_set[map_level]);
-                        this.node.addChild(this.game_map);
-                        // this.game_map.setLocalZOrder(-100);
-                        this.game_map.zIndex = -100;
-                        this.map_tag_root = this.game_map.getChildByName("tag_root");
                         return [2 /*return*/];
                 }
             });
@@ -193,7 +220,8 @@ var GameUIControl = /** @class */ (function (_super) {
         // 取消掉所有的塔
         for (var i = 0; i < this.map_tag_root.children.length; i++) {
             var tower_builder = this.map_tag_root.children[i].addComponent(TowerBuilder_1.default);
-            //tower_builder.remove_builder_tower();
+            tower_builder.remove_builder_tower();
+            tower_builder.setData(i + 1);
         }
         // end 
         // map_root
@@ -224,8 +252,24 @@ var GameUIControl = /** @class */ (function (_super) {
         this.cur_road_index = 0; // 在非随机模式下，当前的选择路径的索引
         this.cur_gen_total = 0; // 当前这波产生的总数
         this.cur_gen_now = 0; // 当前已经放出的怪物数量
-        this.gen_round_enemy();
+        //this.gen_round_enemy();
         // end 
+    };
+    GameUIControl.prototype.show_tower_builder = function (data) {
+        var is_builded = data.is_builded;
+        var tower_builder = data.tower_builder;
+        var s = cc.scaleTo(0.3, 1).easing(cc.easeBackOut());
+        console.log("show_tower_builder", is_builded);
+        if (is_builded === false) { // 还没有塔，所以要show builder
+            this.gui_tower_builder.show_tower_builder(tower_builder);
+            this.gui_tower_builder.node.scale = 0;
+            this.gui_tower_builder.node.runAction(s);
+        }
+        else { // 已经创建，所以要显示撤销
+            this.gui_tower_builder.show_tower_undo(tower_builder);
+            this.gui_tower_builder.node.scale = 0;
+            this.gui_tower_builder.node.runAction(s);
+        }
     };
     GameUIControl.prototype.show_game_uchip = function () {
         this.uchip_label.string = "" + GameDataManager_1.default.getInstance().get_uchip();

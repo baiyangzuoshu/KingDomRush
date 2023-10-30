@@ -910,10 +910,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 15
-    },
-    "component": "tower_builder",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "show_tower_builder",
     "customEventData": ""
@@ -1254,10 +1252,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 24
-    },
-    "component": "tower_builder",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "show_tower_builder",
     "customEventData": ""
@@ -1598,10 +1594,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 33
-    },
-    "component": "tower_builder",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "show_tower_builder",
     "customEventData": ""
@@ -1942,10 +1936,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 42
-    },
-    "component": "tower_builder",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "show_tower_builder",
     "customEventData": ""
@@ -2286,10 +2278,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 51
-    },
-    "component": "tower_builder",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "show_tower_builder",
     "customEventData": ""
@@ -2630,10 +2620,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 60
-    },
-    "component": "tower_builder",
+    "target": null,
+    "component": "",
     "_componentId": "",
     "handler": "show_tower_builder",
     "customEventData": ""

@@ -126,7 +126,7 @@ export default class RoadMapUIControl extends UIControl {
             // end 
         }
         // end 
-
+        console.log("newest_level = " + this.newest_level);
         for(; i < this.level_num; i ++) {
             this.passed_entry[i].active = false;
         }
@@ -157,6 +157,7 @@ export default class RoadMapUIControl extends UIControl {
     // end 
 
     _goto_game_scene(level) {
+        console.log("goto game scene at level:", level);
         // 保存当前可以游戏的关卡,保存到GameDataManager.getInstance()里面，游戏场景就可以直接访问的到；
         GameDataManager.getInstance().set_cur_level(level);
         // end 
@@ -180,7 +181,8 @@ export default class RoadMapUIControl extends UIControl {
     // end 
 
     // 已经挑战的关卡点击进入
-    on_passed_entry_click(level) {
+    on_passed_entry_click(t,data) {
+        let level=parseInt(data)
         if (this.outside === true) {
             return;
         }

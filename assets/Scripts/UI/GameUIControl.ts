@@ -5,10 +5,13 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
+import { EventManager } from "../../FrameWork/manager/EventManager";
 import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
 import { UIControl } from "../../FrameWork/ui/UIControl";
 import GameDataManager from "../Data/GameDataManager";
+import { GameUI } from "../EventName";
 import Checkout from "../Game/Checkout";
+import GuiTowerBuilder from "../Game/GuiTowerBuilder";
 import TowerBuilder from "../Game/TowerBuilder";
 import LoadingDoor from "../Tools/LoadingDoor";
 
@@ -39,13 +42,57 @@ export default class GameUIControl extends UIControl {
     cur_gen_now:number=0;
     cur_schedule_time:number=0;
     enemy_prefabs:Array<cc.Prefab>=[];
+    gui_tower_builder:GuiTowerBuilder=null;
     // use this for initialization
     async onLoad () {
         super.onLoad();
         // 以后随机播放背景音乐;
         //sound_manager.play_music("resources/sounds/music/game_bg1.mp3", true);
         // end
+        
+        await this.loadData();
+        
+        this.door = this.getChildByUrl("loading_door").addComponent(LoadingDoor);
+        this.door.setData(0,0.4);
+        this.go_back = false;
+        
+        this.pause_root = this.getChildByUrl("anchor-center/pause_root");
+        this.pause_root.active = false;
+        
+        this.setting_root = this.getChildByUrl("anchor-center/setting_root");
+        this.setting_root.active = false;
 
+        this.gui_tower_builder = this.getChildByUrl("gui_tower_builder").addComponent(GuiTowerBuilder);
+        
+        this.blood_label = this.getChildByUrl("anchor-lt/ugame_root/blood_label").getComponent(cc.Label);
+        this.uchip_label = this.getChildByUrl("anchor-lt/ugame_root/uchip_label").getComponent(cc.Label);
+        this.round_label = this.getChildByUrl("anchor-lt/ugame_root/round_label").getComponent(cc.Label);
+        
+        this.blood = 0;
+        this.game_started = false;
+        GameDataManager.getInstance().is_game_paused = false;
+
+        this.map_root = this.getChildByUrl("map_root");
+        this.checkout = this.getChildByUrl("checkout").addComponent(Checkout);
+        
+        var map_level = GameDataManager.getInstance().get_cur_level();
+        if (map_level >= this.game_map_set.length) {
+            map_level = this.game_map_set.length - 1;
+        }
+        this.game_map = cc.instantiate(this.game_map_set[map_level]);
+        this.node.addChild(this.game_map);
+        this.game_map.zIndex = -100;
+
+        this.map_tag_root = this.game_map.getChildByName("tag_root");
+
+        EventManager.getInstance().addEventListener(GameUI.show_tower_builder, this.show_tower_builder, this);
+    }
+
+    protected onDestroy(): void {
+        EventManager.getInstance().removeEventListener(GameUI.show_tower_builder, this.show_tower_builder, this);
+    }
+
+    async loadData(){
         for(let i=1;i<=3;i++){
             let mapPrefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Map/levelmap"+i,cc.Prefab) as cc.Prefab;
             this.game_map_set.push(mapPrefab);
@@ -64,41 +111,6 @@ export default class GameUIControl extends UIControl {
         this.enemy_prefabs.push(ememy5);
         this.enemy_prefabs.push(ememy6);
         this.enemy_prefabs.push(ememy7);
-
-        
-        this.door = this.getChildByUrl("loading_door").addComponent(LoadingDoor);
-        this.door.setData(0,0.4);
-        this.go_back = false;
-        
-        this.pause_root = this.getChildByUrl("anchor-center/pause_root");
-        this.pause_root.active = false;
-        
-        this.setting_root = this.getChildByUrl("anchor-center/setting_root");
-        this.setting_root.active = false;
-        
-        this.blood_label = this.getChildByUrl("anchor-lt/ugame_root/blood_label").getComponent(cc.Label);
-        this.uchip_label = this.getChildByUrl("anchor-lt/ugame_root/uchip_label").getComponent(cc.Label);
-        this.round_label = this.getChildByUrl("anchor-lt/ugame_root/round_label").getComponent(cc.Label);
-        
-        this.blood = 0;
-        this.game_started = false;
-        GameDataManager.getInstance().is_game_paused = false;
-
-        this.map_root = this.getChildByUrl("map_root");
-        
-        this.checkout = this.getChildByUrl("checkout").addComponent(Checkout);
-        
-        // this.game_map = this.getChildByUrl("level1_map");
-        var map_level = GameDataManager.getInstance().get_cur_level();
-        // this.game_map = this.getChildByUrl("level1_map");
-        if (map_level >= this.game_map_set.length) {
-            map_level = this.game_map_set.length - 1;
-        }
-        this.game_map = cc.instantiate(this.game_map_set[map_level]);
-        this.node.addChild(this.game_map);
-        // this.game_map.setLocalZOrder(-100);
-        this.game_map.zIndex = -100;
-        this.map_tag_root = this.game_map.getChildByName("tag_root");
     }
     
     start_game() {
@@ -117,7 +129,8 @@ export default class GameUIControl extends UIControl {
         // 取消掉所有的塔
         for(var i = 0; i < this.map_tag_root.children.length; i ++) {
             var tower_builder = this.map_tag_root.children[i].addComponent(TowerBuilder);
-            //tower_builder.remove_builder_tower();
+            tower_builder.remove_builder_tower();
+            tower_builder.setData(i+1);
         }
         // end 
         
@@ -154,8 +167,25 @@ export default class GameUIControl extends UIControl {
         this.cur_road_index = 0; // 在非随机模式下，当前的选择路径的索引
         this.cur_gen_total = 0; // 当前这波产生的总数
         this.cur_gen_now = 0; // 当前已经放出的怪物数量
-        this.gen_round_enemy();
+        //this.gen_round_enemy();
         // end 
+    }
+
+    show_tower_builder(data) {
+        let is_builded = data.is_builded;
+        let tower_builder = data.tower_builder;
+        var s = cc.scaleTo(0.3, 1).easing(cc.easeBackOut());
+        console.log("show_tower_builder",is_builded)
+        if (is_builded === false) { // 还没有塔，所以要show builder
+            this.gui_tower_builder.show_tower_builder(tower_builder);
+            this.gui_tower_builder.node.scale = 0;
+            this.gui_tower_builder.node.runAction(s);
+        }
+        else { // 已经创建，所以要显示撤销
+            this.gui_tower_builder.show_tower_undo(tower_builder);
+            this.gui_tower_builder.node.scale = 0;
+            this.gui_tower_builder.node.runAction(s);
+        }
     }
 
     show_game_uchip() {

@@ -215,4 +215,168 @@ export default class GameDataManager extends cc.Component {
             }
         }
     }
+
+    public warlock_bullet_params = [
+        { // 等级1的子弹
+            speed: 200,
+            attack: 10,
+        },
+        
+        { // 等级2的子弹
+            speed: 200,
+            attack: 10
+        },
+        
+        { // 等级3的子弹
+            speed: 200,
+            attack: 10
+        },
+        
+        { // 等级4的子弹
+            speed: 200,
+            attack: 10
+        },
+    ]
+
+    public arrow_tower_params = [
+        {
+            search_R: 100,
+            build_chip: 100, // 造这个塔的价值
+        },
+    
+        {
+            search_R: 120,
+            build_chip: 220, // 造这个塔的价值,升级所带的消耗就是 220 - 100 = 120
+        },
+    
+        {
+            search_R: 140,
+            build_chip: 340
+        },
+        {
+            search_R: 160,
+            build_chip: 540        
+        },
+    ];
+
+    public cannon_bullet = [
+        { // 等级1的子弹
+            speed: 200,
+            attack: 10,
+            bomb_R: 30,
+        },
+        
+        { // 等级2的子弹
+            speed: 200,
+            attack: 20,
+            bomb_R: 30,
+        },
+        
+        { // 等级3的子弹
+            speed: 200,
+            attack: 30,
+            bomb_R: 30,
+        },
+        
+        { // 等级4的子弹
+            speed: 200,
+            attack: 30,
+            bomb_R: 30,
+        },
+        
+        { // 等级5的子弹
+            speed: 200,
+            attack: 10,
+            bomb_R: 30,
+        },
+    ];
+    
+    public cannon_tower_params = [
+        {
+            search_R: 100,
+            build_chip: 200, // 造这个塔的价值
+        },
+    
+        {
+            search_R: 120,
+            build_chip: 400, // 造这个塔的价值
+        },
+    
+        {
+            search_R: 140,
+            build_chip: 600, // 造这个塔的价值
+        },
+        {
+            search_R: 160,
+            build_chip: 900, // 造这个塔的价值
+        },
+    ];
+
+    public infantry_actor = [
+        { // 等级1的兵
+            speed: 50,
+            attack: 10,
+            blood: 100,
+        },
+        
+        { // 等级2的兵
+            speed: 50,
+            attack: 10,
+            blood: 100,
+        },
+        
+        { // 等级3的兵
+            speed: 50,
+            attack: 10,
+            blood: 100,
+        },
+        
+        { // 等级4的兵
+            speed: 50,
+            attack: 10,
+            blood: 100,
+        },
+    ];
+
+    public infantry_tower_params = [
+        {
+            search_R: 100,
+            build_chip: 150,
+        },
+    
+        {
+            search_R: 120,
+            build_chip: 300,
+        },
+    
+        {
+            search_R: 140,
+            build_chip: 450,
+        },
+        {
+            search_R: 160,
+            build_chip: 600,
+        },
+    ];
+
+    public warlock_tower_params = [
+        {
+            search_R: 100,
+            build_chip: 150,
+        },
+    
+        {
+            search_R: 120,
+            build_chip: 300,
+        },
+    
+        {
+            search_R: 140,
+            build_chip: 450,
+        },
+        {
+            search_R: 160,
+            build_chip: 600,
+        },
+    ];
 }
