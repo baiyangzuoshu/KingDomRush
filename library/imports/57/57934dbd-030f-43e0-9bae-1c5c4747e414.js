@@ -37,6 +37,8 @@ var ResManagerPro_1 = require("../FrameWork/manager/ResManagerPro");
 var UIManager_1 = require("../FrameWork/manager/UIManager");
 var UIManagerPro_1 = require("../FrameWork/manager/UIManagerPro");
 var GameDataManager_1 = require("./Data/GameDataManager");
+var ECSFactory_1 = require("./ECS/ECSFactory");
+var ECSManager_1 = require("./ECS/ECSManager");
 var GameApp_1 = require("./GameApp");
 var PlayerSoundManager_1 = require("./Manager/PlayerSoundManager");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
@@ -59,6 +61,8 @@ var GameLanch = /** @class */ (function (_super) {
         this.addComponent(GameApp_1.default);
         this.addComponent(GameDataManager_1.default);
         this.addComponent(PlayerSoundManager_1.default);
+        this.addComponent(ECSFactory_1.default);
+        this.addComponent(ECSManager_1.default);
     };
     GameLanch.prototype.start = function () {
         GameApp_1.default.getInstance().startGame();

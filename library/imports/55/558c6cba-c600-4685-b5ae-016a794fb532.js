@@ -49,6 +49,10 @@ var GuiTowerBuilder = /** @class */ (function (_super) {
         this.tower_builder = null;
         this.buttonAddClickEvent("gui_builder/mask", this.close_gui_builder, this);
         this.buttonAddClickEvent("gui_undo/mask", this.close_gui_builder, this);
+        this.buttonAddClickEvent("gui_builder/build_arrow_icon", this.on_build_tower_click, this);
+        this.buttonAddClickEvent("gui_builder/build_fasi_icon", this.on_build_tower_click, this);
+        this.buttonAddClickEvent("gui_builder/build_bing_icon", this.on_build_tower_click, this);
+        this.buttonAddClickEvent("gui_builder/build_zd_icon", this.on_build_tower_click, this);
     };
     GuiTowerBuilder.prototype.show_tower_builder = function (tower_buidler) {
         this.tower_builder = tower_buidler;
@@ -72,9 +76,23 @@ var GuiTowerBuilder = /** @class */ (function (_super) {
         this.node.x = tower_buidler.node.x;
         this.node.y = tower_buidler.node.y;
     };
-    GuiTowerBuilder.prototype.on_build_tower_click = function (t, tower_type) {
+    GuiTowerBuilder.prototype.on_build_tower_click = function (t) {
+        console.log("on_build_tower_click", t.name, this.tower_builder);
         if (!this.tower_builder) {
             return;
+        }
+        var tower_type = 0;
+        if ("build_arrow_icon<Button>" == t.name) {
+            tower_type = 1;
+        }
+        else if ("build_fasi_icon<Button>" == t.name) {
+            tower_type = 2;
+        }
+        else if ("build_bing_icon<Button>" == t.name) {
+            tower_type = 4;
+        }
+        else if ("build_zd_icon<Button>" == t.name) {
+            tower_type = 3;
         }
         this.tower_builder.on_tower_build_click(t, tower_type);
         this.close_gui_builder();

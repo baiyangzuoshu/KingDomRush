@@ -169,7 +169,9 @@ var RoadMapUIControl = /** @class */ (function (_super) {
         console.log("enter game_scene at level:", GameDataManager_1.default.getInstance().get_cur_level());
         // 调转到游戏场景;
         this.door.close_the_door(function () {
-            UIManagerPro_1.UIManagerPro.getInstance().showPrefab("GameUI");
+            var canvas = cc.find("Canvas");
+            var uiNode = canvas.getChildByName("uiNode");
+            UIManagerPro_1.UIManagerPro.getInstance().showPrefab(Enum_1.ViewUI.GameUI, "UI", uiNode);
         }.bind(this));
         // end 
     };

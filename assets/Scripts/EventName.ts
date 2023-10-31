@@ -4,4 +4,5 @@ export enum HomeUI{
 
 export enum GameUI{
     show_tower_builder="show_tower_builder",
+    show_game_uchip="show_game_uchip",
 }

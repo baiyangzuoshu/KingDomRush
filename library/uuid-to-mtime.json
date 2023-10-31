@@ -319,11 +319,6 @@
     "meta": 1698304118018,
     "relativePath": "AssetsPackge\\prefabs\\Game\\infantry_tower.prefab"
   },
-  "93d692b2-3376-4614-8523-d9eef0f34920": {
-    "asset": 1698663276468,
-    "meta": 1698663276473,
-    "relativePath": "AssetsPackge\\prefabs\\Map\\levelmap1.prefab"
-  },
   "70e9254f-fc38-48b8-aecb-5c7fedaf23e3": {
     "asset": 1698304568137,
     "meta": 1698304568140,
@@ -4955,8 +4950,8 @@
     "relativePath": "AssetsPackge\\prefabs\\UI\\AboutUI.prefab"
   },
   "d112fb02-2347-4b6d-9b2b-7caa91b29c07": {
-    "asset": 1698666834224,
-    "meta": 1698666834233,
+    "asset": 1698754013713,
+    "meta": 1698754013720,
     "relativePath": "AssetsPackge\\prefabs\\UI\\GameUI.prefab"
   },
   "0ca2c193-b588-4bbe-9514-b339801a1bdf": {
@@ -4970,8 +4965,8 @@
     "relativePath": "AssetsPackge\\prefabs\\UI\\RoadMapUI.prefab"
   },
   "8b32ec46-a101-4421-9dfa-5d98f4274f4a": {
-    "asset": 1698313625360,
-    "meta": 1698313625363,
+    "asset": 1698752935964,
+    "meta": 1698752935967,
     "relativePath": "Scenes\\Boot.fire"
   },
   "215ec8ad-8648-4696-8da0-fb00ce9aac28": {
@@ -4999,11 +4994,6 @@
     "meta": 1698313108167,
     "relativePath": "FrameWork\\manager\\ResManagerPro.ts"
   },
-  "a0fde79e-935a-4971-a07b-03f02532ba82": {
-    "asset": 1698313230878,
-    "meta": 1698313287130,
-    "relativePath": "FrameWork\\manager\\UIManagerPro.ts"
-  },
   "2f5196b7-2f03-4928-8462-d70e9c2c45d2": {
     "asset": 1698314118283,
     "meta": 1698314118291,
@@ -5013,11 +5003,6 @@
     "asset": 1698315849112,
     "meta": 1698315849130,
     "relativePath": "Scripts\\Manager"
-  },
-  "57934dbd-030f-43e0-9bae-1c5c4747e414": {
-    "asset": 1698315925003,
-    "meta": 1698321022062,
-    "relativePath": "Scripts\\GameLanch.ts"
   },
   "90b7345f-22ec-4167-8c18-907796439ea5": {
     "asset": 1698320561678,
@@ -5044,20 +5029,10 @@
     "meta": 1698328519079,
     "relativePath": "Scripts\\Enum.ts"
   },
-  "62a39722-88f7-4e35-9aa4-fedd33a3c3c7": {
-    "asset": 1698328266826,
-    "meta": 1698328519099,
-    "relativePath": "Scripts\\GameApp.ts"
-  },
   "caa56587-678e-45df-b3a9-f0655b721b92": {
     "asset": 1698328320020,
     "meta": 1698328519113,
     "relativePath": "Scripts\\UI\\AboutUIControl.ts"
-  },
-  "6f1e6509-d13e-4b8b-8c17-fb45c60bdb88": {
-    "asset": 1698328356573,
-    "meta": 1698328519155,
-    "relativePath": "Scripts\\UI\\HomeUIControl.ts"
   },
   "18450ca3-f499-4320-924c-7b6f33fee82e": {
     "asset": 1698330232019,
@@ -5594,34 +5569,104 @@
     "meta": 1698662203272,
     "relativePath": "model\\primitives.fbx"
   },
+  "bb39ae6c-c0c5-4fce-9433-d6a055e04501": {
+    "asset": 1698749490309,
+    "meta": 1698749570302,
+    "relativePath": "Scripts\\EventName.ts"
+  },
+  "dba06ff6-61a2-4531-9709-fca6af146229": {
+    "asset": 1698749497627,
+    "meta": 1698749570405,
+    "relativePath": "Scripts\\UI\\GameUIControl.ts"
+  },
+  "2fe3646b-6ab1-4d7d-90d8-2be23260de85": {
+    "asset": 1698749742501,
+    "meta": 1698749742502,
+    "relativePath": "Scripts\\ECS"
+  },
+  "0eb3e5b7-9a56-4f75-9ac8-ba75b0e56e17": {
+    "asset": 1698749771330,
+    "meta": 1698749771331,
+    "relativePath": "Scripts\\ECS\\Components"
+  },
+  "cac193a4-1730-4e0d-acfd-0d810780b5f7": {
+    "asset": 1698749783533,
+    "meta": 1698749783534,
+    "relativePath": "Scripts\\ECS\\Systems"
+  },
+  "e9080027-8a4b-4484-b34c-4dea2d2d1e33": {
+    "asset": 1698749790901,
+    "meta": 1698749790902,
+    "relativePath": "Scripts\\ECS\\Entities"
+  },
+  "1d01a4af-35c6-4034-be57-a733dbb060d3": {
+    "asset": 1698749999465,
+    "meta": 1698750065605,
+    "relativePath": "Scripts\\ECS\\Components\\BaseComponent.ts"
+  },
+  "92a91694-7438-4db8-ab4f-0cfdd5b8df90": {
+    "asset": 1698750024553,
+    "meta": 1698750065609,
+    "relativePath": "Scripts\\ECS\\Components\\TransformComponent.ts"
+  },
+  "57934dbd-030f-43e0-9bae-1c5c4747e414": {
+    "asset": 1698749953106,
+    "meta": 1698750065638,
+    "relativePath": "Scripts\\GameLanch.ts"
+  },
+  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
+    "asset": 1698750723652,
+    "meta": 1698750731954,
+    "relativePath": "Scripts\\ECS\\ECSManager.ts"
+  },
+  "538b1798-5026-4faf-a1b5-b6da97998c68": {
+    "asset": 1698750134831,
+    "meta": 1698750731960,
+    "relativePath": "Scripts\\ECS\\Entities\\TowerEntity.ts"
+  },
+  "a0fde79e-935a-4971-a07b-03f02532ba82": {
+    "asset": 1698750956248,
+    "meta": 1698751007393,
+    "relativePath": "FrameWork\\manager\\UIManagerPro.ts"
+  },
+  "93d692b2-3376-4614-8523-d9eef0f34920": {
+    "asset": 1698752135932,
+    "meta": 1698752142997,
+    "relativePath": "AssetsPackge\\prefabs\\Map\\levelmap1.prefab"
+  },
+  "62a39722-88f7-4e35-9aa4-fedd33a3c3c7": {
+    "asset": 1698752858835,
+    "meta": 1698752907280,
+    "relativePath": "Scripts\\GameApp.ts"
+  },
+  "6f1e6509-d13e-4b8b-8c17-fb45c60bdb88": {
+    "asset": 1698752899369,
+    "meta": 1698752907334,
+    "relativePath": "Scripts\\UI\\HomeUIControl.ts"
+  },
   "cf41d85e-99e4-40ac-a3c0-b8864270f5f9": {
-    "asset": 1698662240510,
-    "meta": 1698662457800,
+    "asset": 1698752840882,
+    "meta": 1698752907362,
     "relativePath": "Scripts\\UI\\RoadMapUIControl.ts"
   },
   "b5f791b2-04ce-4e10-8c22-e69586a6650e": {
-    "asset": 1698664258761,
-    "meta": 1698664522463,
+    "asset": 1698753675849,
+    "meta": 1698753678967,
     "relativePath": "Scripts\\Data\\GameDataManager.ts"
   },
-  "bb39ae6c-c0c5-4fce-9433-d6a055e04501": {
-    "asset": 1698665618251,
-    "meta": 1698665841724,
-    "relativePath": "Scripts\\EventName.ts"
-  },
   "4404737a-6091-4bd0-a048-9e7f9a08679e": {
-    "asset": 1698666437238,
-    "meta": 1698666456072,
+    "asset": 1698753753379,
+    "meta": 1698753764337,
     "relativePath": "Scripts\\Game\\TowerBuilder.ts"
   },
-  "dba06ff6-61a2-4531-9709-fca6af146229": {
-    "asset": 1698666515522,
-    "meta": 1698666517664,
-    "relativePath": "Scripts\\UI\\GameUIControl.ts"
-  },
   "558c6cba-c600-4685-b5ae-016a794fb532": {
-    "asset": 1698666908972,
-    "meta": 1698666915162,
+    "asset": 1698753841156,
+    "meta": 1698753844035,
     "relativePath": "Scripts\\Game\\GuiTowerBuilder.ts"
+  },
+  "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
+    "asset": 1698754229417,
+    "meta": 1698754237470,
+    "relativePath": "Scripts\\ECS\\ECSFactory.ts"
   }
 }

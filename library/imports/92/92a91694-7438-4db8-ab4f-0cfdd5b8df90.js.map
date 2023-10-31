@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets\\Scripts\\ECS\\Components\\TransformComponent.ts"],"names":[],"mappings":";;;;;;AACA;IAAA;QACW,MAAC,GAAQ,CAAC,CAAC;QACX,MAAC,GAAQ,CAAC,CAAC;IACtB,CAAC;IAAD,yBAAC;AAAD,CAHA,AAGC,IAAA","file":"","sourceRoot":"/","sourcesContent":["\nexport default class TransformComponent {\n    public x:number=0;\n    public y:number=0;\n}\n"]}

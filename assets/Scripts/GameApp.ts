@@ -26,6 +26,7 @@ export default class GameApp extends cc.Component {
         this.canvas=cc.find("Canvas")
         this.progressBar=this.canvas.getChildByName("myProgressBar").getComponent(cc.ProgressBar)
         this.progressBar.progress=0
+        this.progressBar.node.active=true
     }
 
     public static getInstance():GameApp{
@@ -36,7 +37,9 @@ export default class GameApp extends cc.Component {
     private progressBar:cc.ProgressBar=null
 
     public enterGame():void{
-        UIManagerPro.getInstance().showPrefab(ViewUI.HomeUI);
+        let canvas=cc.find("Canvas");
+        let uiNode=canvas.getChildByName("uiNode");
+        UIManagerPro.getInstance().showPrefab(ViewUI.HomeUI,"UI",uiNode);
     }
 
     public async startGame():Promise<void>{

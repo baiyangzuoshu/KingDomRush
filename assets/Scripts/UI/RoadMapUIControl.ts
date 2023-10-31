@@ -165,7 +165,9 @@ export default class RoadMapUIControl extends UIControl {
         console.log("enter game_scene at level:", GameDataManager.getInstance().get_cur_level());
         // 调转到游戏场景;
         this.door.close_the_door(function(){
-            UIManagerPro.getInstance().showPrefab("GameUI");    
+            let canvas=cc.find("Canvas");
+            let uiNode=canvas.getChildByName("uiNode");
+            UIManagerPro.getInstance().showPrefab(ViewUI.GameUI,"UI",uiNode);    
         }.bind(this));
         // end 
     }

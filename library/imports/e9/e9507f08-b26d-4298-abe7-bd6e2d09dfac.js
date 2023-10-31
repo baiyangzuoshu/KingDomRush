@@ -1,6 +1,6 @@
 "use strict";
-cc._RF.push(module, '62a39ciiPdONZqk/t0zo8PH', 'GameApp');
-// Scripts/GameApp.ts
+cc._RF.push(module, 'e95078Ism1CmKvnvW4tCd+s', 'ECSManager');
+// Scripts/ECS/ECSManager.ts
 
 "use strict";
 // Learn TypeScript:
@@ -65,75 +65,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ResManagerPro_1 = require("../FrameWork/manager/ResManagerPro");
-var UIManagerPro_1 = require("../FrameWork/manager/UIManagerPro");
-var Enum_1 = require("./Enum");
+var ECSFactory_1 = require("./ECSFactory");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
-var GameApp = /** @class */ (function (_super) {
-    __extends(GameApp, _super);
-    function GameApp() {
+var ECSManager = /** @class */ (function (_super) {
+    __extends(ECSManager, _super);
+    function ECSManager() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.canvas = null;
-        _this.progressBar = null;
+        _this.towerEntityList = [];
         return _this;
-        // update (dt) {}
     }
-    GameApp_1 = GameApp;
-    GameApp.prototype.onLoad = function () {
-        if (null === GameApp_1._instance) {
-            GameApp_1._instance = this;
+    ECSManager_1 = ECSManager;
+    ECSManager.prototype.onLoad = function () {
+        if (null === ECSManager_1._instance) {
+            ECSManager_1._instance = this;
         }
         else {
             this.destroy();
             return;
         }
-        this.canvas = cc.find("Canvas");
-        this.progressBar = this.canvas.getChildByName("myProgressBar").getComponent(cc.ProgressBar);
-        this.progressBar.progress = 0;
-        this.progressBar.node.active = true;
     };
-    GameApp.getInstance = function () {
-        return GameApp_1._instance;
+    ECSManager.getInstance = function () {
+        return ECSManager_1._instance;
     };
-    GameApp.prototype.enterGame = function () {
-        var canvas = cc.find("Canvas");
-        var uiNode = canvas.getChildByName("uiNode");
-        UIManagerPro_1.UIManagerPro.getInstance().showPrefab(Enum_1.ViewUI.HomeUI, "UI", uiNode);
-    };
-    GameApp.prototype.startGame = function () {
-        return __awaiter(this, void 0, Promise, function () {
+    ECSManager.prototype.createTowerEntity = function (tower_type, world_pos) {
+        return __awaiter(this, void 0, void 0, function () {
+            var entity;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        //加载资源
-                        this.progressBar.progress = 0.1;
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_LoadBundleAndAllAssets("prefabs", cc.Prefab)];
+                    case 0: return [4 /*yield*/, ECSFactory_1.default.getInstance().createTowerEntity(tower_type, world_pos)];
                     case 1:
-                        _a.sent();
-                        this.progressBar.progress = 0.5;
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_LoadBundleAndAllAssets("Sounds", cc.AudioClip)];
-                    case 2:
-                        _a.sent();
-                        this.progressBar.progress = 0.8;
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_LoadBundleAndAllAssets("textures", cc.SpriteFrame)];
-                    case 3:
-                        _a.sent();
-                        this.progressBar.progress = 1;
-                        this.enterGame();
+                        entity = _a.sent();
+                        this.towerEntityList.push(entity);
                         return [2 /*return*/];
                 }
             });
         });
     };
-    GameApp.prototype.start = function () {
+    ECSManager.prototype.update = function (dt) {
     };
-    var GameApp_1;
-    GameApp._instance = null;
-    GameApp = GameApp_1 = __decorate([
+    var ECSManager_1;
+    ECSManager._instance = null;
+    ECSManager = ECSManager_1 = __decorate([
         ccclass
-    ], GameApp);
-    return GameApp;
+    ], ECSManager);
+    return ECSManager;
 }(cc.Component));
-exports.default = GameApp;
+exports.default = ECSManager;
 
 cc._RF.pop();

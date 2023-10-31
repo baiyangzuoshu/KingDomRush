@@ -235,8 +235,9 @@ var HomeUIControl = /** @class */ (function (_super) {
         //sound_manager.play_effect("resources/sounds/click.wav");
         this.loading_door.close_the_door(function () {
             this.scheduleOnce(function () {
-                //cc.director.loadScene("abount_scene");  
-                UIManagerPro_1.UIManagerPro.getInstance().showPrefab(Enum_1.ViewUI.AboutUI);
+                var canvas = cc.find("Canvas");
+                var uiNode = canvas.getChildByName("uiNode");
+                UIManagerPro_1.UIManagerPro.getInstance().showPrefab(Enum_1.ViewUI.AboutUI, "UI", uiNode);
             }, 0.5);
         }.bind(this));
     };
@@ -261,8 +262,9 @@ var HomeUIControl = /** @class */ (function (_super) {
         //sound_manager.play_effect("resources/sounds/click.wav");
         this.loading_door.close_the_door(function () {
             this.scheduleOnce(function () {
-                //cc.director.loadScene("roadmap_scene"); 
-                UIManagerPro_1.UIManagerPro.getInstance().showPrefab(Enum_1.ViewUI.RoadMapUI);
+                var canvas = cc.find("Canvas");
+                var uiNode = canvas.getChildByName("uiNode");
+                UIManagerPro_1.UIManagerPro.getInstance().showPrefab(Enum_1.ViewUI.RoadMapUI, "UI", uiNode);
             }, 0.5);
         }.bind(this));
     };

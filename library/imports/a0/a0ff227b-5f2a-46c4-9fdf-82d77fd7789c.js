@@ -1,6 +1,6 @@
 "use strict";
-cc._RF.push(module, '62a39ciiPdONZqk/t0zo8PH', 'GameApp');
-// Scripts/GameApp.ts
+cc._RF.push(module, 'a0ff2J7XypGxJ/fgtd/13ic', 'ECSFactory');
+// Scripts/ECS/ECSFactory.ts
 
 "use strict";
 // Learn TypeScript:
@@ -65,75 +65,87 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ResManagerPro_1 = require("../FrameWork/manager/ResManagerPro");
-var UIManagerPro_1 = require("../FrameWork/manager/UIManagerPro");
-var Enum_1 = require("./Enum");
+var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
+var TowerEntity_1 = require("./Entities/TowerEntity");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
-var GameApp = /** @class */ (function (_super) {
-    __extends(GameApp, _super);
-    function GameApp() {
+var ECSFactory = /** @class */ (function (_super) {
+    __extends(ECSFactory, _super);
+    function ECSFactory() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.canvas = null;
-        _this.progressBar = null;
+        _this.towerNode = null;
         return _this;
-        // update (dt) {}
     }
-    GameApp_1 = GameApp;
-    GameApp.prototype.onLoad = function () {
-        if (null === GameApp_1._instance) {
-            GameApp_1._instance = this;
+    ECSFactory_1 = ECSFactory;
+    ECSFactory.prototype.onLoad = function () {
+        if (null === ECSFactory_1._instance) {
+            ECSFactory_1._instance = this;
         }
         else {
             this.destroy();
             return;
         }
-        this.canvas = cc.find("Canvas");
-        this.progressBar = this.canvas.getChildByName("myProgressBar").getComponent(cc.ProgressBar);
-        this.progressBar.progress = 0;
-        this.progressBar.node.active = true;
-    };
-    GameApp.getInstance = function () {
-        return GameApp_1._instance;
-    };
-    GameApp.prototype.enterGame = function () {
         var canvas = cc.find("Canvas");
-        var uiNode = canvas.getChildByName("uiNode");
-        UIManagerPro_1.UIManagerPro.getInstance().showPrefab(Enum_1.ViewUI.HomeUI, "UI", uiNode);
+        this.towerNode = canvas.getChildByName("towerNode");
     };
-    GameApp.prototype.startGame = function () {
+    ECSFactory.getInstance = function () {
+        return ECSFactory_1._instance;
+    };
+    ECSFactory.prototype.createTowerEntity = function (tower_type, world_pos) {
         return __awaiter(this, void 0, Promise, function () {
+            var entity, prefab, builded_tower, center_pos;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        //加载资源
-                        this.progressBar.progress = 0.1;
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_LoadBundleAndAllAssets("prefabs", cc.Prefab)];
+                        console.log("createTowerEntity", tower_type, world_pos);
+                        entity = new TowerEntity_1.default();
+                        prefab = null;
+                        if (!(1 == tower_type)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/arrow_tower", cc.Prefab)];
                     case 1:
-                        _a.sent();
-                        this.progressBar.progress = 0.5;
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_LoadBundleAndAllAssets("Sounds", cc.AudioClip)];
+                        prefab = (_a.sent());
+                        return [3 /*break*/, 8];
                     case 2:
-                        _a.sent();
-                        this.progressBar.progress = 0.8;
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_LoadBundleAndAllAssets("textures", cc.SpriteFrame)];
+                        if (!(2 == tower_type)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/warlock_tower", cc.Prefab)];
                     case 3:
-                        _a.sent();
-                        this.progressBar.progress = 1;
-                        this.enterGame();
-                        return [2 /*return*/];
+                        prefab = (_a.sent());
+                        return [3 /*break*/, 8];
+                    case 4:
+                        if (!(3 == tower_type)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/cannon_tower", cc.Prefab)];
+                    case 5:
+                        prefab = (_a.sent());
+                        return [3 /*break*/, 8];
+                    case 6:
+                        if (!(4 == tower_type)) return [3 /*break*/, 8];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/infantry_tower", cc.Prefab)];
+                    case 7:
+                        prefab = (_a.sent());
+                        _a.label = 8;
+                    case 8:
+                        builded_tower = cc.instantiate(prefab);
+                        this.towerNode.addChild(builded_tower);
+                        center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
+                        console.log(center_pos);
+                        builded_tower.setPosition(center_pos);
+                        builded_tower.active = true;
+                        entity.baseComponent.entityID = ECSFactory_1.entityID++;
+                        entity.baseComponent.gameObject = builded_tower;
+                        entity.transformComponent.x = center_pos.x;
+                        entity.transformComponent.y = center_pos.y;
+                        return [2 /*return*/, entity];
                 }
             });
         });
     };
-    GameApp.prototype.start = function () {
-    };
-    var GameApp_1;
-    GameApp._instance = null;
-    GameApp = GameApp_1 = __decorate([
+    var ECSFactory_1;
+    ECSFactory._instance = null;
+    ECSFactory.entityID = 0;
+    ECSFactory = ECSFactory_1 = __decorate([
         ccclass
-    ], GameApp);
-    return GameApp;
+    ], ECSFactory);
+    return ECSFactory;
 }(cc.Component));
-exports.default = GameApp;
+exports.default = ECSFactory;
 
 cc._RF.pop();

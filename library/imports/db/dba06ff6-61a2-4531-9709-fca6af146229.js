@@ -147,6 +147,7 @@ var GameUIControl = /** @class */ (function (_super) {
                         this.game_map.zIndex = -100;
                         this.map_tag_root = this.game_map.getChildByName("tag_root");
                         EventManager_1.EventManager.getInstance().addEventListener(EventName_1.GameUI.show_tower_builder, this.show_tower_builder, this);
+                        EventManager_1.EventManager.getInstance().addEventListener(EventName_1.GameUI.show_game_uchip, this.show_game_uchip, this);
                         return [2 /*return*/];
                 }
             });
@@ -154,6 +155,7 @@ var GameUIControl = /** @class */ (function (_super) {
     };
     GameUIControl.prototype.onDestroy = function () {
         EventManager_1.EventManager.getInstance().removeEventListener(EventName_1.GameUI.show_tower_builder, this.show_tower_builder, this);
+        EventManager_1.EventManager.getInstance().removeEventListener(EventName_1.GameUI.show_game_uchip, this.show_game_uchip, this);
     };
     GameUIControl.prototype.loadData = function () {
         return __awaiter(this, void 0, void 0, function () {

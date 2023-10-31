@@ -129,7 +129,7 @@ var UIManagerPro = /** @class */ (function (_super) {
             });
         });
     };
-    UIManagerPro.prototype.showPrefab = function (uiName, bundleName) {
+    UIManagerPro.prototype.showPrefab = function (uiName, bundleName, parent) {
         if (bundleName === void 0) { bundleName = "UI"; }
         return __awaiter(this, void 0, Promise, function () {
             var prefab_1, panel, prefab, node, ts;
@@ -151,9 +151,10 @@ var UIManagerPro = /** @class */ (function (_super) {
                         panel.opening = true;
                         panel.open = false;
                         panel.closeTime = 0;
+                        parent = parent ? parent : this._canvas;
                         prefab = panel.prefab;
                         node = cc.instantiate(prefab);
-                        node.parent = this._canvas;
+                        node.parent = parent;
                         node.setSiblingIndex(this._localZOrder++);
                         panel.self = node;
                         ts = node.addComponent(prefab.data.name + "Control");

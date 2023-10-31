@@ -86,10 +86,12 @@ export default class GameUIControl extends UIControl {
         this.map_tag_root = this.game_map.getChildByName("tag_root");
 
         EventManager.getInstance().addEventListener(GameUI.show_tower_builder, this.show_tower_builder, this);
+        EventManager.getInstance().addEventListener(GameUI.show_game_uchip, this.show_game_uchip, this);
     }
 
     protected onDestroy(): void {
         EventManager.getInstance().removeEventListener(GameUI.show_tower_builder, this.show_tower_builder, this);
+        EventManager.getInstance().removeEventListener(GameUI.show_game_uchip, this.show_game_uchip, this);
     }
 
     async loadData(){

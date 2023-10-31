@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets\\Scripts\\ECS\\Components\\BaseComponent.ts"],"names":[],"mappings":";;;;;;AACA;IAAA;QACW,eAAU,GAAS,IAAI,CAAC;QACxB,aAAQ,GAAQ,CAAC,CAAC;IAE7B,CAAC;IAAD,oBAAC;AAAD,CAJA,AAIC,IAAA","file":"","sourceRoot":"/","sourcesContent":["\nexport default class BaseComponent {\n    public gameObject:cc.Node=null;\n    public entityID:number=0;\n    \n}\n"]}

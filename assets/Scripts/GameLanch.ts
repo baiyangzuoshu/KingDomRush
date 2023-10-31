@@ -13,6 +13,8 @@ import { ResManagerPro } from "../FrameWork/manager/ResManagerPro";
 import { UIManager } from "../FrameWork/manager/UIManager";
 import { UIManagerPro } from "../FrameWork/manager/UIManagerPro";
 import GameDataManager from "./Data/GameDataManager";
+import ECSFactory from "./ECS/ECSFactory";
+import ECSManager from "./ECS/ECSManager";
 import GameApp from "./GameApp";
 import PlayerSoundManager from "./Manager/PlayerSoundManager";
 
@@ -36,6 +38,8 @@ export default class GameLanch extends cc.Component {
          this.addComponent(GameApp)
          this.addComponent(GameDataManager)
          this.addComponent(PlayerSoundManager)
+         this.addComponent(ECSFactory)
+         this.addComponent(ECSManager)
     }
 
     start () {

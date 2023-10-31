@@ -55,7 +55,7 @@ export class UIManagerPro extends cc.Component {
         return prefab
     }
 
-    public async showPrefab(uiName:string,bundleName="UI"):Promise<any>{
+    public async showPrefab(uiName:string,bundleName="UI",parent?:any):Promise<any>{
         if(!this._allShowPanel[uiName]){
             this._allShowPanel[uiName]=new Panel()
 
@@ -72,9 +72,11 @@ export class UIManagerPro extends cc.Component {
         panel.open=false
         panel.closeTime=0
 
+        parent=parent? parent:this._canvas
+
         let prefab=panel.prefab as cc.Prefab
         let node=cc.instantiate(prefab)
-        node.parent=this._canvas as any
+        node.parent=parent
         node.setSiblingIndex(this._localZOrder++)
         
         panel.self=node

@@ -12,6 +12,7 @@ var HomeUI;
 var GameUI;
 (function (GameUI) {
     GameUI["show_tower_builder"] = "show_tower_builder";
+    GameUI["show_game_uchip"] = "show_game_uchip";
 })(GameUI = exports.GameUI || (exports.GameUI = {}));
 
 cc._RF.pop();

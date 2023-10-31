@@ -172,8 +172,9 @@ export default class HomeUIControl extends UIControl {
         
         this.loading_door.close_the_door(function() {
             this.scheduleOnce(function() {
-                //cc.director.loadScene("abount_scene");  
-                UIManagerPro.getInstance().showPrefab(ViewUI.AboutUI);  
+                let canvas=cc.find("Canvas");
+                let uiNode=canvas.getChildByName("uiNode");  
+                UIManagerPro.getInstance().showPrefab(ViewUI.AboutUI,"UI",uiNode);  
             }, 0.5);
         }.bind(this));
     }
@@ -200,8 +201,9 @@ export default class HomeUIControl extends UIControl {
         
         this.loading_door.close_the_door(function() {
             this.scheduleOnce(function() {
-                //cc.director.loadScene("roadmap_scene"); 
-                UIManagerPro.getInstance().showPrefab(ViewUI.RoadMapUI);   
+                let canvas=cc.find("Canvas");
+                let uiNode=canvas.getChildByName("uiNode"); 
+                UIManagerPro.getInstance().showPrefab(ViewUI.RoadMapUI,"UI",uiNode);   
             }, 0.5);
         }.bind(this));
     }

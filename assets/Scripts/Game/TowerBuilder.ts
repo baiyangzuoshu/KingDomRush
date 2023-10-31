@@ -6,8 +6,10 @@
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
 import { EventManager } from "../../FrameWork/manager/EventManager";
+import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
 import { UIControl } from "../../FrameWork/ui/UIControl";
 import GameDataManager from "../Data/GameDataManager";
+import ECSManager from "../ECS/ECSManager";
 import { GameUI } from "../EventName";
 import GuiTowerBuilder from "./GuiTowerBuilder";
 
@@ -28,7 +30,7 @@ export default class TowerBuilder extends UIControl {
     index:number=0;
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    async onLoad () {
         super.onLoad();
 
         this.tower_offset.push(cc.v2(-8,-4));
@@ -36,13 +38,20 @@ export default class TowerBuilder extends UIControl {
         this.tower_offset.push(cc.v2(-1,8));
         this.tower_offset.push(cc.v2(-5,7));
        
+        let arrow_tower=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/arrow_tower",cc.Prefab) as cc.Prefab;
+        let cannon_tower=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/cannon_tower",cc.Prefab) as cc.Prefab;
+        let infantry_tower=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/infantry_tower",cc.Prefab) as cc.Prefab;
+        let warlock_tower=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/warlock_tower",cc.Prefab) as cc.Prefab;
+        this.tower_prefabs.push(arrow_tower);
+        this.tower_prefabs.push(cannon_tower);
+        this.tower_prefabs.push(infantry_tower);
+        this.tower_prefabs.push(warlock_tower);
         
         this.icon = this.node.getChildByName("icon");
         
         this.tower_type = 0;
         this.builded_tower = null;
         this.is_builded = false;
-        //this.map_root = cc.find("GameUI/map_root");
 
         // 四种塔索对应的参数
         this.tower_params = [null, null, null, null];
@@ -101,7 +110,8 @@ export default class TowerBuilder extends UIControl {
         var tower_level = tower_com.get_tower_level();
         var undo_chip = this.tower_params[this.tower_type - 1][tower_level - 1].build_chip;
         GameDataManager.getInstance().add_chip(undo_chip);
-        this.game_scene.show_game_uchip();
+        
+        EventManager.getInstance().emit(GameUI.show_game_uchip);
         // end 
 
         this.builded_tower.removeFromParent();
@@ -112,14 +122,15 @@ export default class TowerBuilder extends UIControl {
     }
     
     // 1, 弓箭, 2, 法师, 3,炮塔, 4兵塔
-    on_tower_build_click(t, tower_type) {
-        tower_type = parseInt(tower_type);
-        
+    async on_tower_build_click(t, tower_type) {   
+        tower_type = parseInt(tower_type);     
         if (tower_type <= 0 || this.tower_type > 4) {
+            console.log(tower_type, this.tower_type);
             return;
         }
         
         if (!this.check_uchip_when_build(tower_type, 1)) {
+            console.log("uchip is not enough");
             return;
         }
         
@@ -127,22 +138,24 @@ export default class TowerBuilder extends UIControl {
         this.icon.active = false;
         
         // 造一个塔
-        this.builded_tower = cc.instantiate(this.tower_prefabs[tower_type - 1]);
-        this.map_root.addChild(this.builded_tower);
+        // this.builded_tower = cc.instantiate(this.tower_prefabs[tower_type - 1]);
+        // this.node.addChild(this.builded_tower);
         
-        var center_pos = this.node.getPosition();
-        center_pos.x  += this.tower_offset[tower_type - 1].x;
-        center_pos.y  += this.tower_offset[tower_type - 1].y;
+        // var center_pos = this.node.getPosition();
+        // center_pos.x  += this.tower_offset[tower_type - 1].x;
+        // center_pos.y  += this.tower_offset[tower_type - 1].y;
         
-        this.builded_tower.setPosition(center_pos);
-        this.builded_tower.active = true;
+        // this.builded_tower.setPosition(center_pos);
+        // this.builded_tower.active = true;
+        let world_pos=this.node.convertToWorldSpaceAR(cc.v2(0,0));
+        await ECSManager.getInstance().createTowerEntity(tower_type,world_pos);
         this.is_builded = true;
         // end 
         
         // 消耗你的金币
         var build_chip = this.tower_params[tower_type - 1][0].build_chip;
         GameDataManager.getInstance().add_chip(-build_chip);
-        this.game_scene.show_game_uchip();
+        EventManager.getInstance().emit(GameUI.show_game_uchip);
         // end 
     }
     
@@ -196,7 +209,7 @@ export default class TowerBuilder extends UIControl {
 
         // 消耗金币
         GameDataManager.getInstance().add_chip(-upgrade_chip);
-        this.game_scene.show_game_uchip();
+        EventManager.getInstance().emit(GameUI.show_game_uchip);
         // end 
     }
 }

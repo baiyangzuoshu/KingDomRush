@@ -11657,7 +11657,7 @@
         "__id__": 310
       }
     ],
-    "_N$interactable": false,
+    "_N$interactable": true,
     "_N$enableAutoGrayEffect": true,
     "_N$transition": 0,
     "transition": 0,
