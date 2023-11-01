@@ -69,8 +69,10 @@ var EventManager_1 = require("../../FrameWork/manager/EventManager");
 var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
 var UIControl_1 = require("../../FrameWork/ui/UIControl");
 var GameDataManager_1 = require("../Data/GameDataManager");
+var ECSManager_1 = require("../ECS/ECSManager");
 var EventName_1 = require("../EventName");
 var Checkout_1 = require("../Game/Checkout");
+var GenMapPath_1 = require("../Game/GenMapPath");
 var GuiTowerBuilder_1 = require("../Game/GuiTowerBuilder");
 var TowerBuilder_1 = require("../Game/TowerBuilder");
 var LoadingDoor_1 = require("../Tools/LoadingDoor");
@@ -143,6 +145,7 @@ var GameUIControl = /** @class */ (function (_super) {
                             map_level = this.game_map_set.length - 1;
                         }
                         this.game_map = cc.instantiate(this.game_map_set[map_level]);
+                        this.game_map.addComponent(GenMapPath_1.default);
                         this.node.addChild(this.game_map);
                         this.game_map.zIndex = -100;
                         this.map_tag_root = this.game_map.getChildByName("tag_root");
@@ -159,7 +162,7 @@ var GameUIControl = /** @class */ (function (_super) {
     };
     GameUIControl.prototype.loadData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var i, mapPrefab, ememy1, ememy2, ememy3, ememy4, ememy5, ememy6, ememy7;
+            var i, mapPrefab;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -175,35 +178,7 @@ var GameUIControl = /** @class */ (function (_super) {
                     case 3:
                         i++;
                         return [3 /*break*/, 1];
-                    case 4: return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_bear", cc.Prefab)];
-                    case 5:
-                        ememy1 = _a.sent();
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_forkman", cc.Prefab)];
-                    case 6:
-                        ememy2 = _a.sent();
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_small1", cc.Prefab)];
-                    case 7:
-                        ememy3 = _a.sent();
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_gorilla", cc.Prefab)];
-                    case 8:
-                        ememy4 = _a.sent();
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_small2", cc.Prefab)];
-                    case 9:
-                        ememy5 = _a.sent();
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_carry", cc.Prefab)];
-                    case 10:
-                        ememy6 = _a.sent();
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_small3", cc.Prefab)];
-                    case 11:
-                        ememy7 = _a.sent();
-                        this.enemy_prefabs.push(ememy1);
-                        this.enemy_prefabs.push(ememy2);
-                        this.enemy_prefabs.push(ememy3);
-                        this.enemy_prefabs.push(ememy4);
-                        this.enemy_prefabs.push(ememy5);
-                        this.enemy_prefabs.push(ememy6);
-                        this.enemy_prefabs.push(ememy7);
-                        return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -247,14 +222,14 @@ var GameUIControl = /** @class */ (function (_super) {
             map_level = this.game_map_set.length - 1;
         }
         console.log("map_level #####", map_level, this.map_level);
-        this.level_data = []; //require("level" + (map_level + 1));
+        this.level_data = GameDataManager_1.default.getInstance()["level_data" + (map_level + 1)]; //require("level" + (map_level + 1));
         // this.level_data = require("level1");
         this.round_label.string = "round 0 / " + this.level_data.length;
         this.cur_round = 0; // 当前要产生的是第几波敌人
         this.cur_road_index = 0; // 在非随机模式下，当前的选择路径的索引
         this.cur_gen_total = 0; // 当前这波产生的总数
         this.cur_gen_now = 0; // 当前已经放出的怪物数量
-        //this.gen_round_enemy();
+        this.gen_round_enemy();
         // end 
     };
     GameUIControl.prototype.show_tower_builder = function (data) {
@@ -300,58 +275,69 @@ var GameUIControl = /** @class */ (function (_super) {
         this.blood_label.string = "" + this.blood; // 更新当前的血量
     };
     GameUIControl.prototype.gen_one_enemy = function () {
-        if (this.game_started === false) {
-            return;
-        }
-        if (GameDataManager_1.default.getInstance().is_game_paused) {
-            this.scheduleOnce(this.gen_one_enemy.bind(this), this.cur_schedule_time);
-            return;
-        }
-        var cur_round_params = this.level_data[this.cur_round];
-        var type = cur_round_params.type[this.cur_gen_now];
-        var road_set = cur_round_params.road_set;
-        var map_road_set = GameDataManager_1.default.getInstance().get_map_road_set();
-        var enemy = cc.instantiate(this.enemy_prefabs[type]);
-        enemy.active = true;
-        this.map_root.addChild(enemy);
-        GameDataManager_1.default.getInstance().add_ememy(enemy);
-        var actor = enemy.getComponent("actor");
-        var index = 0; // 跑的地图路径的索引
-        if (cur_round_params.random_road) {
-            var random_index = Math.random() * road_set.length; // [0, road_set.length]
-            random_index = Math.floor(random_index);
-            if (random_index >= road_set.length) {
-                random_index = road_set.length - 1;
-            }
-            index = road_set[random_index];
-        }
-        else {
-            index = this.cur_road_index;
-            this.cur_road_index++;
-            if (this.cur_road_index > road_set.length) {
-                this.cur_road_index = 0;
-            }
-            index = road_set[index];
-        }
-        if (index >= map_road_set.length) {
-            index = 0;
-        }
-        var road_data = map_road_set[index];
-        actor.set_actor_params(cur_round_params.actor_params);
-        actor.gen_at_road(road_data);
-        if (this.cur_gen_now === 0) {
-            this.round_label.string = "round " + (this.cur_round + 1) + " / " + this.level_data.length;
-        }
-        this.cur_gen_now++;
-        if (this.cur_gen_now == this.cur_gen_total) { // 放下一波敌人
-            this.cur_round++;
-            this.gen_round_enemy();
-        }
-        else {
-            var time = cur_round_params.gen_time_set[this.cur_gen_now];
-            this.cur_schedule_time = time;
-            this.scheduleOnce(this.gen_one_enemy.bind(this), time);
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var cur_round_params, type, road_set, map_road_set, index, random_index, road_data, time;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (this.game_started === false) {
+                            return [2 /*return*/];
+                        }
+                        if (GameDataManager_1.default.getInstance().is_game_paused) {
+                            this.scheduleOnce(this.gen_one_enemy.bind(this), this.cur_schedule_time);
+                            return [2 /*return*/];
+                        }
+                        cur_round_params = this.level_data[this.cur_round];
+                        type = cur_round_params.type[this.cur_gen_now];
+                        road_set = cur_round_params.road_set;
+                        map_road_set = GameDataManager_1.default.getInstance().get_map_road_set();
+                        index = 0;
+                        if (cur_round_params.random_road) {
+                            random_index = Math.random() * road_set.length;
+                            random_index = Math.floor(random_index);
+                            if (random_index >= road_set.length) {
+                                random_index = road_set.length - 1;
+                            }
+                            index = road_set[random_index];
+                        }
+                        else {
+                            index = this.cur_road_index;
+                            this.cur_road_index++;
+                            if (this.cur_road_index > road_set.length) {
+                                this.cur_road_index = 0;
+                            }
+                            index = road_set[index];
+                        }
+                        if (index >= map_road_set.length) {
+                            index = 0;
+                        }
+                        road_data = map_road_set[index];
+                        //actor.set_actor_params(cur_round_params.actor_params);
+                        //actor.gen_at_road(road_data);
+                        // 生成敌人
+                        return [4 /*yield*/, ECSManager_1.default.getInstance().createEnemyEntity(type, road_data, cur_round_params.actor_params)];
+                    case 1:
+                        //actor.set_actor_params(cur_round_params.actor_params);
+                        //actor.gen_at_road(road_data);
+                        // 生成敌人
+                        _a.sent();
+                        if (this.cur_gen_now === 0) {
+                            this.round_label.string = "round " + (this.cur_round + 1) + " / " + this.level_data.length;
+                        }
+                        this.cur_gen_now++;
+                        if (this.cur_gen_now == this.cur_gen_total) { // 放下一波敌人
+                            this.cur_round++;
+                            this.gen_round_enemy();
+                        }
+                        else {
+                            time = cur_round_params.gen_time_set[this.cur_gen_now];
+                            this.cur_schedule_time = time;
+                            this.scheduleOnce(this.gen_one_enemy.bind(this), time);
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     GameUIControl.prototype.think_level_pass = function () {
         if (this.game_started === false ||

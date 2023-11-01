@@ -64,7 +64,7 @@ export default class GuiTowerBuilder extends UIControl {
     }
     
     on_build_tower_click(t:cc.Button) {
-        console.log("on_build_tower_click",t.name,this.tower_builder)
+        //console.log("on_build_tower_click",t.name,this.tower_builder)
         if (!this.tower_builder) {
             return;
         }

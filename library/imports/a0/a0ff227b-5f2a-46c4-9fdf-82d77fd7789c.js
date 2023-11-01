@@ -66,6 +66,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
+var Enum_1 = require("../Enum");
+var EnemyEntity_1 = require("./Entities/EnemyEntity");
 var TowerEntity_1 = require("./Entities/TowerEntity");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var ECSFactory = /** @class */ (function (_super) {
@@ -73,6 +75,7 @@ var ECSFactory = /** @class */ (function (_super) {
     function ECSFactory() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.towerNode = null;
+        _this.enemyNode = null;
         return _this;
     }
     ECSFactory_1 = ECSFactory;
@@ -86,9 +89,82 @@ var ECSFactory = /** @class */ (function (_super) {
         }
         var canvas = cc.find("Canvas");
         this.towerNode = canvas.getChildByName("towerNode");
+        this.enemyNode = canvas.getChildByName("enemyNode");
     };
     ECSFactory.getInstance = function () {
         return ECSFactory_1._instance;
+    };
+    ECSFactory.prototype.createEnemyEntity = function (enemy_type, road_data, actor_params) {
+        return __awaiter(this, void 0, Promise, function () {
+            var entity, enemy_prefab, enemy;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        entity = new EnemyEntity_1.default();
+                        enemy_prefab = null;
+                        if (!(Enum_1.Enemy.Bear == enemy_type)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_bear", cc.Prefab)];
+                    case 1:
+                        enemy_prefab = (_a.sent());
+                        return [3 /*break*/, 14];
+                    case 2:
+                        if (!(Enum_1.Enemy.Forkman == enemy_type)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_forkman", cc.Prefab)];
+                    case 3:
+                        enemy_prefab = (_a.sent());
+                        return [3 /*break*/, 14];
+                    case 4:
+                        if (!(Enum_1.Enemy.Small1 == enemy_type)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_small1", cc.Prefab)];
+                    case 5:
+                        enemy_prefab = (_a.sent());
+                        return [3 /*break*/, 14];
+                    case 6:
+                        if (!(Enum_1.Enemy.Gorilla == enemy_type)) return [3 /*break*/, 8];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_gorilla", cc.Prefab)];
+                    case 7:
+                        enemy_prefab = (_a.sent());
+                        return [3 /*break*/, 14];
+                    case 8:
+                        if (!(Enum_1.Enemy.Small2 == enemy_type)) return [3 /*break*/, 10];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_small2", cc.Prefab)];
+                    case 9:
+                        enemy_prefab = (_a.sent());
+                        return [3 /*break*/, 14];
+                    case 10:
+                        if (!(Enum_1.Enemy.Carry == enemy_type)) return [3 /*break*/, 12];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_carry", cc.Prefab)];
+                    case 11:
+                        enemy_prefab = (_a.sent());
+                        return [3 /*break*/, 14];
+                    case 12:
+                        if (!(Enum_1.Enemy.Small3 == enemy_type)) return [3 /*break*/, 14];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Enemy/ememy_small3", cc.Prefab)];
+                    case 13:
+                        enemy_prefab = (_a.sent());
+                        _a.label = 14;
+                    case 14:
+                        enemy = cc.instantiate(enemy_prefab);
+                        enemy.active = true;
+                        this.enemyNode.addChild(enemy);
+                        enemy.setPosition(cc.v2(road_data[0].x, road_data[0].y));
+                        entity.navComponent.path = road_data;
+                        entity.navComponent.curTime = 0;
+                        entity.navComponent.curIndex = 0;
+                        entity.navComponent.speed = actor_params.speed;
+                        entity.transformComponent.x = road_data[0].x;
+                        entity.transformComponent.y = road_data[0].y;
+                        entity.baseComponent.entityID = ECSFactory_1.entityID++;
+                        entity.baseComponent.gameObject = enemy;
+                        entity.unitComponent.speed = actor_params.speed;
+                        entity.unitComponent.attack = actor_params.attack;
+                        entity.unitComponent.health = actor_params.health;
+                        entity.unitComponent.player_hurt = actor_params.player_hurt;
+                        entity.unitComponent.bonues_chip = actor_params.bonues_chip;
+                        return [2 /*return*/, entity];
+                }
+            });
+        });
     };
     ECSFactory.prototype.createTowerEntity = function (tower_type, world_pos) {
         return __awaiter(this, void 0, Promise, function () {
@@ -96,7 +172,6 @@ var ECSFactory = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("createTowerEntity", tower_type, world_pos);
                         entity = new TowerEntity_1.default();
                         prefab = null;
                         if (!(1 == tower_type)) return [3 /*break*/, 2];
@@ -126,7 +201,6 @@ var ECSFactory = /** @class */ (function (_super) {
                         builded_tower = cc.instantiate(prefab);
                         this.towerNode.addChild(builded_tower);
                         center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
-                        console.log(center_pos);
                         builded_tower.setPosition(center_pos);
                         builded_tower.active = true;
                         entity.baseComponent.entityID = ECSFactory_1.entityID++;

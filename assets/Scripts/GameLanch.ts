@@ -15,6 +15,7 @@ import { UIManagerPro } from "../FrameWork/manager/UIManagerPro";
 import GameDataManager from "./Data/GameDataManager";
 import ECSFactory from "./ECS/ECSFactory";
 import ECSManager from "./ECS/ECSManager";
+import NavSystem from "./ECS/Systems/NavSystem";
 import GameApp from "./GameApp";
 import PlayerSoundManager from "./Manager/PlayerSoundManager";
 
@@ -40,6 +41,7 @@ export default class GameLanch extends cc.Component {
          this.addComponent(PlayerSoundManager)
          this.addComponent(ECSFactory)
          this.addComponent(ECSManager)
+         this.addComponent(NavSystem)
     }
 
     start () {

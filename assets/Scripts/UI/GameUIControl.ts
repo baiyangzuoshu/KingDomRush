@@ -9,8 +9,10 @@ import { EventManager } from "../../FrameWork/manager/EventManager";
 import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
 import { UIControl } from "../../FrameWork/ui/UIControl";
 import GameDataManager from "../Data/GameDataManager";
+import ECSManager from "../ECS/ECSManager";
 import { GameUI } from "../EventName";
 import Checkout from "../Game/Checkout";
+import GenMapPath from "../Game/GenMapPath";
 import GuiTowerBuilder from "../Game/GuiTowerBuilder";
 import TowerBuilder from "../Game/TowerBuilder";
 import LoadingDoor from "../Tools/LoadingDoor";
@@ -80,6 +82,7 @@ export default class GameUIControl extends UIControl {
             map_level = this.game_map_set.length - 1;
         }
         this.game_map = cc.instantiate(this.game_map_set[map_level]);
+        this.game_map.addComponent(GenMapPath);
         this.node.addChild(this.game_map);
         this.game_map.zIndex = -100;
 
@@ -99,20 +102,7 @@ export default class GameUIControl extends UIControl {
             let mapPrefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Map/levelmap"+i,cc.Prefab) as cc.Prefab;
             this.game_map_set.push(mapPrefab);
         }
-        let ememy1=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_bear",cc.Prefab) as cc.Prefab;
-        let ememy2=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_forkman",cc.Prefab) as cc.Prefab;
-        let ememy3=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_small1",cc.Prefab) as cc.Prefab;
-        let ememy4=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_gorilla",cc.Prefab) as cc.Prefab;
-        let ememy5=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_small2",cc.Prefab) as cc.Prefab;
-        let ememy6=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_carry",cc.Prefab) as cc.Prefab;
-        let ememy7=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_small3",cc.Prefab) as cc.Prefab;
-        this.enemy_prefabs.push(ememy1);
-        this.enemy_prefabs.push(ememy2);
-        this.enemy_prefabs.push(ememy3);
-        this.enemy_prefabs.push(ememy4);
-        this.enemy_prefabs.push(ememy5);
-        this.enemy_prefabs.push(ememy6);
-        this.enemy_prefabs.push(ememy7);
+       
     }
     
     start_game() {
@@ -162,14 +152,14 @@ export default class GameUIControl extends UIControl {
         }
         console.log("map_level #####", map_level, this.map_level);
 
-        this.level_data = []//require("level" + (map_level + 1));
+        this.level_data = GameDataManager.getInstance()["level_data"+ (map_level + 1)]//require("level" + (map_level + 1));
         // this.level_data = require("level1");
         this.round_label.string = "round 0 / " + this.level_data.length;
         this.cur_round = 0; // 当前要产生的是第几波敌人
         this.cur_road_index = 0; // 在非随机模式下，当前的选择路径的索引
         this.cur_gen_total = 0; // 当前这波产生的总数
         this.cur_gen_now = 0; // 当前已经放出的怪物数量
-        //this.gen_round_enemy();
+        this.gen_round_enemy();
         // end 
     }
 
@@ -221,7 +211,7 @@ export default class GameUIControl extends UIControl {
         this.blood_label.string = "" + this.blood; // 更新当前的血量
     }
     
-    gen_one_enemy() {
+    async gen_one_enemy() {
         if (this.game_started === false) {
             return;
         }
@@ -238,13 +228,13 @@ export default class GameUIControl extends UIControl {
 
         var map_road_set = GameDataManager.getInstance().get_map_road_set();
         
-        var enemy = cc.instantiate(this.enemy_prefabs[type]);
-        enemy.active = true;
-        this.map_root.addChild(enemy);
+        // var enemy = cc.instantiate(this.enemy_prefabs[type]);
+        // enemy.active = true;
+        // this.map_root.addChild(enemy);
         
 
-        GameDataManager.getInstance().add_ememy(enemy);
-        var actor = enemy.getComponent("actor");
+        //GameDataManager.getInstance().add_ememy(enemy);
+        //var actor = enemy.getComponent("actor");
         
         var index = 0; // 跑的地图路径的索引
         if (cur_round_params.random_road) {
@@ -270,8 +260,11 @@ export default class GameUIControl extends UIControl {
         
         
         var road_data = map_road_set[index];
-        actor.set_actor_params(cur_round_params.actor_params);
-        actor.gen_at_road(road_data);
+        //actor.set_actor_params(cur_round_params.actor_params);
+        //actor.gen_at_road(road_data);
+
+        // 生成敌人
+        await ECSManager.getInstance().createEnemyEntity(type, road_data, cur_round_params.actor_params);
         
         if (this.cur_gen_now === 0) {
             this.round_label.string = "round " + (this.cur_round + 1) + " / " + this.level_data.length;

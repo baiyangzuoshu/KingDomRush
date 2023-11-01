@@ -6,6 +6,8 @@
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
 import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
+import { Enemy } from "../Enum";
+import EnemyEntity from "./Entities/EnemyEntity";
 import TowerEntity from "./Entities/TowerEntity";
 
 const {ccclass, property} = cc._decorator;
@@ -24,6 +26,7 @@ export default class ECSFactory extends cc.Component {
 
         let canvas=cc.find("Canvas");
         this.towerNode=canvas.getChildByName("towerNode");
+        this.enemyNode=canvas.getChildByName("enemyNode");
     }
 
     public static getInstance():ECSFactory{
@@ -32,10 +35,59 @@ export default class ECSFactory extends cc.Component {
 
     private static entityID:number=0;
     private towerNode:cc.Node=null;
+    private enemyNode:cc.Node=null;
+    async createEnemyEntity(enemy_type:number,road_data:any,actor_params:any):Promise<EnemyEntity>{
+        //console.log(road_data);
+        let entity:EnemyEntity=new EnemyEntity();
+
+        let enemy_prefab:cc.Prefab=null;
+        if(Enemy.Bear==enemy_type){
+            enemy_prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_bear",cc.Prefab) as cc.Prefab;
+        }
+        else if(Enemy.Forkman==enemy_type){
+            enemy_prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_forkman",cc.Prefab) as cc.Prefab;
+        }
+        else if(Enemy.Small1==enemy_type){
+            enemy_prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_small1",cc.Prefab) as cc.Prefab;
+        }
+        else if(Enemy.Gorilla==enemy_type){
+            enemy_prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_gorilla",cc.Prefab) as cc.Prefab;
+        }
+        else if(Enemy.Small2==enemy_type){
+            enemy_prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_small2",cc.Prefab) as cc.Prefab;
+        }
+        else if(Enemy.Carry==enemy_type){
+            enemy_prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_carry",cc.Prefab) as cc.Prefab;
+        }
+        else if(Enemy.Small3==enemy_type){
+            enemy_prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Enemy/ememy_small3",cc.Prefab) as cc.Prefab;
+        }
+        var enemy = cc.instantiate(enemy_prefab);
+        enemy.active = true;
+        this.enemyNode.addChild(enemy);
+        enemy.setPosition(cc.v2(road_data[0].x, road_data[0].y));
+
+        entity.navComponent.path=road_data;
+        entity.navComponent.curTime=0;
+        entity.navComponent.curIndex=0;
+        entity.navComponent.speed=actor_params.speed;
+
+        entity.transformComponent.x=road_data[0].x;
+        entity.transformComponent.y=road_data[0].y;
+
+        entity.baseComponent.entityID=ECSFactory.entityID++;
+        entity.baseComponent.gameObject=enemy;
+
+        entity.unitComponent.speed=actor_params.speed;
+        entity.unitComponent.attack=actor_params.attack;
+        entity.unitComponent.health=actor_params.health;
+        entity.unitComponent.player_hurt=actor_params.player_hurt;
+        entity.unitComponent.bonues_chip=actor_params.bonues_chip;
+
+        return entity;
+    }
 
     async createTowerEntity(tower_type:number,world_pos:cc.Vec2):Promise<TowerEntity>{
-        console.log("createTowerEntity",tower_type,world_pos);
-
         let entity:TowerEntity=new TowerEntity();
         
         let prefab=null
@@ -56,7 +108,6 @@ export default class ECSFactory extends cc.Component {
         this.towerNode.addChild(builded_tower);
         
         var center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
-        console.log(center_pos);
         builded_tower.setPosition(center_pos);
         builded_tower.active = true;
 

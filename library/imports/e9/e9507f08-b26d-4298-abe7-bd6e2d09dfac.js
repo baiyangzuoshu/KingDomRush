@@ -66,12 +66,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ECSFactory_1 = require("./ECSFactory");
+var NavSystem_1 = require("./Systems/NavSystem");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var ECSManager = /** @class */ (function (_super) {
     __extends(ECSManager, _super);
     function ECSManager() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.towerEntityList = [];
+        _this.enemyEntityList = [];
         return _this;
     }
     ECSManager_1 = ECSManager;
@@ -101,7 +103,28 @@ var ECSManager = /** @class */ (function (_super) {
             });
         });
     };
+    ECSManager.prototype.createEnemyEntity = function (enemy_type, road_data, actor_params) {
+        return __awaiter(this, void 0, void 0, function () {
+            var entity;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, ECSFactory_1.default.getInstance().createEnemyEntity(enemy_type, road_data, actor_params)];
+                    case 1:
+                        entity = _a.sent();
+                        this.enemyEntityList.push(entity);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ECSManager.prototype.navSystemEnemyUpdate = function (dt) {
+        for (var i = 0; i < this.enemyEntityList.length; ++i) {
+            NavSystem_1.default.getInstance().onUpdate(dt, this.enemyEntityList[i].navComponent, this.enemyEntityList[i].baseComponent, this.enemyEntityList[i].transformComponent);
+        }
+    };
     ECSManager.prototype.update = function (dt) {
+        //敌军导航
+        this.navSystemEnemyUpdate(dt);
     };
     var ECSManager_1;
     ECSManager._instance = null;

@@ -70,7 +70,7 @@ export default class TowerBuilder extends UIControl {
     }
 
     on_click_mask(btn:cc.Button) {
-        console.log("on_click_mask",this.index);
+        //console.log("on_click_mask",this.index);
         this.show_tower_builder();
     }
 

@@ -4965,8 +4965,8 @@
     "relativePath": "AssetsPackge\\prefabs\\UI\\RoadMapUI.prefab"
   },
   "8b32ec46-a101-4421-9dfa-5d98f4274f4a": {
-    "asset": 1698752935964,
-    "meta": 1698752935967,
+    "asset": 1698795149839,
+    "meta": 1698795149842,
     "relativePath": "Scenes\\Boot.fire"
   },
   "215ec8ad-8648-4696-8da0-fb00ce9aac28": {
@@ -5023,11 +5023,6 @@
     "asset": 1698326797832,
     "meta": 1698326804376,
     "relativePath": "Scripts\\Tools\\LoadingDoor.ts"
-  },
-  "f0bae30a-3b05-45c9-a5c7-48a06f882679": {
-    "asset": 1698328212133,
-    "meta": 1698328519079,
-    "relativePath": "Scripts\\Enum.ts"
   },
   "caa56587-678e-45df-b3a9-f0655b721b92": {
     "asset": 1698328320020,
@@ -5574,11 +5569,6 @@
     "meta": 1698749570302,
     "relativePath": "Scripts\\EventName.ts"
   },
-  "dba06ff6-61a2-4531-9709-fca6af146229": {
-    "asset": 1698749497627,
-    "meta": 1698749570405,
-    "relativePath": "Scripts\\UI\\GameUIControl.ts"
-  },
   "2fe3646b-6ab1-4d7d-90d8-2be23260de85": {
     "asset": 1698749742501,
     "meta": 1698749742502,
@@ -5608,16 +5598,6 @@
     "asset": 1698750024553,
     "meta": 1698750065609,
     "relativePath": "Scripts\\ECS\\Components\\TransformComponent.ts"
-  },
-  "57934dbd-030f-43e0-9bae-1c5c4747e414": {
-    "asset": 1698749953106,
-    "meta": 1698750065638,
-    "relativePath": "Scripts\\GameLanch.ts"
-  },
-  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
-    "asset": 1698750723652,
-    "meta": 1698750731954,
-    "relativePath": "Scripts\\ECS\\ECSManager.ts"
   },
   "538b1798-5026-4faf-a1b5-b6da97998c68": {
     "asset": 1698750134831,
@@ -5649,11 +5629,6 @@
     "meta": 1698752907362,
     "relativePath": "Scripts\\UI\\RoadMapUIControl.ts"
   },
-  "b5f791b2-04ce-4e10-8c22-e69586a6650e": {
-    "asset": 1698753675849,
-    "meta": 1698753678967,
-    "relativePath": "Scripts\\Data\\GameDataManager.ts"
-  },
   "4404737a-6091-4bd0-a048-9e7f9a08679e": {
     "asset": 1698753753379,
     "meta": 1698753764337,
@@ -5664,9 +5639,59 @@
     "meta": 1698753844035,
     "relativePath": "Scripts\\Game\\GuiTowerBuilder.ts"
   },
+  "57934dbd-030f-43e0-9bae-1c5c4747e414": {
+    "asset": 1698754532229,
+    "meta": 1698795126035,
+    "relativePath": "Scripts\\GameLanch.ts"
+  },
+  "b5f791b2-04ce-4e10-8c22-e69586a6650e": {
+    "asset": 1698795981779,
+    "meta": 1698796399568,
+    "relativePath": "Scripts\\Data\\GameDataManager.ts"
+  },
+  "f0bae30a-3b05-45c9-a5c7-48a06f882679": {
+    "asset": 1698795971122,
+    "meta": 1698796399625,
+    "relativePath": "Scripts\\Enum.ts"
+  },
+  "9854cc9b-b7ec-4eae-b756-59322c6decee": {
+    "asset": 1698796960822,
+    "meta": 1698796964867,
+    "relativePath": "Scripts\\Game\\GenMapPath.ts"
+  },
+  "9cf406e9-22be-48d2-a58c-7742de41a363": {
+    "asset": 1698798676362,
+    "meta": 1698798893288,
+    "relativePath": "Scripts\\ECS\\Components\\UnitComponent.ts"
+  },
+  "8358e971-10d6-48b3-8f73-b42470629c40": {
+    "asset": 1698798597328,
+    "meta": 1698798893330,
+    "relativePath": "Scripts\\ECS\\Entities\\EnemyEntity.ts"
+  },
+  "dba06ff6-61a2-4531-9709-fca6af146229": {
+    "asset": 1698799101900,
+    "meta": 1698799104845,
+    "relativePath": "Scripts\\UI\\GameUIControl.ts"
+  },
+  "a3d16508-6290-463c-860d-d8e4c9414574": {
+    "asset": 1698799646359,
+    "meta": 1698799905792,
+    "relativePath": "Scripts\\ECS\\Components\\NavComponent.ts"
+  },
   "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
-    "asset": 1698754229417,
-    "meta": 1698754237470,
+    "asset": 1698799658026,
+    "meta": 1698799905829,
     "relativePath": "Scripts\\ECS\\ECSFactory.ts"
+  },
+  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
+    "asset": 1698799902326,
+    "meta": 1698799905845,
+    "relativePath": "Scripts\\ECS\\ECSManager.ts"
+  },
+  "01deea59-bc5b-4301-a2d1-b0fade47ef3f": {
+    "asset": 1698800058926,
+    "meta": 1698800061106,
+    "relativePath": "Scripts\\ECS\\Systems\\NavSystem.ts"
   }
 }
