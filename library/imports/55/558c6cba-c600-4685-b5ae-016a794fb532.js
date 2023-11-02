@@ -77,7 +77,7 @@ var GuiTowerBuilder = /** @class */ (function (_super) {
         this.node.y = tower_buidler.node.y;
     };
     GuiTowerBuilder.prototype.on_build_tower_click = function (t) {
-        console.log("on_build_tower_click", t.name, this.tower_builder);
+        //console.log("on_build_tower_click",t.name,this.tower_builder)
         if (!this.tower_builder) {
             return;
         }

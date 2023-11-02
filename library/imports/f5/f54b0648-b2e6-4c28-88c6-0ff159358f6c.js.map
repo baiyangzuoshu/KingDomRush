@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets\\Scripts\\ECS\\Entities\\WarlockEntity.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;AAAA,6CAAwC;AAExC;IAA2C,iCAAW;IAAtD;;IAEA,CAAC;IAAD,oBAAC;AAAD,CAFA,AAEC,CAF0C,qBAAW,GAErD","file":"","sourceRoot":"/","sourcesContent":["import TowerEntity from \"./TowerEntity\";\n\nexport default class WarlockEntity extends TowerEntity{\n    \n}\n"]}

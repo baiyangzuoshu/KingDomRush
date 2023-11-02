@@ -138,7 +138,7 @@ var TowerBuilder = /** @class */ (function (_super) {
         this.index = index;
     };
     TowerBuilder.prototype.on_click_mask = function (btn) {
-        console.log("on_click_mask", this.index);
+        //console.log("on_click_mask",this.index);
         this.show_tower_builder();
     };
     TowerBuilder.prototype.check_uchip_when_build = function (tower_type, level) {

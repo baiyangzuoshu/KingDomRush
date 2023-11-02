@@ -9,6 +9,7 @@ import { EventManager } from "../../FrameWork/manager/EventManager";
 import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
 import { UIControl } from "../../FrameWork/ui/UIControl";
 import GameDataManager from "../Data/GameDataManager";
+import MapDataManager from "../Data/MapDataManager";
 import ECSManager from "../ECS/ECSManager";
 import { GameUI } from "../EventName";
 import Checkout from "../Game/Checkout";
@@ -152,7 +153,7 @@ export default class GameUIControl extends UIControl {
         }
         console.log("map_level #####", map_level, this.map_level);
 
-        this.level_data = GameDataManager.getInstance()["level_data"+ (map_level + 1)]//require("level" + (map_level + 1));
+        this.level_data = MapDataManager.getInstance()["level_data"+ (map_level + 1)]//require("level" + (map_level + 1));
         // this.level_data = require("level1");
         this.round_label.string = "round 0 / " + this.level_data.length;
         this.cur_round = 0; // 当前要产生的是第几波敌人

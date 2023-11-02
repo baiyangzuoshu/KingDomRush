@@ -13,6 +13,7 @@ import { ResManagerPro } from "../FrameWork/manager/ResManagerPro";
 import { UIManager } from "../FrameWork/manager/UIManager";
 import { UIManagerPro } from "../FrameWork/manager/UIManagerPro";
 import GameDataManager from "./Data/GameDataManager";
+import MapDataManager from "./Data/MapDataManager";
 import ECSFactory from "./ECS/ECSFactory";
 import ECSManager from "./ECS/ECSManager";
 import NavSystem from "./ECS/Systems/NavSystem";
@@ -42,6 +43,7 @@ export default class GameLanch extends cc.Component {
          this.addComponent(ECSFactory)
          this.addComponent(ECSManager)
          this.addComponent(NavSystem)
+         this.addComponent(MapDataManager)
     }
 
     start () {

@@ -69,6 +69,7 @@ var EventManager_1 = require("../../FrameWork/manager/EventManager");
 var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
 var UIControl_1 = require("../../FrameWork/ui/UIControl");
 var GameDataManager_1 = require("../Data/GameDataManager");
+var MapDataManager_1 = require("../Data/MapDataManager");
 var ECSManager_1 = require("../ECS/ECSManager");
 var EventName_1 = require("../EventName");
 var Checkout_1 = require("../Game/Checkout");
@@ -222,7 +223,7 @@ var GameUIControl = /** @class */ (function (_super) {
             map_level = this.game_map_set.length - 1;
         }
         console.log("map_level #####", map_level, this.map_level);
-        this.level_data = GameDataManager_1.default.getInstance()["level_data" + (map_level + 1)]; //require("level" + (map_level + 1));
+        this.level_data = MapDataManager_1.default.getInstance()["level_data" + (map_level + 1)]; //require("level" + (map_level + 1));
         // this.level_data = require("level1");
         this.round_label.string = "round 0 / " + this.level_data.length;
         this.cur_round = 0; // 当前要产生的是第几波敌人

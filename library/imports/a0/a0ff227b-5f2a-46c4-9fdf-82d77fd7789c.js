@@ -67,8 +67,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
 var Enum_1 = require("../Enum");
+var ArrowEntity_1 = require("./Entities/ArrowEntity");
+var CannonEntity_1 = require("./Entities/CannonEntity");
 var EnemyEntity_1 = require("./Entities/EnemyEntity");
-var TowerEntity_1 = require("./Entities/TowerEntity");
+var InfantryEntity_1 = require("./Entities/InfantryEntity");
+var WarlockEntity_1 = require("./Entities/WarlockEntity");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var ECSFactory = /** @class */ (function (_super) {
     __extends(ECSFactory, _super);
@@ -166,38 +169,16 @@ var ECSFactory = /** @class */ (function (_super) {
             });
         });
     };
-    ECSFactory.prototype.createTowerEntity = function (tower_type, world_pos) {
+    ECSFactory.prototype.createArrowEntity = function (world_pos) {
         return __awaiter(this, void 0, Promise, function () {
             var entity, prefab, builded_tower, center_pos;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        entity = new TowerEntity_1.default();
-                        prefab = null;
-                        if (!(1 == tower_type)) return [3 /*break*/, 2];
+                        entity = new ArrowEntity_1.default();
                         return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/arrow_tower", cc.Prefab)];
                     case 1:
-                        prefab = (_a.sent());
-                        return [3 /*break*/, 8];
-                    case 2:
-                        if (!(2 == tower_type)) return [3 /*break*/, 4];
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/warlock_tower", cc.Prefab)];
-                    case 3:
-                        prefab = (_a.sent());
-                        return [3 /*break*/, 8];
-                    case 4:
-                        if (!(3 == tower_type)) return [3 /*break*/, 6];
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/cannon_tower", cc.Prefab)];
-                    case 5:
-                        prefab = (_a.sent());
-                        return [3 /*break*/, 8];
-                    case 6:
-                        if (!(4 == tower_type)) return [3 /*break*/, 8];
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/infantry_tower", cc.Prefab)];
-                    case 7:
-                        prefab = (_a.sent());
-                        _a.label = 8;
-                    case 8:
+                        prefab = _a.sent();
                         builded_tower = cc.instantiate(prefab);
                         this.towerNode.addChild(builded_tower);
                         center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
@@ -207,6 +188,82 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.baseComponent.gameObject = builded_tower;
                         entity.transformComponent.x = center_pos.x;
                         entity.transformComponent.y = center_pos.y;
+                        entity.roleComponent.type = Enum_1.TowerType.Arrow;
+                        return [2 /*return*/, entity];
+                }
+            });
+        });
+    };
+    ECSFactory.prototype.createWarlockEntity = function (world_pos) {
+        return __awaiter(this, void 0, Promise, function () {
+            var entity, prefab, builded_tower, center_pos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        entity = new WarlockEntity_1.default();
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/warlock_tower", cc.Prefab)];
+                    case 1:
+                        prefab = _a.sent();
+                        builded_tower = cc.instantiate(prefab);
+                        this.towerNode.addChild(builded_tower);
+                        center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
+                        builded_tower.setPosition(center_pos);
+                        builded_tower.active = true;
+                        entity.baseComponent.entityID = ECSFactory_1.entityID++;
+                        entity.baseComponent.gameObject = builded_tower;
+                        entity.transformComponent.x = center_pos.x;
+                        entity.transformComponent.y = center_pos.y;
+                        entity.roleComponent.type = Enum_1.TowerType.Warlock;
+                        return [2 /*return*/, entity];
+                }
+            });
+        });
+    };
+    ECSFactory.prototype.createCannonEntity = function (world_pos) {
+        return __awaiter(this, void 0, Promise, function () {
+            var entity, prefab, builded_tower, center_pos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        entity = new CannonEntity_1.default();
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/cannon_tower", cc.Prefab)];
+                    case 1:
+                        prefab = _a.sent();
+                        builded_tower = cc.instantiate(prefab);
+                        this.towerNode.addChild(builded_tower);
+                        center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
+                        builded_tower.setPosition(center_pos);
+                        builded_tower.active = true;
+                        entity.baseComponent.entityID = ECSFactory_1.entityID++;
+                        entity.baseComponent.gameObject = builded_tower;
+                        entity.transformComponent.x = center_pos.x;
+                        entity.transformComponent.y = center_pos.y;
+                        entity.roleComponent.type = Enum_1.TowerType.Cannon;
+                        return [2 /*return*/, entity];
+                }
+            });
+        });
+    };
+    ECSFactory.prototype.createInfantryEntity = function (world_pos) {
+        return __awaiter(this, void 0, Promise, function () {
+            var entity, prefab, builded_tower, center_pos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        entity = new InfantryEntity_1.default();
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/infantry_tower", cc.Prefab)];
+                    case 1:
+                        prefab = _a.sent();
+                        builded_tower = cc.instantiate(prefab);
+                        this.towerNode.addChild(builded_tower);
+                        center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
+                        builded_tower.setPosition(center_pos);
+                        builded_tower.active = true;
+                        entity.baseComponent.entityID = ECSFactory_1.entityID++;
+                        entity.baseComponent.gameObject = builded_tower;
+                        entity.transformComponent.x = center_pos.x;
+                        entity.transformComponent.y = center_pos.y;
+                        entity.roleComponent.type = Enum_1.TowerType.Infantry;
                         return [2 /*return*/, entity];
                 }
             });

@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets\\Scripts\\ECS\\Components\\RoleComponent.ts"],"names":[],"mappings":";;;;;;AACA;IAAA;QACW,SAAI,GAAQ,CAAC,CAAC;IACzB,CAAC;IAAD,oBAAC;AAAD,CAFA,AAEC,IAAA","file":"","sourceRoot":"/","sourcesContent":["\nexport default class RoleComponent  {\n    public type:number=0;\n}\n"]}

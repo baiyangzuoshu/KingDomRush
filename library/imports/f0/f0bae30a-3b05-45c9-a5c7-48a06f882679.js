@@ -4,7 +4,7 @@ cc._RF.push(module, 'f0baeMKOwVFyaXHSKBviCZ5', 'Enum');
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Enemy = exports.ViewUI = void 0;
+exports.TowerType = exports.Enemy = exports.ViewUI = void 0;
 var ViewUI;
 (function (ViewUI) {
     ViewUI["HomeUI"] = "HomeUI";
@@ -22,5 +22,12 @@ var Enemy;
     Enemy[Enemy["Carry"] = 5] = "Carry";
     Enemy[Enemy["Small3"] = 6] = "Small3";
 })(Enemy = exports.Enemy || (exports.Enemy = {}));
+var TowerType;
+(function (TowerType) {
+    TowerType[TowerType["Arrow"] = 1] = "Arrow";
+    TowerType[TowerType["Warlock"] = 2] = "Warlock";
+    TowerType[TowerType["Cannon"] = 3] = "Cannon";
+    TowerType[TowerType["Infantry"] = 4] = "Infantry";
+})(TowerType = exports.TowerType || (exports.TowerType = {}));
 
 cc._RF.pop();

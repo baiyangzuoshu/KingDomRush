@@ -14,3 +14,10 @@ export enum Enemy {
     Carry= 5,
     Small3= 6,
 }
+
+export enum TowerType{
+    Arrow=1,
+    Warlock=2,
+    Cannon=3,
+    Infantry=4,
+}

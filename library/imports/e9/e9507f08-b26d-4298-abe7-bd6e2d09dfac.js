@@ -65,6 +65,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Enum_1 = require("../Enum");
 var ECSFactory_1 = require("./ECSFactory");
 var NavSystem_1 = require("./Systems/NavSystem");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
@@ -91,14 +92,38 @@ var ECSManager = /** @class */ (function (_super) {
     };
     ECSManager.prototype.createTowerEntity = function (tower_type, world_pos) {
         return __awaiter(this, void 0, void 0, function () {
-            var entity;
+            var entity, entity, entity, entity;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, ECSFactory_1.default.getInstance().createTowerEntity(tower_type, world_pos)];
+                    case 0:
+                        if (!(Enum_1.TowerType.Arrow == tower_type)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createArrowEntity(world_pos)];
                     case 1:
                         entity = _a.sent();
                         this.towerEntityList.push(entity);
-                        return [2 /*return*/];
+                        return [3 /*break*/, 8];
+                    case 2:
+                        if (!(Enum_1.TowerType.Cannon == tower_type)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createCannonEntity(world_pos)];
+                    case 3:
+                        entity = _a.sent();
+                        this.towerEntityList.push(entity);
+                        return [3 /*break*/, 8];
+                    case 4:
+                        if (!(Enum_1.TowerType.Infantry == tower_type)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createInfantryEntity(world_pos)];
+                    case 5:
+                        entity = _a.sent();
+                        this.towerEntityList.push(entity);
+                        return [3 /*break*/, 8];
+                    case 6:
+                        if (!(Enum_1.TowerType.Warlock == tower_type)) return [3 /*break*/, 8];
+                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createWarlockEntity(world_pos)];
+                    case 7:
+                        entity = _a.sent();
+                        this.towerEntityList.push(entity);
+                        _a.label = 8;
+                    case 8: return [2 /*return*/];
                 }
             });
         });

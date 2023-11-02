@@ -6,9 +6,13 @@
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
 import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
-import { Enemy } from "../Enum";
+import { Enemy, TowerType } from "../Enum";
+import ArrowEntity from "./Entities/ArrowEntity";
+import CannonEntity from "./Entities/CannonEntity";
 import EnemyEntity from "./Entities/EnemyEntity";
+import InfantryEntity from "./Entities/InfantryEntity";
 import TowerEntity from "./Entities/TowerEntity";
+import WarlockEntity from "./Entities/WarlockEntity";
 
 const {ccclass, property} = cc._decorator;
 
@@ -87,22 +91,10 @@ export default class ECSFactory extends cc.Component {
         return entity;
     }
 
-    async createTowerEntity(tower_type:number,world_pos:cc.Vec2):Promise<TowerEntity>{
-        let entity:TowerEntity=new TowerEntity();
+    async createArrowEntity(world_pos:cc.Vec2):Promise<TowerEntity>{
+        let entity:ArrowEntity=new ArrowEntity();
         
-        let prefab=null
-        if(1==tower_type){
-            prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/arrow_tower",cc.Prefab) as cc.Prefab;
-        }
-        else if(2==tower_type){
-            prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/warlock_tower",cc.Prefab) as cc.Prefab;
-        }
-        else if(3==tower_type){
-            prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/cannon_tower",cc.Prefab) as cc.Prefab;
-        }
-        else if(4==tower_type){
-            prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/infantry_tower",cc.Prefab) as cc.Prefab;
-        }
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/arrow_tower",cc.Prefab) as cc.Prefab;
         
         let builded_tower = cc.instantiate(prefab) as cc.Node;
         this.towerNode.addChild(builded_tower);
@@ -116,6 +108,77 @@ export default class ECSFactory extends cc.Component {
 
         entity.transformComponent.x=center_pos.x;
         entity.transformComponent.y=center_pos.y;
+
+        entity.roleComponent.type=TowerType.Arrow;
+
+        return entity;
+    }
+
+    async createWarlockEntity(world_pos:cc.Vec2):Promise<TowerEntity>{
+        let entity:WarlockEntity=new WarlockEntity();
+        
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/warlock_tower",cc.Prefab) as cc.Prefab;
+        
+        let builded_tower = cc.instantiate(prefab) as cc.Node;
+        this.towerNode.addChild(builded_tower);
+        
+        var center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
+        builded_tower.setPosition(center_pos);
+        builded_tower.active = true;
+
+        entity.baseComponent.entityID=ECSFactory.entityID++;
+        entity.baseComponent.gameObject=builded_tower;
+
+        entity.transformComponent.x=center_pos.x;
+        entity.transformComponent.y=center_pos.y;
+
+        entity.roleComponent.type=TowerType.Warlock;
+
+        return entity;
+    }
+
+    async createCannonEntity(world_pos:cc.Vec2):Promise<TowerEntity>{
+        let entity:CannonEntity=new CannonEntity();
+        
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/cannon_tower",cc.Prefab) as cc.Prefab;
+        
+        let builded_tower = cc.instantiate(prefab) as cc.Node;
+        this.towerNode.addChild(builded_tower);
+        
+        var center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
+        builded_tower.setPosition(center_pos);
+        builded_tower.active = true;
+
+        entity.baseComponent.entityID=ECSFactory.entityID++;
+        entity.baseComponent.gameObject=builded_tower;
+
+        entity.transformComponent.x=center_pos.x;
+        entity.transformComponent.y=center_pos.y;
+
+        entity.roleComponent.type=TowerType.Cannon;
+
+        return entity;
+    }
+
+    async createInfantryEntity(world_pos:cc.Vec2):Promise<TowerEntity>{
+        let entity:InfantryEntity=new InfantryEntity();
+        
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/infantry_tower",cc.Prefab) as cc.Prefab;
+        
+        let builded_tower = cc.instantiate(prefab) as cc.Node;
+        this.towerNode.addChild(builded_tower);
+        
+        var center_pos = this.towerNode.convertToNodeSpaceAR(world_pos);
+        builded_tower.setPosition(center_pos);
+        builded_tower.active = true;
+
+        entity.baseComponent.entityID=ECSFactory.entityID++;
+        entity.baseComponent.gameObject=builded_tower;
+
+        entity.transformComponent.x=center_pos.x;
+        entity.transformComponent.y=center_pos.y;
+
+        entity.roleComponent.type=TowerType.Infantry;
 
         return entity;
     }

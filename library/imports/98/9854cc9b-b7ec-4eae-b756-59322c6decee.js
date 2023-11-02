@@ -101,7 +101,7 @@ var GenMapPath = /** @class */ (function (_super) {
                 start_point = end_point;
             }
         }
-        console.log(road_curve_path);
+        //console.log(road_curve_path);
         var one_road = [road_curve_path[0][0]];
         for (var index = 0; index < road_curve_path.length; index++) {
             start_point = road_curve_path[index][0];
@@ -121,7 +121,7 @@ var GenMapPath = /** @class */ (function (_super) {
                 t += t_delta;
             }
         }
-        console.log(one_road);
+        //console.log(one_road);
         this.road_data_set.push(one_road);
     };
     GenMapPath.prototype.draw_roads = function () {

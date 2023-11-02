@@ -5599,11 +5599,6 @@
     "meta": 1698750065609,
     "relativePath": "Scripts\\ECS\\Components\\TransformComponent.ts"
   },
-  "538b1798-5026-4faf-a1b5-b6da97998c68": {
-    "asset": 1698750134831,
-    "meta": 1698750731960,
-    "relativePath": "Scripts\\ECS\\Entities\\TowerEntity.ts"
-  },
   "a0fde79e-935a-4971-a07b-03f02532ba82": {
     "asset": 1698750956248,
     "meta": 1698751007393,
@@ -5629,36 +5624,6 @@
     "meta": 1698752907362,
     "relativePath": "Scripts\\UI\\RoadMapUIControl.ts"
   },
-  "4404737a-6091-4bd0-a048-9e7f9a08679e": {
-    "asset": 1698753753379,
-    "meta": 1698753764337,
-    "relativePath": "Scripts\\Game\\TowerBuilder.ts"
-  },
-  "558c6cba-c600-4685-b5ae-016a794fb532": {
-    "asset": 1698753841156,
-    "meta": 1698753844035,
-    "relativePath": "Scripts\\Game\\GuiTowerBuilder.ts"
-  },
-  "57934dbd-030f-43e0-9bae-1c5c4747e414": {
-    "asset": 1698754532229,
-    "meta": 1698795126035,
-    "relativePath": "Scripts\\GameLanch.ts"
-  },
-  "b5f791b2-04ce-4e10-8c22-e69586a6650e": {
-    "asset": 1698795981779,
-    "meta": 1698796399568,
-    "relativePath": "Scripts\\Data\\GameDataManager.ts"
-  },
-  "f0bae30a-3b05-45c9-a5c7-48a06f882679": {
-    "asset": 1698795971122,
-    "meta": 1698796399625,
-    "relativePath": "Scripts\\Enum.ts"
-  },
-  "9854cc9b-b7ec-4eae-b756-59322c6decee": {
-    "asset": 1698796960822,
-    "meta": 1698796964867,
-    "relativePath": "Scripts\\Game\\GenMapPath.ts"
-  },
   "9cf406e9-22be-48d2-a58c-7742de41a363": {
     "asset": 1698798676362,
     "meta": 1698798893288,
@@ -5669,29 +5634,94 @@
     "meta": 1698798893330,
     "relativePath": "Scripts\\ECS\\Entities\\EnemyEntity.ts"
   },
-  "dba06ff6-61a2-4531-9709-fca6af146229": {
-    "asset": 1698799101900,
-    "meta": 1698799104845,
-    "relativePath": "Scripts\\UI\\GameUIControl.ts"
-  },
   "a3d16508-6290-463c-860d-d8e4c9414574": {
     "asset": 1698799646359,
     "meta": 1698799905792,
     "relativePath": "Scripts\\ECS\\Components\\NavComponent.ts"
   },
-  "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
-    "asset": 1698799658026,
-    "meta": 1698799905829,
-    "relativePath": "Scripts\\ECS\\ECSFactory.ts"
-  },
-  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
-    "asset": 1698799902326,
-    "meta": 1698799905845,
-    "relativePath": "Scripts\\ECS\\ECSManager.ts"
-  },
   "01deea59-bc5b-4301-a2d1-b0fade47ef3f": {
     "asset": 1698800058926,
     "meta": 1698800061106,
     "relativePath": "Scripts\\ECS\\Systems\\NavSystem.ts"
+  },
+  "9854cc9b-b7ec-4eae-b756-59322c6decee": {
+    "asset": 1698800235993,
+    "meta": 1698881020071,
+    "relativePath": "Scripts\\Game\\GenMapPath.ts"
+  },
+  "558c6cba-c600-4685-b5ae-016a794fb532": {
+    "asset": 1698800244708,
+    "meta": 1698881020087,
+    "relativePath": "Scripts\\Game\\GuiTowerBuilder.ts"
+  },
+  "4404737a-6091-4bd0-a048-9e7f9a08679e": {
+    "asset": 1698800250275,
+    "meta": 1698881020126,
+    "relativePath": "Scripts\\Game\\TowerBuilder.ts"
+  },
+  "7dc19759-ab22-4933-942e-6a949325ad8e": {
+    "asset": 1698882588230,
+    "meta": 1698882767402,
+    "relativePath": "Scripts\\ECS\\Entities\\ArrowEntity.ts"
+  },
+  "570ff334-13f4-41a8-918f-0ea49646e17a": {
+    "asset": 1698882617971,
+    "meta": 1698882767407,
+    "relativePath": "Scripts\\ECS\\Entities\\CannonEntity.ts"
+  },
+  "713c621a-1b88-4b96-8cc6-812b27bade59": {
+    "asset": 1698882635198,
+    "meta": 1698882767410,
+    "relativePath": "Scripts\\ECS\\Entities\\InfantryEntity.ts"
+  },
+  "f54b0648-b2e6-4c28-88c6-0ff159358f6c": {
+    "asset": 1698882633409,
+    "meta": 1698882767415,
+    "relativePath": "Scripts\\ECS\\Entities\\WarlockEntity.ts"
+  },
+  "631bd821-e347-4fb6-aca3-16622733dadd": {
+    "asset": 1698883029341,
+    "meta": 1698883188485,
+    "relativePath": "Scripts\\ECS\\Components\\RoleComponent.ts"
+  },
+  "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
+    "asset": 1698883170058,
+    "meta": 1698883188548,
+    "relativePath": "Scripts\\ECS\\ECSFactory.ts"
+  },
+  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
+    "asset": 1698883184920,
+    "meta": 1698883188571,
+    "relativePath": "Scripts\\ECS\\ECSManager.ts"
+  },
+  "538b1798-5026-4faf-a1b5-b6da97998c68": {
+    "asset": 1698883063798,
+    "meta": 1698883188575,
+    "relativePath": "Scripts\\ECS\\Entities\\TowerEntity.ts"
+  },
+  "f0bae30a-3b05-45c9-a5c7-48a06f882679": {
+    "asset": 1698883136132,
+    "meta": 1698883188581,
+    "relativePath": "Scripts\\Enum.ts"
+  },
+  "57934dbd-030f-43e0-9bae-1c5c4747e414": {
+    "asset": 1698883751515,
+    "meta": 1698883907845,
+    "relativePath": "Scripts\\GameLanch.ts"
+  },
+  "dba06ff6-61a2-4531-9709-fca6af146229": {
+    "asset": 1698883905661,
+    "meta": 1698883907891,
+    "relativePath": "Scripts\\UI\\GameUIControl.ts"
+  },
+  "b5f791b2-04ce-4e10-8c22-e69586a6650e": {
+    "asset": 1698884018345,
+    "meta": 1698884041593,
+    "relativePath": "Scripts\\Data\\GameDataManager.ts"
+  },
+  "d0903363-4258-4e1d-8fc8-92c5f6de7f27": {
+    "asset": 1698884028657,
+    "meta": 1698884041639,
+    "relativePath": "Scripts\\Data\\MapDataManager.ts"
   }
 }

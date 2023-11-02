@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets\\Scripts\\ECS\\Entities\\CannonEntity.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;AAAA,6CAAwC;AAExC;IAA0C,gCAAW;IAArD;;IAEA,CAAC;IAAD,mBAAC;AAAD,CAFA,AAEC,CAFyC,qBAAW,GAEpD","file":"","sourceRoot":"/","sourcesContent":["import TowerEntity from \"./TowerEntity\";\n\nexport default class CannonEntity extends TowerEntity{\n    \n}\n"]}
