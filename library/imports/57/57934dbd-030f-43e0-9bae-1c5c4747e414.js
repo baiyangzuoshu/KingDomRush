@@ -40,6 +40,10 @@ var GameDataManager_1 = require("./Data/GameDataManager");
 var MapDataManager_1 = require("./Data/MapDataManager");
 var ECSFactory_1 = require("./ECS/ECSFactory");
 var ECSManager_1 = require("./ECS/ECSManager");
+var ECSUtil_1 = require("./ECS/ECSUtil");
+var AISystem_1 = require("./ECS/Systems/AISystem");
+var AnimateSystem_1 = require("./ECS/Systems/AnimateSystem");
+var AttackSystem_1 = require("./ECS/Systems/AttackSystem");
 var NavSystem_1 = require("./ECS/Systems/NavSystem");
 var GameApp_1 = require("./GameApp");
 var PlayerSoundManager_1 = require("./Manager/PlayerSoundManager");
@@ -67,6 +71,10 @@ var GameLanch = /** @class */ (function (_super) {
         this.addComponent(ECSManager_1.default);
         this.addComponent(NavSystem_1.default);
         this.addComponent(MapDataManager_1.default);
+        this.addComponent(AttackSystem_1.default);
+        this.addComponent(AISystem_1.default);
+        this.addComponent(AnimateSystem_1.default);
+        this.addComponent(ECSUtil_1.default);
     };
     GameLanch.prototype.start = function () {
         GameApp_1.default.getInstance().startGame();

@@ -7,6 +7,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var RoleComponent = /** @class */ (function () {
     function RoleComponent() {
         this.type = 0;
+        this.isDead = false;
+        this.level = 0;
     }
     return RoleComponent;
 }());

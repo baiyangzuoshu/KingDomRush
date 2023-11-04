@@ -1,6 +1,6 @@
 "use strict";
 cc._RF.push(module, '570ffM0E/RBqJGPDqSWRuF6', 'CannonEntity');
-// Scripts/ECS/Entities/CannonEntity.ts
+// Scripts/ECS/Entities/Tower/CannonEntity.ts
 
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var TowerEntity_1 = require("./TowerEntity");
+var TowerEntity_1 = require("../TowerEntity");
 var CannonEntity = /** @class */ (function (_super) {
     __extends(CannonEntity, _super);
     function CannonEntity() {

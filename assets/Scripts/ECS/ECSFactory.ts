@@ -7,12 +7,13 @@
 
 import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
 import { Enemy, TowerType } from "../Enum";
-import ArrowEntity from "./Entities/ArrowEntity";
-import CannonEntity from "./Entities/CannonEntity";
+import BulletEntity from "./Entities/BulletEntity";
 import EnemyEntity from "./Entities/EnemyEntity";
-import InfantryEntity from "./Entities/InfantryEntity";
+import ArrowEntity from "./Entities/Tower/ArrowEntity";
+import CannonEntity from "./Entities/Tower/CannonEntity";
+import InfantryEntity from "./Entities/Tower/InfantryEntity";
+import WarlockEntity from "./Entities/Tower/WarlockEntity";
 import TowerEntity from "./Entities/TowerEntity";
-import WarlockEntity from "./Entities/WarlockEntity";
 
 const {ccclass, property} = cc._decorator;
 
@@ -31,6 +32,7 @@ export default class ECSFactory extends cc.Component {
         let canvas=cc.find("Canvas");
         this.towerNode=canvas.getChildByName("towerNode");
         this.enemyNode=canvas.getChildByName("enemyNode");
+        this.bulletNode=canvas.getChildByName("bulletNode");
     }
 
     public static getInstance():ECSFactory{
@@ -40,6 +42,114 @@ export default class ECSFactory extends cc.Component {
     private static entityID:number=0;
     private towerNode:cc.Node=null;
     private enemyNode:cc.Node=null;
+    private bulletNode:cc.Node=null;
+    //
+    async createArrowBulletEntity(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number):Promise<BulletEntity>{
+        let entity:BulletEntity=new BulletEntity();
+
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/arrow_bullet",cc.Prefab) as cc.Prefab;
+
+        let bullet = cc.instantiate(prefab) as cc.Node;
+        this.bulletNode.addChild(bullet);
+        
+        var center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+        bullet.setPosition(center_pos);
+        bullet.active = true;
+
+        entity.baseComponent.entityID=ECSFactory.entityID++;
+        entity.baseComponent.gameObject=bullet;
+
+        entity.transformComponent.x=center_pos.x;
+        entity.transformComponent.y=center_pos.y;
+
+        entity.animateComponent.dstPos=w_dst_pos;
+        entity.animateComponent.srcPos=w_pos;
+
+        entity.roleComponent.level=tower_level;
+
+        entity.attackComponent.enemyID=enemyID;
+
+        return entity;
+    }
+
+    async createCannonBulletEntity(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number):Promise<BulletEntity>{
+        let entity:BulletEntity=new BulletEntity();
+
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/cannon_bullet",cc.Prefab) as cc.Prefab;
+
+        let bullet = cc.instantiate(prefab) as cc.Node;
+        this.bulletNode.addChild(bullet);
+        
+        var center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+        bullet.setPosition(center_pos);
+        bullet.active = true;
+
+        entity.baseComponent.entityID=ECSFactory.entityID++;
+        entity.baseComponent.gameObject=bullet;
+
+        entity.transformComponent.x=center_pos.x;
+        entity.transformComponent.y=center_pos.y;
+
+        entity.animateComponent.dstPos=w_dst_pos;
+        entity.animateComponent.srcPos=w_pos;
+
+        entity.roleComponent.level=tower_level;
+
+        return entity;
+    }
+
+    async createInfantryBulletEntity(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number):Promise<BulletEntity>{
+        let entity:BulletEntity=new BulletEntity();
+
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/infantry_bullet",cc.Prefab) as cc.Prefab;
+
+        let bullet = cc.instantiate(prefab) as cc.Node;
+        this.bulletNode.addChild(bullet);
+        
+        var center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+        bullet.setPosition(center_pos);
+        bullet.active = true;
+
+        entity.baseComponent.entityID=ECSFactory.entityID++;
+        entity.baseComponent.gameObject=bullet;
+
+        entity.transformComponent.x=center_pos.x;
+        entity.transformComponent.y=center_pos.y;
+
+        entity.animateComponent.dstPos=w_dst_pos;
+        entity.animateComponent.srcPos=w_pos;
+
+        entity.roleComponent.level=tower_level;
+
+        return entity;
+    }
+
+    async createWarlockBulletEntity(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number):Promise<BulletEntity>{
+        let entity:BulletEntity=new BulletEntity();
+
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/warlock_actor",cc.Prefab) as cc.Prefab;
+
+        let bullet = cc.instantiate(prefab) as cc.Node;
+        this.bulletNode.addChild(bullet);
+        
+        var center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+        bullet.setPosition(center_pos);
+        bullet.active = true;
+
+        entity.baseComponent.entityID=ECSFactory.entityID++;
+        entity.baseComponent.gameObject=bullet;
+
+        entity.transformComponent.x=center_pos.x;
+        entity.transformComponent.y=center_pos.y;
+
+        entity.animateComponent.dstPos=w_dst_pos;
+        entity.animateComponent.srcPos=w_pos;
+
+        entity.roleComponent.level=tower_level;
+
+        return entity;
+    }
+    //
     async createEnemyEntity(enemy_type:number,road_data:any,actor_params:any):Promise<EnemyEntity>{
         //console.log(road_data);
         let entity:EnemyEntity=new EnemyEntity();
@@ -85,12 +195,13 @@ export default class ECSFactory extends cc.Component {
         entity.unitComponent.speed=actor_params.speed;
         entity.unitComponent.attack=actor_params.attack;
         entity.unitComponent.health=actor_params.health;
+        entity.unitComponent.maxHp=actor_params.health;
         entity.unitComponent.player_hurt=actor_params.player_hurt;
         entity.unitComponent.bonues_chip=actor_params.bonues_chip;
 
         return entity;
     }
-
+    //
     async createArrowEntity(world_pos:cc.Vec2):Promise<TowerEntity>{
         let entity:ArrowEntity=new ArrowEntity();
         
@@ -110,6 +221,7 @@ export default class ECSFactory extends cc.Component {
         entity.transformComponent.y=center_pos.y;
 
         entity.roleComponent.type=TowerType.Arrow;
+        entity.roleComponent.level=1;
 
         return entity;
     }
@@ -133,6 +245,7 @@ export default class ECSFactory extends cc.Component {
         entity.transformComponent.y=center_pos.y;
 
         entity.roleComponent.type=TowerType.Warlock;
+        entity.roleComponent.level=1;
 
         return entity;
     }
@@ -156,6 +269,7 @@ export default class ECSFactory extends cc.Component {
         entity.transformComponent.y=center_pos.y;
 
         entity.roleComponent.type=TowerType.Cannon;
+        entity.roleComponent.level=1;
 
         return entity;
     }
@@ -179,6 +293,7 @@ export default class ECSFactory extends cc.Component {
         entity.transformComponent.y=center_pos.y;
 
         entity.roleComponent.type=TowerType.Infantry;
+        entity.roleComponent.level=1;
 
         return entity;
     }

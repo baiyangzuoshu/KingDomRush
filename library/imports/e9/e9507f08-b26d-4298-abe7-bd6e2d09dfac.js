@@ -67,6 +67,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Enum_1 = require("../Enum");
 var ECSFactory_1 = require("./ECSFactory");
+var AISystem_1 = require("./Systems/AISystem");
+var AnimateSystem_1 = require("./Systems/AnimateSystem");
+var AttackSystem_1 = require("./Systems/AttackSystem");
 var NavSystem_1 = require("./Systems/NavSystem");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var ECSManager = /** @class */ (function (_super) {
@@ -75,6 +78,7 @@ var ECSManager = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.towerEntityList = [];
         _this.enemyEntityList = [];
+        _this.bulletEntityList = [];
         return _this;
     }
     ECSManager_1 = ECSManager;
@@ -89,6 +93,45 @@ var ECSManager = /** @class */ (function (_super) {
     };
     ECSManager.getInstance = function () {
         return ECSManager_1._instance;
+    };
+    //
+    ECSManager.prototype.createBulletEntity = function (tower_type, tower_level, w_pos, w_dst_pos, enemyID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var entity, entity, entity, entity;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(Enum_1.TowerType.Arrow == tower_type)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createArrowBulletEntity(tower_type, tower_level, w_pos, w_dst_pos, enemyID)];
+                    case 1:
+                        entity = _a.sent();
+                        this.bulletEntityList.push(entity);
+                        return [3 /*break*/, 8];
+                    case 2:
+                        if (!(Enum_1.TowerType.Cannon == tower_type)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createCannonBulletEntity(tower_type, tower_level, w_pos, w_dst_pos, enemyID)];
+                    case 3:
+                        entity = _a.sent();
+                        this.bulletEntityList.push(entity);
+                        return [3 /*break*/, 8];
+                    case 4:
+                        if (!(Enum_1.TowerType.Infantry == tower_type)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createInfantryBulletEntity(tower_type, tower_level, w_pos, w_dst_pos, enemyID)];
+                    case 5:
+                        entity = _a.sent();
+                        this.bulletEntityList.push(entity);
+                        return [3 /*break*/, 8];
+                    case 6:
+                        if (!(Enum_1.TowerType.Warlock == tower_type)) return [3 /*break*/, 8];
+                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createWarlockBulletEntity(tower_type, tower_level, w_pos, w_dst_pos, enemyID)];
+                    case 7:
+                        entity = _a.sent();
+                        this.bulletEntityList.push(entity);
+                        _a.label = 8;
+                    case 8: return [2 /*return*/];
+                }
+            });
+        });
     };
     ECSManager.prototype.createTowerEntity = function (tower_type, world_pos) {
         return __awaiter(this, void 0, void 0, function () {
@@ -142,14 +185,65 @@ var ECSManager = /** @class */ (function (_super) {
             });
         });
     };
+    //
+    ECSManager.prototype.getEnemyEntityByID = function (id) {
+        for (var i = 0; i < this.enemyEntityList.length; ++i) {
+            if (this.enemyEntityList[i].baseComponent.entityID == id) {
+                return this.enemyEntityList[i];
+            }
+        }
+        return null;
+    };
+    //
     ECSManager.prototype.navSystemEnemyUpdate = function (dt) {
         for (var i = 0; i < this.enemyEntityList.length; ++i) {
             NavSystem_1.default.getInstance().onUpdate(dt, this.enemyEntityList[i].navComponent, this.enemyEntityList[i].baseComponent, this.enemyEntityList[i].transformComponent);
         }
     };
+    ECSManager.prototype.AISystemTower = function (dt) {
+        for (var i = 0; i < this.towerEntityList.length; ++i) {
+            var towerAttackComponent = this.towerEntityList[i].attackComponent;
+            if (towerAttackComponent.enemyID > 0) {
+                continue;
+            }
+            towerAttackComponent.activeTime -= dt;
+            if (towerAttackComponent.activeTime > 0) {
+                continue;
+            }
+            for (var j = 0; j < this.enemyEntityList.length; ++j) {
+                if (this.enemyEntityList[j].roleComponent.isDead) {
+                    continue;
+                }
+                AISystem_1.default.getInstance().onUpdate(dt, this.towerEntityList[i].transformComponent, this.towerEntityList[i].roleComponent, towerAttackComponent, this.towerEntityList[i].baseComponent, this.enemyEntityList[j].transformComponent, this.enemyEntityList[j].baseComponent);
+            }
+        }
+    };
+    ECSManager.prototype.attackSystemTower = function (dt) {
+        for (var i = 0; i < this.towerEntityList.length; ++i) {
+            var tower = this.towerEntityList[i];
+            if (tower.attackComponent.enemyID > 0) {
+                AttackSystem_1.default.getInstance().onUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
+            }
+        }
+    };
+    ECSManager.prototype.animateSystemBullet = function (dt) {
+        for (var i = 0; i < this.bulletEntityList.length; ++i) {
+            var bullet = this.bulletEntityList[i];
+            if (bullet.roleComponent.isDead) {
+                continue;
+            }
+            AnimateSystem_1.default.getInstance().onBulletUpdate(dt, bullet.roleComponent, bullet.animateComponent, bullet.attackComponent, bullet.baseComponent);
+        }
+    };
     ECSManager.prototype.update = function (dt) {
         //敌军导航
         this.navSystemEnemyUpdate(dt);
+        //塔的AI
+        this.AISystemTower(dt);
+        //
+        this.attackSystemTower(dt);
+        //
+        this.animateSystemBullet(dt);
     };
     var ECSManager_1;
     ECSManager._instance = null;

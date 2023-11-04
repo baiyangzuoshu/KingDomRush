@@ -1,6 +1,6 @@
 "use strict";
 cc._RF.push(module, '713c6IaG4hLlozGgSsnut5Z', 'InfantryEntity');
-// Scripts/ECS/Entities/InfantryEntity.ts
+// Scripts/ECS/Entities/Tower/InfantryEntity.ts
 
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var TowerEntity_1 = require("./TowerEntity");
+var TowerEntity_1 = require("../TowerEntity");
 var InfantryEntity = /** @class */ (function (_super) {
     __extends(InfantryEntity, _super);
     function InfantryEntity() {

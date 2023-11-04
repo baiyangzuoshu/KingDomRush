@@ -1,6 +1,6 @@
 "use strict";
 cc._RF.push(module, 'f54b0ZIsuZMKIjGD/FZNY9s', 'WarlockEntity');
-// Scripts/ECS/Entities/WarlockEntity.ts
+// Scripts/ECS/Entities/Tower/WarlockEntity.ts
 
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var TowerEntity_1 = require("./TowerEntity");
+var TowerEntity_1 = require("../TowerEntity");
 var WarlockEntity = /** @class */ (function (_super) {
     __extends(WarlockEntity, _super);
     function WarlockEntity() {

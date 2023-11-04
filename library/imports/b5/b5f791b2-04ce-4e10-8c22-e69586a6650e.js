@@ -67,7 +67,7 @@ var GameDataManager = /** @class */ (function (_super) {
         _this.is_game_started = false; // 是否在游戏中
         _this.is_game_paused = false; // 游戏是否暂停
         // end
-        _this.warlock_bullet_params = [
+        _this.arrow_bullet_params = [
             {
                 speed: 200,
                 attack: 10,

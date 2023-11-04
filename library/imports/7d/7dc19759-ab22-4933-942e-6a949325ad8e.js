@@ -1,6 +1,6 @@
 "use strict";
 cc._RF.push(module, '7dc19dZqyJJM5QuapSTJa2O', 'ArrowEntity');
-// Scripts/ECS/Entities/ArrowEntity.ts
+// Scripts/ECS/Entities/Tower/ArrowEntity.ts
 
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -17,7 +17,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var TowerEntity_1 = require("./TowerEntity");
+var TowerEntity_1 = require("../TowerEntity");
 var ArrowEntity = /** @class */ (function (_super) {
     __extends(ArrowEntity, _super);
     function ArrowEntity() {

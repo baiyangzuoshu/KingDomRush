@@ -67,11 +67,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
 var Enum_1 = require("../Enum");
-var ArrowEntity_1 = require("./Entities/ArrowEntity");
-var CannonEntity_1 = require("./Entities/CannonEntity");
+var BulletEntity_1 = require("./Entities/BulletEntity");
 var EnemyEntity_1 = require("./Entities/EnemyEntity");
-var InfantryEntity_1 = require("./Entities/InfantryEntity");
-var WarlockEntity_1 = require("./Entities/WarlockEntity");
+var ArrowEntity_1 = require("./Entities/Tower/ArrowEntity");
+var CannonEntity_1 = require("./Entities/Tower/CannonEntity");
+var InfantryEntity_1 = require("./Entities/Tower/InfantryEntity");
+var WarlockEntity_1 = require("./Entities/Tower/WarlockEntity");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var ECSFactory = /** @class */ (function (_super) {
     __extends(ECSFactory, _super);
@@ -79,6 +80,7 @@ var ECSFactory = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.towerNode = null;
         _this.enemyNode = null;
+        _this.bulletNode = null;
         return _this;
     }
     ECSFactory_1 = ECSFactory;
@@ -93,10 +95,122 @@ var ECSFactory = /** @class */ (function (_super) {
         var canvas = cc.find("Canvas");
         this.towerNode = canvas.getChildByName("towerNode");
         this.enemyNode = canvas.getChildByName("enemyNode");
+        this.bulletNode = canvas.getChildByName("bulletNode");
     };
     ECSFactory.getInstance = function () {
         return ECSFactory_1._instance;
     };
+    //
+    ECSFactory.prototype.createArrowBulletEntity = function (tower_type, tower_level, w_pos, w_dst_pos, enemyID) {
+        return __awaiter(this, void 0, Promise, function () {
+            var entity, prefab, bullet, center_pos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        entity = new BulletEntity_1.default();
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/arrow_bullet", cc.Prefab)];
+                    case 1:
+                        prefab = _a.sent();
+                        bullet = cc.instantiate(prefab);
+                        this.bulletNode.addChild(bullet);
+                        center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+                        bullet.setPosition(center_pos);
+                        bullet.active = true;
+                        entity.baseComponent.entityID = ECSFactory_1.entityID++;
+                        entity.baseComponent.gameObject = bullet;
+                        entity.transformComponent.x = center_pos.x;
+                        entity.transformComponent.y = center_pos.y;
+                        entity.animateComponent.dstPos = w_dst_pos;
+                        entity.animateComponent.srcPos = w_pos;
+                        entity.roleComponent.level = tower_level;
+                        entity.attackComponent.enemyID = enemyID;
+                        return [2 /*return*/, entity];
+                }
+            });
+        });
+    };
+    ECSFactory.prototype.createCannonBulletEntity = function (tower_type, tower_level, w_pos, w_dst_pos, enemyID) {
+        return __awaiter(this, void 0, Promise, function () {
+            var entity, prefab, bullet, center_pos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        entity = new BulletEntity_1.default();
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/cannon_bullet", cc.Prefab)];
+                    case 1:
+                        prefab = _a.sent();
+                        bullet = cc.instantiate(prefab);
+                        this.bulletNode.addChild(bullet);
+                        center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+                        bullet.setPosition(center_pos);
+                        bullet.active = true;
+                        entity.baseComponent.entityID = ECSFactory_1.entityID++;
+                        entity.baseComponent.gameObject = bullet;
+                        entity.transformComponent.x = center_pos.x;
+                        entity.transformComponent.y = center_pos.y;
+                        entity.animateComponent.dstPos = w_dst_pos;
+                        entity.animateComponent.srcPos = w_pos;
+                        entity.roleComponent.level = tower_level;
+                        return [2 /*return*/, entity];
+                }
+            });
+        });
+    };
+    ECSFactory.prototype.createInfantryBulletEntity = function (tower_type, tower_level, w_pos, w_dst_pos, enemyID) {
+        return __awaiter(this, void 0, Promise, function () {
+            var entity, prefab, bullet, center_pos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        entity = new BulletEntity_1.default();
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/infantry_bullet", cc.Prefab)];
+                    case 1:
+                        prefab = _a.sent();
+                        bullet = cc.instantiate(prefab);
+                        this.bulletNode.addChild(bullet);
+                        center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+                        bullet.setPosition(center_pos);
+                        bullet.active = true;
+                        entity.baseComponent.entityID = ECSFactory_1.entityID++;
+                        entity.baseComponent.gameObject = bullet;
+                        entity.transformComponent.x = center_pos.x;
+                        entity.transformComponent.y = center_pos.y;
+                        entity.animateComponent.dstPos = w_dst_pos;
+                        entity.animateComponent.srcPos = w_pos;
+                        entity.roleComponent.level = tower_level;
+                        return [2 /*return*/, entity];
+                }
+            });
+        });
+    };
+    ECSFactory.prototype.createWarlockBulletEntity = function (tower_type, tower_level, w_pos, w_dst_pos, enemyID) {
+        return __awaiter(this, void 0, Promise, function () {
+            var entity, prefab, bullet, center_pos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        entity = new BulletEntity_1.default();
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/warlock_actor", cc.Prefab)];
+                    case 1:
+                        prefab = _a.sent();
+                        bullet = cc.instantiate(prefab);
+                        this.bulletNode.addChild(bullet);
+                        center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+                        bullet.setPosition(center_pos);
+                        bullet.active = true;
+                        entity.baseComponent.entityID = ECSFactory_1.entityID++;
+                        entity.baseComponent.gameObject = bullet;
+                        entity.transformComponent.x = center_pos.x;
+                        entity.transformComponent.y = center_pos.y;
+                        entity.animateComponent.dstPos = w_dst_pos;
+                        entity.animateComponent.srcPos = w_pos;
+                        entity.roleComponent.level = tower_level;
+                        return [2 /*return*/, entity];
+                }
+            });
+        });
+    };
+    //
     ECSFactory.prototype.createEnemyEntity = function (enemy_type, road_data, actor_params) {
         return __awaiter(this, void 0, Promise, function () {
             var entity, enemy_prefab, enemy;
@@ -162,6 +276,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.unitComponent.speed = actor_params.speed;
                         entity.unitComponent.attack = actor_params.attack;
                         entity.unitComponent.health = actor_params.health;
+                        entity.unitComponent.maxHp = actor_params.health;
                         entity.unitComponent.player_hurt = actor_params.player_hurt;
                         entity.unitComponent.bonues_chip = actor_params.bonues_chip;
                         return [2 /*return*/, entity];
@@ -169,6 +284,7 @@ var ECSFactory = /** @class */ (function (_super) {
             });
         });
     };
+    //
     ECSFactory.prototype.createArrowEntity = function (world_pos) {
         return __awaiter(this, void 0, Promise, function () {
             var entity, prefab, builded_tower, center_pos;
@@ -189,6 +305,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.x = center_pos.x;
                         entity.transformComponent.y = center_pos.y;
                         entity.roleComponent.type = Enum_1.TowerType.Arrow;
+                        entity.roleComponent.level = 1;
                         return [2 /*return*/, entity];
                 }
             });
@@ -214,6 +331,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.x = center_pos.x;
                         entity.transformComponent.y = center_pos.y;
                         entity.roleComponent.type = Enum_1.TowerType.Warlock;
+                        entity.roleComponent.level = 1;
                         return [2 /*return*/, entity];
                 }
             });
@@ -239,6 +357,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.x = center_pos.x;
                         entity.transformComponent.y = center_pos.y;
                         entity.roleComponent.type = Enum_1.TowerType.Cannon;
+                        entity.roleComponent.level = 1;
                         return [2 /*return*/, entity];
                 }
             });
@@ -264,6 +383,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.x = center_pos.x;
                         entity.transformComponent.y = center_pos.y;
                         entity.roleComponent.type = Enum_1.TowerType.Infantry;
+                        entity.roleComponent.level = 1;
                         return [2 /*return*/, entity];
                 }
             });

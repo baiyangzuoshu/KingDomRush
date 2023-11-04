@@ -16,6 +16,10 @@ import GameDataManager from "./Data/GameDataManager";
 import MapDataManager from "./Data/MapDataManager";
 import ECSFactory from "./ECS/ECSFactory";
 import ECSManager from "./ECS/ECSManager";
+import ECSUtil from "./ECS/ECSUtil";
+import AISystem from "./ECS/Systems/AISystem";
+import AnimateSystem from "./ECS/Systems/AnimateSystem";
+import AttackSystem from "./ECS/Systems/AttackSystem";
 import NavSystem from "./ECS/Systems/NavSystem";
 import GameApp from "./GameApp";
 import PlayerSoundManager from "./Manager/PlayerSoundManager";
@@ -44,6 +48,10 @@ export default class GameLanch extends cc.Component {
          this.addComponent(ECSManager)
          this.addComponent(NavSystem)
          this.addComponent(MapDataManager)
+         this.addComponent(AttackSystem)
+         this.addComponent(AISystem)
+         this.addComponent(AnimateSystem)
+         this.addComponent(ECSUtil)
     }
 
     start () {

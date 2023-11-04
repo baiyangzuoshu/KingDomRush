@@ -8,6 +8,7 @@ var UnitComponent = /** @class */ (function () {
     function UnitComponent() {
         this.speed = 0; // 速度
         this.health = 0; // 血
+        this.maxHp = 0; // 最大血量
         this.attack = 0; // 攻击力
         this.player_hurt = 0; // 对玩家的伤害值
         this.bonues_chip = 0; // 玩家打死怪物的奖励,也可以按照概率来报

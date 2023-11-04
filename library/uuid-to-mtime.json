@@ -4965,8 +4965,8 @@
     "relativePath": "AssetsPackge\\prefabs\\UI\\RoadMapUI.prefab"
   },
   "8b32ec46-a101-4421-9dfa-5d98f4274f4a": {
-    "asset": 1698795149839,
-    "meta": 1698795149842,
+    "asset": 1698970461820,
+    "meta": 1698970461826,
     "relativePath": "Scenes\\Boot.fire"
   },
   "215ec8ad-8648-4696-8da0-fb00ce9aac28": {
@@ -5624,16 +5624,6 @@
     "meta": 1698752907362,
     "relativePath": "Scripts\\UI\\RoadMapUIControl.ts"
   },
-  "9cf406e9-22be-48d2-a58c-7742de41a363": {
-    "asset": 1698798676362,
-    "meta": 1698798893288,
-    "relativePath": "Scripts\\ECS\\Components\\UnitComponent.ts"
-  },
-  "8358e971-10d6-48b3-8f73-b42470629c40": {
-    "asset": 1698798597328,
-    "meta": 1698798893330,
-    "relativePath": "Scripts\\ECS\\Entities\\EnemyEntity.ts"
-  },
   "a3d16508-6290-463c-860d-d8e4c9414574": {
     "asset": 1698799646359,
     "meta": 1698799905792,
@@ -5659,69 +5649,119 @@
     "meta": 1698881020126,
     "relativePath": "Scripts\\Game\\TowerBuilder.ts"
   },
-  "7dc19759-ab22-4933-942e-6a949325ad8e": {
-    "asset": 1698882588230,
-    "meta": 1698882767402,
-    "relativePath": "Scripts\\ECS\\Entities\\ArrowEntity.ts"
-  },
-  "570ff334-13f4-41a8-918f-0ea49646e17a": {
-    "asset": 1698882617971,
-    "meta": 1698882767407,
-    "relativePath": "Scripts\\ECS\\Entities\\CannonEntity.ts"
-  },
-  "713c621a-1b88-4b96-8cc6-812b27bade59": {
-    "asset": 1698882635198,
-    "meta": 1698882767410,
-    "relativePath": "Scripts\\ECS\\Entities\\InfantryEntity.ts"
-  },
-  "f54b0648-b2e6-4c28-88c6-0ff159358f6c": {
-    "asset": 1698882633409,
-    "meta": 1698882767415,
-    "relativePath": "Scripts\\ECS\\Entities\\WarlockEntity.ts"
-  },
-  "631bd821-e347-4fb6-aca3-16622733dadd": {
-    "asset": 1698883029341,
-    "meta": 1698883188485,
-    "relativePath": "Scripts\\ECS\\Components\\RoleComponent.ts"
-  },
-  "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
-    "asset": 1698883170058,
-    "meta": 1698883188548,
-    "relativePath": "Scripts\\ECS\\ECSFactory.ts"
-  },
-  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
-    "asset": 1698883184920,
-    "meta": 1698883188571,
-    "relativePath": "Scripts\\ECS\\ECSManager.ts"
-  },
-  "538b1798-5026-4faf-a1b5-b6da97998c68": {
-    "asset": 1698883063798,
-    "meta": 1698883188575,
-    "relativePath": "Scripts\\ECS\\Entities\\TowerEntity.ts"
-  },
   "f0bae30a-3b05-45c9-a5c7-48a06f882679": {
     "asset": 1698883136132,
     "meta": 1698883188581,
     "relativePath": "Scripts\\Enum.ts"
-  },
-  "57934dbd-030f-43e0-9bae-1c5c4747e414": {
-    "asset": 1698883751515,
-    "meta": 1698883907845,
-    "relativePath": "Scripts\\GameLanch.ts"
   },
   "dba06ff6-61a2-4531-9709-fca6af146229": {
     "asset": 1698883905661,
     "meta": 1698883907891,
     "relativePath": "Scripts\\UI\\GameUIControl.ts"
   },
-  "b5f791b2-04ce-4e10-8c22-e69586a6650e": {
-    "asset": 1698884018345,
-    "meta": 1698884041593,
-    "relativePath": "Scripts\\Data\\GameDataManager.ts"
-  },
   "d0903363-4258-4e1d-8fc8-92c5f6de7f27": {
     "asset": 1698884028657,
     "meta": 1698884041639,
     "relativePath": "Scripts\\Data\\MapDataManager.ts"
+  },
+  "99f8dd11-3bd7-4b66-982a-fd68557c8f01": {
+    "asset": 1698967840621,
+    "meta": 1698967840622,
+    "relativePath": "Scripts\\ECS\\Entities\\Tower"
+  },
+  "631bd821-e347-4fb6-aca3-16622733dadd": {
+    "asset": 1698968121946,
+    "meta": 1698968594209,
+    "relativePath": "Scripts\\ECS\\Components\\RoleComponent.ts"
+  },
+  "8358e971-10d6-48b3-8f73-b42470629c40": {
+    "asset": 1698967914253,
+    "meta": 1698968594283,
+    "relativePath": "Scripts\\ECS\\Entities\\EnemyEntity.ts"
+  },
+  "7dc19759-ab22-4933-942e-6a949325ad8e": {
+    "asset": 1698967919944,
+    "meta": 1698968594286,
+    "relativePath": "Scripts\\ECS\\Entities\\Tower\\ArrowEntity.ts"
+  },
+  "570ff334-13f4-41a8-918f-0ea49646e17a": {
+    "asset": 1698967924796,
+    "meta": 1698968594289,
+    "relativePath": "Scripts\\ECS\\Entities\\Tower\\CannonEntity.ts"
+  },
+  "713c621a-1b88-4b96-8cc6-812b27bade59": {
+    "asset": 1698967928992,
+    "meta": 1698968594293,
+    "relativePath": "Scripts\\ECS\\Entities\\Tower\\InfantryEntity.ts"
+  },
+  "f54b0648-b2e6-4c28-88c6-0ff159358f6c": {
+    "asset": 1698967932794,
+    "meta": 1698968594296,
+    "relativePath": "Scripts\\ECS\\Entities\\Tower\\WarlockEntity.ts"
+  },
+  "538b1798-5026-4faf-a1b5-b6da97998c68": {
+    "asset": 1698970549000,
+    "meta": 1698970966710,
+    "relativePath": "Scripts\\ECS\\Entities\\TowerEntity.ts"
+  },
+  "b5f791b2-04ce-4e10-8c22-e69586a6650e": {
+    "asset": 1698974676566,
+    "meta": 1699014684010,
+    "relativePath": "Scripts\\Data\\GameDataManager.ts"
+  },
+  "8c87e917-4fb9-45ce-9265-68e8a9d566b9": {
+    "asset": 1698996050209,
+    "meta": 1699014684016,
+    "relativePath": "Scripts\\ECS\\Components\\AnimateComponent.ts"
+  },
+  "8affa0ae-ab8a-4bfb-b06d-ea7b7d511277": {
+    "asset": 1699015627719,
+    "meta": 1699015713553,
+    "relativePath": "Scripts\\ECS\\Components\\AttackComponent.ts"
+  },
+  "37c8b8a1-d637-4324-8c3a-cc059c35a7ed": {
+    "asset": 1699016953700,
+    "meta": 1699017016577,
+    "relativePath": "Scripts\\ECS\\Entities\\BulletEntity.ts"
+  },
+  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
+    "asset": 1699063663481,
+    "meta": 1699063681921,
+    "relativePath": "Scripts\\ECS\\ECSManager.ts"
+  },
+  "78d679b3-1c2f-46f3-9a0b-216800cc0857": {
+    "asset": 1699063636801,
+    "meta": 1699063681932,
+    "relativePath": "Scripts\\ECS\\Systems\\AISystem.ts"
+  },
+  "544c86a1-0bf7-4110-9895-2a0ec064bfd9": {
+    "asset": 1699063856896,
+    "meta": 1699063861562,
+    "relativePath": "Scripts\\ECS\\Systems\\AttackSystem.ts"
+  },
+  "9cf406e9-22be-48d2-a58c-7742de41a363": {
+    "asset": 1699066204192,
+    "meta": 1699066339005,
+    "relativePath": "Scripts\\ECS\\Components\\UnitComponent.ts"
+  },
+  "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
+    "asset": 1699066238621,
+    "meta": 1699066339096,
+    "relativePath": "Scripts\\ECS\\ECSFactory.ts"
+  },
+  "57934dbd-030f-43e0-9bae-1c5c4747e414": {
+    "asset": 1699065916245,
+    "meta": 1699066339119,
+    "relativePath": "Scripts\\GameLanch.ts"
+  },
+  "1a3d2871-327a-40b7-a63a-1047bf336918": {
+    "asset": 1699066532095,
+    "meta": 1699066541764,
+    "relativePath": "Scripts\\ECS\\ECSUtil.ts"
+  },
+  "fa0c3372-1ff1-493f-9215-70ba3fa96b76": {
+    "asset": 1699066539250,
+    "meta": 1699066541791,
+    "relativePath": "Scripts\\ECS\\Systems\\AnimateSystem.ts"
   }
 }

@@ -215,7 +215,7 @@ export default class GameDataManager extends cc.Component {
         }
     }
     // end
-    public warlock_bullet_params = [
+    public arrow_bullet_params = [
         { // 等级1的子弹
             speed: 200,
             attack: 10,

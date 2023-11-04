@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets\\Scripts\\ECS\\Components\\AnimateComponent.ts"],"names":[],"mappings":";;;;;;AACA;IAAA;QACW,WAAM,GAAS,IAAI,CAAC;QACpB,WAAM,GAAS,IAAI,CAAC;IAC/B,CAAC;IAAD,uBAAC;AAAD,CAHA,AAGC,IAAA","file":"","sourceRoot":"/","sourcesContent":["\nexport default class AnimateComponent {\n    public srcPos:cc.Vec2=null;\n    public dstPos:cc.Vec2=null;\n}\n"]}
