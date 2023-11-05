@@ -5,7 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
-import { TowerType } from "../Enum";
+import { AnimateState, TowerType } from "../Enum";
 import ECSFactory from "./ECSFactory";
 import BulletEntity from "./Entities/BulletEntity";
 import EnemyEntity from "./Entities/EnemyEntity";
@@ -86,6 +86,25 @@ export default class ECSManager extends cc.Component {
         this.enemyEntityList.push(entity);
     }
     //
+    public cleanBulletEntity(){
+        for(let i=0;i<this.bulletEntityList.length;++i){
+            if(this.bulletEntityList[i].roleComponent.isDead){
+                this.bulletEntityList[i].baseComponent.gameObject.destroy();
+                this.bulletEntityList.splice(i,1);
+                --i;
+            }
+        }
+    }
+    public cleanEnemyEntity(){
+        for(let i=0;i<this.enemyEntityList.length;++i){
+            if(this.enemyEntityList[i].roleComponent.isDead){
+                this.enemyEntityList[i].baseComponent.gameObject.destroy();
+                this.enemyEntityList.splice(i,1);
+                --i;
+            }
+        }
+    }
+    //
     public getEnemyEntityByID(id:number):EnemyEntity{
         for(let i=0;i<this.enemyEntityList.length;++i){
             if(this.enemyEntityList[i].baseComponent.entityID==id){
@@ -97,6 +116,9 @@ export default class ECSManager extends cc.Component {
     //
     navSystemEnemyUpdate(dt:number){
         for(let i=0;i<this.enemyEntityList.length;++i){
+            if(this.enemyEntityList[i].roleComponent.isDead){
+                continue;
+            }
             NavSystem.getInstance().onUpdate(dt,this.enemyEntityList[i].navComponent,this.enemyEntityList[i].baseComponent,this.enemyEntityList[i].transformComponent);
         }
     }
@@ -118,7 +140,7 @@ export default class ECSManager extends cc.Component {
                     continue;
                 }
 
-                AISystem.getInstance().onUpdate(dt,this.towerEntityList[i].transformComponent,this.towerEntityList[i].roleComponent,
+                AISystem.getInstance().onUpdate(dt,this.towerEntityList[i].animateComponent,this.towerEntityList[i].roleComponent,
                     towerAttackComponent,this.towerEntityList[i].baseComponent,
                     this.enemyEntityList[j].transformComponent,this.enemyEntityList[j].baseComponent);
             }
@@ -134,18 +156,32 @@ export default class ECSManager extends cc.Component {
         }
     }
 
-    animateSystemBullet(dt:number){
+    async animateSystemBullet(dt:number){
         for(let i=0;i<this.bulletEntityList.length;++i){
             let bullet=this.bulletEntityList[i];
             if(bullet.roleComponent.isDead){
                 continue;
             }
 
-            AnimateSystem.getInstance().onBulletUpdate(dt,bullet.roleComponent,bullet.animateComponent,bullet.attackComponent,bullet.baseComponent);
+            if(bullet.animateComponent.state==AnimateState.start){
+                await AnimateSystem.getInstance().onBulletUpdate(dt,bullet.roleComponent,bullet.animateComponent,bullet.attackComponent,bullet.baseComponent);
+            }
         }
     }
 
-    update (dt) {
+    async animateSystemArrow(dt:number){
+        for(let i=0;i<this.towerEntityList.length;++i){
+            let tower=this.towerEntityList[i];
+            if(tower.roleComponent.isDead){
+                continue;
+            }
+            if(tower.animateComponent.state==AnimateState.start){
+                await AnimateSystem.getInstance().onTowerUpdate(dt,tower.roleComponent,tower.animateComponent,tower.baseComponent,tower.attackComponent);
+            }
+        }
+    }
+
+    async update (dt) {
         //敌军导航
         this.navSystemEnemyUpdate(dt);
         //塔的AI
@@ -153,6 +189,10 @@ export default class ECSManager extends cc.Component {
         //
         this.attackSystemTower(dt);
         //
-        this.animateSystemBullet(dt);
+        await this.animateSystemBullet(dt);
+        await this.animateSystemArrow(dt);
+        //
+        this.cleanBulletEntity();
+        this.cleanEnemyEntity();
     }
 }

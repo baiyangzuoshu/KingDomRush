@@ -122,7 +122,9 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.y = center_pos.y;
                         entity.animateComponent.dstPos = w_dst_pos;
                         entity.animateComponent.srcPos = w_pos;
+                        entity.animateComponent.state = Enum_1.AnimateState.start;
                         entity.roleComponent.level = tower_level;
+                        entity.roleComponent.type = tower_type;
                         entity.attackComponent.enemyID = enemyID;
                         return [2 /*return*/, entity];
                 }
@@ -150,7 +152,10 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.y = center_pos.y;
                         entity.animateComponent.dstPos = w_dst_pos;
                         entity.animateComponent.srcPos = w_pos;
+                        entity.animateComponent.state = Enum_1.AnimateState.start;
                         entity.roleComponent.level = tower_level;
+                        entity.roleComponent.type = tower_type;
+                        entity.attackComponent.enemyID = enemyID;
                         return [2 /*return*/, entity];
                 }
             });
@@ -177,7 +182,10 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.y = center_pos.y;
                         entity.animateComponent.dstPos = w_dst_pos;
                         entity.animateComponent.srcPos = w_pos;
+                        entity.animateComponent.state = Enum_1.AnimateState.start;
                         entity.roleComponent.level = tower_level;
+                        entity.roleComponent.type = tower_type;
+                        entity.attackComponent.enemyID = enemyID;
                         return [2 /*return*/, entity];
                 }
             });
@@ -204,7 +212,10 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.y = center_pos.y;
                         entity.animateComponent.dstPos = w_dst_pos;
                         entity.animateComponent.srcPos = w_pos;
+                        entity.animateComponent.state = Enum_1.AnimateState.start;
                         entity.roleComponent.level = tower_level;
+                        entity.roleComponent.type = tower_type;
+                        entity.attackComponent.enemyID = enemyID;
                         return [2 /*return*/, entity];
                 }
             });

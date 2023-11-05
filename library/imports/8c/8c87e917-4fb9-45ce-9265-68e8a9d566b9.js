@@ -4,10 +4,13 @@ cc._RF.push(module, '8c87ekXT7lFzpJlaOip1Wa5', 'AnimateComponent');
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Enum_1 = require("../../Enum");
 var AnimateComponent = /** @class */ (function () {
     function AnimateComponent() {
         this.srcPos = null;
         this.dstPos = null;
+        this.state = Enum_1.AnimateState.None;
+        this.id = 0;
     }
     return AnimateComponent;
 }());

@@ -4,6 +4,7 @@ cc._RF.push(module, '538b1eYUCZPr6G1ttqXmYxo', 'TowerEntity');
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var AnimateComponent_1 = require("../Components/AnimateComponent");
 var AttackComponent_1 = require("../Components/AttackComponent");
 var BaseComponent_1 = require("../Components/BaseComponent");
 var RoleComponent_1 = require("../Components/RoleComponent");
@@ -14,6 +15,7 @@ var TowerEntity = /** @class */ (function () {
         this.transformComponent = new TransformComponent_1.default();
         this.roleComponent = new RoleComponent_1.default();
         this.attackComponent = new AttackComponent_1.default();
+        this.animateComponent = new AnimateComponent_1.default();
     }
     return TowerEntity;
 }());

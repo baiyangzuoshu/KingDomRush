@@ -30,6 +30,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var GameDataManager_1 = require("../../Data/GameDataManager");
+var Enum_1 = require("../../Enum");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var AISystem = /** @class */ (function (_super) {
     __extends(AISystem, _super);
@@ -49,7 +50,7 @@ var AISystem = /** @class */ (function (_super) {
     AISystem.getInstance = function () {
         return AISystem_1._instance;
     };
-    AISystem.prototype.onUpdate = function (dt, towerTransformComponent, towerRoleComponent, towerAttackComponent, towerBaseComponent, enemyTransformComponent, enemyBaseComponent) {
+    AISystem.prototype.onUpdate = function (dt, towerAnimateComponent, towerRoleComponent, towerAttackComponent, towerBaseComponent, enemyTransformComponent, enemyBaseComponent) {
         var src = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
         var search_R = GameDataManager_1.default.getInstance().arrow_tower_params[towerRoleComponent.level - 1].search_R;
         var dst = enemyBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
@@ -57,8 +58,10 @@ var AISystem = /** @class */ (function (_super) {
         if (search_R >= (dir.mag())) {
             // 攻击
             towerAttackComponent.activeTime = 1.0;
-            towerAttackComponent.enemyID = enemyBaseComponent.entityID;
-            console.log("enemyBaseComponent.entityID=", enemyBaseComponent.entityID);
+            //towerAttackComponent.enemyID = enemyBaseComponent.entityID;
+            towerAnimateComponent.id = enemyBaseComponent.entityID;
+            towerAnimateComponent.dstPos = dst;
+            towerAnimateComponent.state = Enum_1.AnimateState.start;
             return true;
         }
         return false;

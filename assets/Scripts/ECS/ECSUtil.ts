@@ -31,7 +31,7 @@ export default class ECSUtil extends cc.Component {
         return ECSUtil._instance
     }
 
-    public on_bullet_shoot(attack_value:number,enemyUnitComponent:UnitComponent,enemyBaseComponent:BaseComponent,enemyRoleComponent:RoleComponent){
+    public on_arrowBullet_shoot(attack_value:number,enemyUnitComponent:UnitComponent,enemyBaseComponent:BaseComponent,enemyRoleComponent:RoleComponent){
         enemyUnitComponent.health -= attack_value;
         if (enemyUnitComponent.health <= 0) {
             enemyUnitComponent.health = 0;
@@ -41,9 +41,8 @@ export default class ECSUtil extends cc.Component {
             EventManager.getInstance().emit(GameUI.show_game_uchip);
             // end 
         }
-        else { // 更新学条
-            var per = enemyUnitComponent.health / enemyUnitComponent.maxHp;
-            enemyBaseComponent.gameObject.getChildByName("blood_bar").getComponent(cc.ProgressBar).progress = per;
-        }
+        
+        var per = enemyUnitComponent.health / enemyUnitComponent.maxHp;
+        enemyBaseComponent.gameObject.getChildByName("blood_bar").getComponent(cc.ProgressBar).progress = per;
     }
 }

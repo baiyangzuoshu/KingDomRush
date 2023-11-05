@@ -1,3 +1,5 @@
+import NavComponent from "./ECS/Components/NavComponent";
+
 export enum ViewUI{
     HomeUI="HomeUI",
     GameUI="GameUI",
@@ -20,4 +22,10 @@ export enum TowerType{
     Warlock=2,
     Cannon=3,
     Infantry=4,
+}
+
+export enum AnimateState{
+    None=1,
+    start=2,
+    stop=3
 }

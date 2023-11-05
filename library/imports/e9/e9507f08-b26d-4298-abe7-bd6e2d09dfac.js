@@ -186,6 +186,25 @@ var ECSManager = /** @class */ (function (_super) {
         });
     };
     //
+    ECSManager.prototype.cleanBulletEntity = function () {
+        for (var i = 0; i < this.bulletEntityList.length; ++i) {
+            if (this.bulletEntityList[i].roleComponent.isDead) {
+                this.bulletEntityList[i].baseComponent.gameObject.destroy();
+                this.bulletEntityList.splice(i, 1);
+                --i;
+            }
+        }
+    };
+    ECSManager.prototype.cleanEnemyEntity = function () {
+        for (var i = 0; i < this.enemyEntityList.length; ++i) {
+            if (this.enemyEntityList[i].roleComponent.isDead) {
+                this.enemyEntityList[i].baseComponent.gameObject.destroy();
+                this.enemyEntityList.splice(i, 1);
+                --i;
+            }
+        }
+    };
+    //
     ECSManager.prototype.getEnemyEntityByID = function (id) {
         for (var i = 0; i < this.enemyEntityList.length; ++i) {
             if (this.enemyEntityList[i].baseComponent.entityID == id) {
@@ -197,6 +216,9 @@ var ECSManager = /** @class */ (function (_super) {
     //
     ECSManager.prototype.navSystemEnemyUpdate = function (dt) {
         for (var i = 0; i < this.enemyEntityList.length; ++i) {
+            if (this.enemyEntityList[i].roleComponent.isDead) {
+                continue;
+            }
             NavSystem_1.default.getInstance().onUpdate(dt, this.enemyEntityList[i].navComponent, this.enemyEntityList[i].baseComponent, this.enemyEntityList[i].transformComponent);
         }
     };
@@ -214,7 +236,7 @@ var ECSManager = /** @class */ (function (_super) {
                 if (this.enemyEntityList[j].roleComponent.isDead) {
                     continue;
                 }
-                AISystem_1.default.getInstance().onUpdate(dt, this.towerEntityList[i].transformComponent, this.towerEntityList[i].roleComponent, towerAttackComponent, this.towerEntityList[i].baseComponent, this.enemyEntityList[j].transformComponent, this.enemyEntityList[j].baseComponent);
+                AISystem_1.default.getInstance().onUpdate(dt, this.towerEntityList[i].animateComponent, this.towerEntityList[i].roleComponent, towerAttackComponent, this.towerEntityList[i].baseComponent, this.enemyEntityList[j].transformComponent, this.enemyEntityList[j].baseComponent);
             }
         }
     };
@@ -227,23 +249,85 @@ var ECSManager = /** @class */ (function (_super) {
         }
     };
     ECSManager.prototype.animateSystemBullet = function (dt) {
-        for (var i = 0; i < this.bulletEntityList.length; ++i) {
-            var bullet = this.bulletEntityList[i];
-            if (bullet.roleComponent.isDead) {
-                continue;
-            }
-            AnimateSystem_1.default.getInstance().onBulletUpdate(dt, bullet.roleComponent, bullet.animateComponent, bullet.attackComponent, bullet.baseComponent);
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var i, bullet;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        i = 0;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i < this.bulletEntityList.length)) return [3 /*break*/, 4];
+                        bullet = this.bulletEntityList[i];
+                        if (bullet.roleComponent.isDead) {
+                            return [3 /*break*/, 3];
+                        }
+                        if (!(bullet.animateComponent.state == Enum_1.AnimateState.start)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, AnimateSystem_1.default.getInstance().onBulletUpdate(dt, bullet.roleComponent, bullet.animateComponent, bullet.attackComponent, bullet.baseComponent)];
+                    case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3:
+                        ++i;
+                        return [3 /*break*/, 1];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ECSManager.prototype.animateSystemArrow = function (dt) {
+        return __awaiter(this, void 0, void 0, function () {
+            var i, tower;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        i = 0;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i < this.towerEntityList.length)) return [3 /*break*/, 4];
+                        tower = this.towerEntityList[i];
+                        if (tower.roleComponent.isDead) {
+                            return [3 /*break*/, 3];
+                        }
+                        if (!(tower.animateComponent.state == Enum_1.AnimateState.start)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, AnimateSystem_1.default.getInstance().onTowerUpdate(dt, tower.roleComponent, tower.animateComponent, tower.baseComponent, tower.attackComponent)];
+                    case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3:
+                        ++i;
+                        return [3 /*break*/, 1];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
     };
     ECSManager.prototype.update = function (dt) {
-        //敌军导航
-        this.navSystemEnemyUpdate(dt);
-        //塔的AI
-        this.AISystemTower(dt);
-        //
-        this.attackSystemTower(dt);
-        //
-        this.animateSystemBullet(dt);
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        //敌军导航
+                        this.navSystemEnemyUpdate(dt);
+                        //塔的AI
+                        this.AISystemTower(dt);
+                        //
+                        this.attackSystemTower(dt);
+                        //
+                        return [4 /*yield*/, this.animateSystemBullet(dt)];
+                    case 1:
+                        //
+                        _a.sent();
+                        return [4 /*yield*/, this.animateSystemArrow(dt)];
+                    case 2:
+                        _a.sent();
+                        //
+                        this.cleanBulletEntity();
+                        this.cleanEnemyEntity();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     var ECSManager_1;
     ECSManager._instance = null;

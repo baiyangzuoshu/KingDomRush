@@ -6,7 +6,7 @@
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
 import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
-import { Enemy, TowerType } from "../Enum";
+import { AnimateState, Enemy, TowerType } from "../Enum";
 import BulletEntity from "./Entities/BulletEntity";
 import EnemyEntity from "./Entities/EnemyEntity";
 import ArrowEntity from "./Entities/Tower/ArrowEntity";
@@ -64,8 +64,10 @@ export default class ECSFactory extends cc.Component {
 
         entity.animateComponent.dstPos=w_dst_pos;
         entity.animateComponent.srcPos=w_pos;
+        entity.animateComponent.state=AnimateState.start;
 
         entity.roleComponent.level=tower_level;
+        entity.roleComponent.type=tower_type;
 
         entity.attackComponent.enemyID=enemyID;
 
@@ -92,8 +94,12 @@ export default class ECSFactory extends cc.Component {
 
         entity.animateComponent.dstPos=w_dst_pos;
         entity.animateComponent.srcPos=w_pos;
+        entity.animateComponent.state=AnimateState.start;
 
         entity.roleComponent.level=tower_level;
+        entity.roleComponent.type=tower_type;
+
+        entity.attackComponent.enemyID=enemyID;
 
         return entity;
     }
@@ -118,8 +124,12 @@ export default class ECSFactory extends cc.Component {
 
         entity.animateComponent.dstPos=w_dst_pos;
         entity.animateComponent.srcPos=w_pos;
+        entity.animateComponent.state=AnimateState.start;
 
         entity.roleComponent.level=tower_level;
+        entity.roleComponent.type=tower_type;
+
+        entity.attackComponent.enemyID=enemyID;
 
         return entity;
     }
@@ -144,8 +154,12 @@ export default class ECSFactory extends cc.Component {
 
         entity.animateComponent.dstPos=w_dst_pos;
         entity.animateComponent.srcPos=w_pos;
+        entity.animateComponent.state=AnimateState.start;
 
         entity.roleComponent.level=tower_level;
+        entity.roleComponent.type=tower_type;
+
+        entity.attackComponent.enemyID=enemyID;
 
         return entity;
     }

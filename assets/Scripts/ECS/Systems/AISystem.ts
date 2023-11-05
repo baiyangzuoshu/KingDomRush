@@ -6,6 +6,8 @@
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
 import GameDataManager from "../../Data/GameDataManager";
+import { AnimateState } from "../../Enum";
+import AnimateComponent from "../Components/AnimateComponent";
 import AttackComponent from "../Components/AttackComponent";
 import BaseComponent from "../Components/BaseComponent";
 import RoleComponent from "../Components/RoleComponent";
@@ -31,7 +33,7 @@ export default class AISystem extends cc.Component {
         return AISystem._instance;
     }
 
-    onUpdate(dt:number,towerTransformComponent:TransformComponent,towerRoleComponent:RoleComponent,towerAttackComponent:AttackComponent,
+    onUpdate(dt:number,towerAnimateComponent:AnimateComponent,towerRoleComponent:RoleComponent,towerAttackComponent:AttackComponent,
         towerBaseComponent,enemyTransformComponent:TransformComponent,enemyBaseComponent:BaseComponent){
 
         var src = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0))
@@ -41,7 +43,10 @@ export default class AISystem extends cc.Component {
         if (search_R >= (dir.mag())) {
             // 攻击
             towerAttackComponent.activeTime=1.0;
-            towerAttackComponent.enemyID = enemyBaseComponent.entityID;
+            //towerAttackComponent.enemyID = enemyBaseComponent.entityID;
+            towerAnimateComponent.id=enemyBaseComponent.entityID;
+            towerAnimateComponent.dstPos=dst;
+            towerAnimateComponent.state=AnimateState.start;
             return true
         }
         return false

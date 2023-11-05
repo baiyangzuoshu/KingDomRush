@@ -1,3 +1,4 @@
+import AnimateComponent from "../Components/AnimateComponent";
 import AttackComponent from "../Components/AttackComponent";
 import BaseComponent from "../Components/BaseComponent";
 import RoleComponent from "../Components/RoleComponent";
@@ -8,4 +9,5 @@ export default class TowerEntity {
     public transformComponent:TransformComponent=new TransformComponent();
     public roleComponent:RoleComponent=new RoleComponent();
     public attackComponent:AttackComponent=new AttackComponent();
+    public animateComponent:AnimateComponent=new AnimateComponent();
 }
