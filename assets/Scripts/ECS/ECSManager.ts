@@ -151,7 +151,10 @@ export default class ECSManager extends cc.Component {
         for(let i=0;i<this.towerEntityList.length;++i){
             let tower=this.towerEntityList[i];
             if(tower.attackComponent.enemyID>0){
-                AttackSystem.getInstance().onUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
+                let enemy=this.getEnemyEntityByID(tower.attackComponent.enemyID);
+                if(!enemy.roleComponent.isDead){
+                    AttackSystem.getInstance().onUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
+                }
             }
         }
     }
@@ -163,7 +166,7 @@ export default class ECSManager extends cc.Component {
                 continue;
             }
 
-            if(bullet.animateComponent.state==AnimateState.start){
+            if(bullet.animateComponent.state!=AnimateState.Stop){
                 await AnimateSystem.getInstance().onBulletUpdate(dt,bullet.roleComponent,bullet.animateComponent,bullet.attackComponent,bullet.baseComponent);
             }
         }
@@ -175,7 +178,7 @@ export default class ECSManager extends cc.Component {
             if(tower.roleComponent.isDead){
                 continue;
             }
-            if(tower.animateComponent.state==AnimateState.start){
+            if(tower.animateComponent.state!=AnimateState.Stop){
                 await AnimateSystem.getInstance().onTowerUpdate(dt,tower.roleComponent,tower.animateComponent,tower.baseComponent,tower.attackComponent);
             }
         }

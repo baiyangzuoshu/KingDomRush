@@ -43,10 +43,9 @@ export default class AISystem extends cc.Component {
         if (search_R >= (dir.mag())) {
             // 攻击
             towerAttackComponent.activeTime=1.0;
-            //towerAttackComponent.enemyID = enemyBaseComponent.entityID;
             towerAnimateComponent.id=enemyBaseComponent.entityID;
             towerAnimateComponent.dstPos=dst;
-            towerAnimateComponent.state=AnimateState.start;
+            towerAnimateComponent.state=AnimateState.Start;
             return true
         }
         return false

@@ -64,7 +64,7 @@ export default class ECSFactory extends cc.Component {
 
         entity.animateComponent.dstPos=w_dst_pos;
         entity.animateComponent.srcPos=w_pos;
-        entity.animateComponent.state=AnimateState.start;
+        entity.animateComponent.state=AnimateState.Start;
 
         entity.roleComponent.level=tower_level;
         entity.roleComponent.type=tower_type;
@@ -94,7 +94,7 @@ export default class ECSFactory extends cc.Component {
 
         entity.animateComponent.dstPos=w_dst_pos;
         entity.animateComponent.srcPos=w_pos;
-        entity.animateComponent.state=AnimateState.start;
+        entity.animateComponent.state=AnimateState.Start;
 
         entity.roleComponent.level=tower_level;
         entity.roleComponent.type=tower_type;
@@ -124,7 +124,7 @@ export default class ECSFactory extends cc.Component {
 
         entity.animateComponent.dstPos=w_dst_pos;
         entity.animateComponent.srcPos=w_pos;
-        entity.animateComponent.state=AnimateState.start;
+        entity.animateComponent.state=AnimateState.Start;
 
         entity.roleComponent.level=tower_level;
         entity.roleComponent.type=tower_type;
@@ -137,12 +137,12 @@ export default class ECSFactory extends cc.Component {
     async createWarlockBulletEntity(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number):Promise<BulletEntity>{
         let entity:BulletEntity=new BulletEntity();
 
-        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/warlock_actor",cc.Prefab) as cc.Prefab;
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/warlock_bullet",cc.Prefab) as cc.Prefab;
 
         let bullet = cc.instantiate(prefab) as cc.Node;
         this.bulletNode.addChild(bullet);
         
-        var center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+        var center_pos = this.bulletNode.convertToNodeSpaceAR(cc.v2(w_pos.x,w_pos.y+20));
         bullet.setPosition(center_pos);
         bullet.active = true;
 
@@ -154,7 +154,7 @@ export default class ECSFactory extends cc.Component {
 
         entity.animateComponent.dstPos=w_dst_pos;
         entity.animateComponent.srcPos=w_pos;
-        entity.animateComponent.state=AnimateState.start;
+        entity.animateComponent.state=AnimateState.Start;
 
         entity.roleComponent.level=tower_level;
         entity.roleComponent.type=tower_type;

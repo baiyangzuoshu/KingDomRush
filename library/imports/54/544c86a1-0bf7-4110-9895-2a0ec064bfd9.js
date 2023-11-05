@@ -54,8 +54,8 @@ var AttackSystem = /** @class */ (function (_super) {
         if (null == enemyEntity) {
             return;
         }
-        var center_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 29));
-        var enemy_pos = enemyEntity.baseComponent.gameObject.convertToWorldSpaceAR(cc.v2(29, -29));
+        var center_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
+        var enemy_pos = enemyEntity.baseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
         ECSManager_1.default.getInstance().createBulletEntity(towerRoleComponent.type, towerRoleComponent.level, center_pos, enemy_pos, towerAttackComponent.enemyID);
         towerAttackComponent.enemyID = 0;
     };

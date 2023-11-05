@@ -11,6 +11,7 @@ var AnimateComponent = /** @class */ (function () {
         this.dstPos = null;
         this.state = Enum_1.AnimateState.None;
         this.id = 0;
+        this.time = 0;
     }
     return AnimateComponent;
 }());

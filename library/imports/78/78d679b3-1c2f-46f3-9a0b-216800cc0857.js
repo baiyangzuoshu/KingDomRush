@@ -58,10 +58,9 @@ var AISystem = /** @class */ (function (_super) {
         if (search_R >= (dir.mag())) {
             // 攻击
             towerAttackComponent.activeTime = 1.0;
-            //towerAttackComponent.enemyID = enemyBaseComponent.entityID;
             towerAnimateComponent.id = enemyBaseComponent.entityID;
             towerAnimateComponent.dstPos = dst;
-            towerAnimateComponent.state = Enum_1.AnimateState.start;
+            towerAnimateComponent.state = Enum_1.AnimateState.Start;
             return true;
         }
         return false;

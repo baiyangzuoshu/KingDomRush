@@ -90,6 +90,7 @@ var AnimateSystem = /** @class */ (function (_super) {
     AnimateSystem.getInstance = function () {
         return AnimateSystem_1._instance;
     };
+    //
     AnimateSystem.prototype.onTowerUpdate = function (dt, towerRoleComponent, arrowAnimateComponent, arrowBaseComponent, towerAttackComponent) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -99,8 +100,98 @@ var AnimateSystem = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.onArrowUpdate(dt, arrowAnimateComponent, arrowBaseComponent, towerAttackComponent)];
                     case 1:
                         _a.sent();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 2:
+                        if (!(Enum_1.TowerType.Warlock == towerRoleComponent.type)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.onWarlockUpdate(dt, arrowAnimateComponent, arrowBaseComponent, towerAttackComponent)];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AnimateSystem.prototype.onWarlockUpdate = function (dt, warlockAnimateComponent, warlockBaseComponent, towerAttackComponent) {
+        return __awaiter(this, void 0, void 0, function () {
+            var anim, frame_anim, tower_anim, i, sf, man, frame_anim, w_start_pos, w_dst_pos, b_up, shoot_up_anim, i, sf, shoot_down_anim, i, sf;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        //this._play_tower_anim();
+                        //this._play_shoot_man_anim(w_dst_pos);
+                        warlockAnimateComponent.time -= dt;
+                        if (!(warlockAnimateComponent.state == Enum_1.AnimateState.Start)) return [3 /*break*/, 5];
+                        anim = warlockBaseComponent.gameObject.getChildByName("anim");
+                        frame_anim = anim.addComponent(FrameAnimate_1.default);
+                        tower_anim = [];
+                        i = 0;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i <= 4)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/fashi_tower/fashi1/fashi_" + i, cc.SpriteFrame)];
+                    case 2:
+                        sf = _a.sent();
+                        tower_anim.push(sf);
+                        _a.label = 3;
+                    case 3:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 4:
+                        frame_anim.sprite_frames = tower_anim;
+                        frame_anim.duration = 0.1;
+                        warlockAnimateComponent.time = 0.1;
+                        warlockAnimateComponent.state = Enum_1.AnimateState.Playing;
+                        return [3 /*break*/, 16];
+                    case 5:
+                        if (!(warlockAnimateComponent.state == Enum_1.AnimateState.Playing && warlockAnimateComponent.time <= 0)) return [3 /*break*/, 16];
+                        man = warlockBaseComponent.gameObject.getChildByName("man");
+                        frame_anim = man.addComponent(FrameAnimate_1.default);
+                        w_start_pos = man.convertToWorldSpaceAR(cc.v2(0, 0));
+                        w_dst_pos = warlockAnimateComponent.dstPos;
+                        b_up = w_start_pos.y < w_dst_pos.y;
+                        if (!b_up) return [3 /*break*/, 10];
+                        shoot_up_anim = [];
+                        i = 0;
+                        _a.label = 6;
+                    case 6:
+                        if (!(i <= 9)) return [3 /*break*/, 9];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/fashi_tower/shoot_man_1/up/up_" + i, cc.SpriteFrame)];
+                    case 7:
+                        sf = _a.sent();
+                        shoot_up_anim.push(sf);
+                        _a.label = 8;
+                    case 8:
+                        i++;
+                        return [3 /*break*/, 6];
+                    case 9:
+                        frame_anim.sprite_frames = shoot_up_anim;
+                        frame_anim.duration = 0.1;
+                        return [3 /*break*/, 15];
+                    case 10:
+                        shoot_down_anim = [];
+                        i = 0;
+                        _a.label = 11;
+                    case 11:
+                        if (!(i <= 9)) return [3 /*break*/, 14];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/fashi_tower/shoot_man_1/down/down_" + i, cc.SpriteFrame)];
+                    case 12:
+                        sf = _a.sent();
+                        shoot_down_anim.push(sf);
+                        _a.label = 13;
+                    case 13:
+                        i++;
+                        return [3 /*break*/, 11];
+                    case 14:
+                        frame_anim.sprite_frames = shoot_down_anim;
+                        frame_anim.duration = 0.1;
+                        _a.label = 15;
+                    case 15:
+                        //end
+                        towerAttackComponent.enemyID = warlockAnimateComponent.id;
+                        warlockAnimateComponent.state = Enum_1.AnimateState.Stop;
+                        _a.label = 16;
+                    case 16: return [2 /*return*/];
                 }
             });
         });
@@ -164,12 +255,13 @@ var AnimateSystem = /** @class */ (function (_super) {
                     case 10:
                         //end 
                         towerAttackComponent.enemyID = arrowAnimateComponent.id;
-                        arrowAnimateComponent.state = Enum_1.AnimateState.stop;
+                        arrowAnimateComponent.state = Enum_1.AnimateState.Stop;
                         return [2 /*return*/];
                 }
             });
         });
     };
+    //
     AnimateSystem.prototype.onBulletUpdate = function (dt, bulletRoleComponent, bulletAnimateComponent, bulletAttackComponent, bulletBaseComponent) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -179,8 +271,75 @@ var AnimateSystem = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.onArrowBulletUpdate(dt, bulletRoleComponent, bulletAnimateComponent, bulletAttackComponent, bulletBaseComponent)];
                     case 1:
                         _a.sent();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 2:
+                        if (!(Enum_1.TowerType.Warlock == bulletRoleComponent.type)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.onWarlockBulletUpdate(dt, bulletRoleComponent, bulletAnimateComponent, bulletAttackComponent, bulletBaseComponent)];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AnimateSystem.prototype.onWarlockBulletUpdate = function (dt, bulletRoleComponent, bulletAnimateComponent, bulletAttackComponent, bulletBaseComponent) {
+        return __awaiter(this, void 0, void 0, function () {
+            var bullet_level, speed, attack, enemyEntity, shoot_enemy, w_start_pos, w_dst_pos, anim, start_pos, dst_pos, dir, len, time, after_pos, m, bomb_anim, i, sf, func, end_func, seq;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        bullet_level = bulletRoleComponent.level;
+                        speed = GameDataManager_1.default.getInstance().warlock_bullet_params[bullet_level - 1].speed;
+                        attack = GameDataManager_1.default.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
+                        enemyEntity = ECSManager_1.default.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
+                        shoot_enemy = enemyEntity.baseComponent.gameObject;
+                        w_start_pos = bulletAnimateComponent.srcPos;
+                        w_dst_pos = bulletAnimateComponent.dstPos;
+                        anim = bulletBaseComponent.gameObject.getChildByName("anim");
+                        start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(cc.v2(w_start_pos.x, w_start_pos.y + 30));
+                        dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
+                        bulletBaseComponent.gameObject.setPosition(start_pos);
+                        dir = w_dst_pos.sub(w_start_pos);
+                        len = (dir.mag());
+                        time = len / speed;
+                        after_pos = cc.v2(0, -30);
+                        w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
+                        dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
+                        m = cc.moveBy(time, w_dst_pos.x - w_start_pos.x, w_dst_pos.y - w_start_pos.y);
+                        bomb_anim = [];
+                        i = 0;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i <= 8)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/fashi_tower/bomb/bomb_" + i, cc.SpriteFrame)];
+                    case 2:
+                        sf = _a.sent();
+                        bomb_anim.push(sf);
+                        _a.label = 3;
+                    case 3:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 4:
+                        func = cc.callFunc(function () {
+                            ECSUtil_1.default.getInstance().on_arrowBullet_shoot(attack, enemyEntity.unitComponent, enemyEntity.baseComponent, enemyEntity.roleComponent);
+                            var frame_anim = anim.addComponent(FrameAnimate_1.default);
+                            frame_anim.sprite_frames = bomb_anim;
+                            frame_anim.duration = 0.1;
+                            frame_anim.play_once(function () {
+                                //this.on_bullet_bomb(w_dst_pos);
+                                //this.node.removeFromParent();
+                            }.bind(this));
+                            // 播放爆炸动画
+                        }.bind(this), anim);
+                        end_func = cc.callFunc(function () {
+                            bulletRoleComponent.isDead = true;
+                            bulletAttackComponent.enemyID = 0;
+                        }.bind(this), bulletBaseComponent.gameObject);
+                        seq = cc.sequence([m, func, cc.delayTime(0.1), end_func]);
+                        bulletBaseComponent.gameObject.runAction(seq);
+                        bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
+                        return [2 /*return*/];
                 }
             });
         });
@@ -249,7 +408,7 @@ var AnimateSystem = /** @class */ (function (_super) {
                         }
                         rot = cc.rotateBy(time, degree);
                         anim.runAction(rot);
-                        bulletAnimateComponent.state = Enum_1.AnimateState.stop;
+                        bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
                         return [2 /*return*/];
                 }
             });

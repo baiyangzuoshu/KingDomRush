@@ -206,6 +206,24 @@ var GameDataManager = /** @class */ (function (_super) {
                 build_chip: 600,
             },
         ];
+        _this.warlock_bullet_params = [
+            {
+                speed: 200,
+                attack: 10,
+            },
+            {
+                speed: 200,
+                attack: 10
+            },
+            {
+                speed: 200,
+                attack: 10
+            },
+            {
+                speed: 200,
+                attack: 10
+            },
+        ];
         return _this;
     }
     GameDataManager.prototype.onLoad = function () {

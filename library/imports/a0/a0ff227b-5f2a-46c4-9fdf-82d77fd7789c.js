@@ -122,7 +122,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.y = center_pos.y;
                         entity.animateComponent.dstPos = w_dst_pos;
                         entity.animateComponent.srcPos = w_pos;
-                        entity.animateComponent.state = Enum_1.AnimateState.start;
+                        entity.animateComponent.state = Enum_1.AnimateState.Start;
                         entity.roleComponent.level = tower_level;
                         entity.roleComponent.type = tower_type;
                         entity.attackComponent.enemyID = enemyID;
@@ -152,7 +152,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.y = center_pos.y;
                         entity.animateComponent.dstPos = w_dst_pos;
                         entity.animateComponent.srcPos = w_pos;
-                        entity.animateComponent.state = Enum_1.AnimateState.start;
+                        entity.animateComponent.state = Enum_1.AnimateState.Start;
                         entity.roleComponent.level = tower_level;
                         entity.roleComponent.type = tower_type;
                         entity.attackComponent.enemyID = enemyID;
@@ -182,7 +182,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.y = center_pos.y;
                         entity.animateComponent.dstPos = w_dst_pos;
                         entity.animateComponent.srcPos = w_pos;
-                        entity.animateComponent.state = Enum_1.AnimateState.start;
+                        entity.animateComponent.state = Enum_1.AnimateState.Start;
                         entity.roleComponent.level = tower_level;
                         entity.roleComponent.type = tower_type;
                         entity.attackComponent.enemyID = enemyID;
@@ -198,12 +198,12 @@ var ECSFactory = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         entity = new BulletEntity_1.default();
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/warlock_actor", cc.Prefab)];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/warlock_bullet", cc.Prefab)];
                     case 1:
                         prefab = _a.sent();
                         bullet = cc.instantiate(prefab);
                         this.bulletNode.addChild(bullet);
-                        center_pos = this.bulletNode.convertToNodeSpaceAR(w_pos);
+                        center_pos = this.bulletNode.convertToNodeSpaceAR(cc.v2(w_pos.x, w_pos.y + 20));
                         bullet.setPosition(center_pos);
                         bullet.active = true;
                         entity.baseComponent.entityID = ECSFactory_1.entityID++;
@@ -212,7 +212,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.transformComponent.y = center_pos.y;
                         entity.animateComponent.dstPos = w_dst_pos;
                         entity.animateComponent.srcPos = w_pos;
-                        entity.animateComponent.state = Enum_1.AnimateState.start;
+                        entity.animateComponent.state = Enum_1.AnimateState.Start;
                         entity.roleComponent.level = tower_level;
                         entity.roleComponent.type = tower_type;
                         entity.attackComponent.enemyID = enemyID;

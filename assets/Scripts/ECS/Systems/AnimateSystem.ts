@@ -36,10 +36,61 @@ export default class AnimateSystem extends cc.Component {
     public static getInstance():AnimateSystem{
         return AnimateSystem._instance;
     }
-
+    //
     async onTowerUpdate(dt:number,towerRoleComponent:RoleComponent,arrowAnimateComponent:AnimateComponent,arrowBaseComponent:BaseComponent,towerAttackComponent:AttackComponent){
         if(TowerType.Arrow==towerRoleComponent.type){
             await this.onArrowUpdate(dt,arrowAnimateComponent,arrowBaseComponent,towerAttackComponent);
+        }
+        else if(TowerType.Warlock==towerRoleComponent.type){
+            await this.onWarlockUpdate(dt,arrowAnimateComponent,arrowBaseComponent,towerAttackComponent);
+        }
+    }
+
+    async onWarlockUpdate(dt:number,warlockAnimateComponent:AnimateComponent,warlockBaseComponent:BaseComponent,towerAttackComponent:AttackComponent){
+        //this._play_tower_anim();
+        //this._play_shoot_man_anim(w_dst_pos);
+        warlockAnimateComponent.time-=dt;
+        if(warlockAnimateComponent.state==AnimateState.Start){
+            let anim=warlockBaseComponent.gameObject.getChildByName("anim");
+            var frame_anim = anim.addComponent(FrameAnimate);
+            let tower_anim:cc.SpriteFrame[]=[];
+            for(let i=0;i<=4;i++){
+                let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/fashi_tower/fashi1/fashi_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+                tower_anim.push(sf);
+            }
+            frame_anim.sprite_frames = tower_anim;
+            frame_anim.duration =0.1;
+            warlockAnimateComponent.time=0.1;
+            warlockAnimateComponent.state=AnimateState.Playing;
+        }
+        else if(warlockAnimateComponent.state==AnimateState.Playing&&warlockAnimateComponent.time<=0){
+            let man=warlockBaseComponent.gameObject.getChildByName("man");
+            var frame_anim = man.addComponent(FrameAnimate);
+            var w_start_pos = man.convertToWorldSpaceAR(cc.v2(0, 0));
+            let w_dst_pos=warlockAnimateComponent.dstPos;
+            var b_up = w_start_pos.y < w_dst_pos.y;
+            
+            if (b_up) { // 上的动画
+                let shoot_up_anim:cc.SpriteFrame[]=[];
+                for(let i=0;i<=9;i++){
+                    let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/fashi_tower/shoot_man_1/up/up_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+                    shoot_up_anim.push(sf);
+                }
+                frame_anim.sprite_frames = shoot_up_anim;
+                frame_anim.duration = 0.1;
+            }
+            else { // 下的动画
+                let shoot_down_anim:cc.SpriteFrame[]=[];
+                for(let i=0;i<=9;i++){
+                    let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/fashi_tower/shoot_man_1/down/down_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+                    shoot_down_anim.push(sf);
+                }
+                frame_anim.sprite_frames = shoot_down_anim;
+                frame_anim.duration = 0.1;
+            }
+            //end
+            towerAttackComponent.enemyID = warlockAnimateComponent.id;
+            warlockAnimateComponent.state=AnimateState.Stop;
         }
     }
 
@@ -81,14 +132,73 @@ export default class AnimateSystem extends cc.Component {
         }
         //end 
         towerAttackComponent.enemyID = arrowAnimateComponent.id;
-        arrowAnimateComponent.state=AnimateState.stop;
+        arrowAnimateComponent.state=AnimateState.Stop;
     }
-
+    //
     async onBulletUpdate(dt:number,bulletRoleComponent:RoleComponent,bulletAnimateComponent:AnimateComponent,
         bulletAttackComponent:AttackComponent,bulletBaseComponent:BaseComponent){
         if(TowerType.Arrow==bulletRoleComponent.type){
             await this.onArrowBulletUpdate(dt,bulletRoleComponent,bulletAnimateComponent,bulletAttackComponent,bulletBaseComponent);
         }
+        else if(TowerType.Warlock==bulletRoleComponent.type){
+            await this.onWarlockBulletUpdate(dt,bulletRoleComponent,bulletAnimateComponent,bulletAttackComponent,bulletBaseComponent);
+        }
+    }
+
+    async onWarlockBulletUpdate(dt:number,bulletRoleComponent:RoleComponent,bulletAnimateComponent:AnimateComponent,
+        bulletAttackComponent:AttackComponent,bulletBaseComponent:BaseComponent){
+            let bullet_level = bulletRoleComponent.level;
+            let speed = GameDataManager.getInstance().warlock_bullet_params[bullet_level - 1].speed;
+            let attack = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
+            let enemyEntity:EnemyEntity=ECSManager.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
+            let shoot_enemy = enemyEntity.baseComponent.gameObject;
+            let w_start_pos=bulletAnimateComponent.srcPos;
+            let w_dst_pos=bulletAnimateComponent.dstPos;
+            let anim=bulletBaseComponent.gameObject.getChildByName("anim")
+            //this._set_bullet_idle();
+            var start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(cc.v2(w_start_pos.x,w_start_pos.y+30));
+            var dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
+            bulletBaseComponent.gameObject.setPosition(start_pos);
+            
+            // var dir = cc.pSub(w_dst_pos, w_start_pos);
+            var dir = w_dst_pos.sub(w_start_pos);
+            // var len = cc.pLength(dir);
+            var len = (dir.mag());
+            var time = len / speed;
+            
+            var after_pos = cc.v2(0,-30);//actor.position_after_time(time);
+            w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
+            dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
+    
+            var m = cc.moveBy(time, w_dst_pos.x - w_start_pos.x, w_dst_pos.y - w_start_pos.y);
+            let bomb_anim:cc.SpriteFrame[]=[];
+            for(let i=0;i<=8;i++){
+                let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/fashi_tower/bomb/bomb_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+                bomb_anim.push(sf);
+            }
+            var func = cc.callFunc(function(){
+                ECSUtil.getInstance().on_arrowBullet_shoot(attack,enemyEntity.unitComponent,enemyEntity.baseComponent,enemyEntity.roleComponent);
+
+                var frame_anim = anim.addComponent(FrameAnimate);
+                frame_anim.sprite_frames = bomb_anim;
+                frame_anim.duration = 0.1;
+                frame_anim.play_once(function(){
+                    //this.on_bullet_bomb(w_dst_pos);
+                    //this.node.removeFromParent();
+                }.bind(this));
+                // 播放爆炸动画
+            }.bind(this),anim);
+
+            var end_func = cc.callFunc(function(){
+                bulletRoleComponent.isDead=true;
+                bulletAttackComponent.enemyID=0;
+            }.bind(this), bulletBaseComponent.gameObject);
+
+            var seq = cc.sequence([m, func,cc.delayTime(0.1),end_func]);
+            bulletBaseComponent.gameObject.runAction(seq);
+
+           
+            bulletAnimateComponent.state=AnimateState.Stop;
     }
 
     async onArrowBulletUpdate(dt:number,bulletRoleComponent:RoleComponent,bulletAnimateComponent:AnimateComponent,
@@ -169,6 +279,6 @@ export default class AnimateSystem extends cc.Component {
         var rot = cc.rotateBy(time, degree);
         anim.runAction(rot);
 
-        bulletAnimateComponent.state=AnimateState.stop;
+        bulletAnimateComponent.state=AnimateState.Stop;
     }
 }

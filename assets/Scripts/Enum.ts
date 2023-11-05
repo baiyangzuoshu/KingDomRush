@@ -26,6 +26,7 @@ export enum TowerType{
 
 export enum AnimateState{
     None=1,
-    start=2,
-    stop=3
+    Start=2,
+    Playing=3,
+    Stop=4
 }

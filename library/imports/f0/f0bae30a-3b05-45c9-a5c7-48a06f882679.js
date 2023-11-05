@@ -32,8 +32,9 @@ var TowerType;
 var AnimateState;
 (function (AnimateState) {
     AnimateState[AnimateState["None"] = 1] = "None";
-    AnimateState[AnimateState["start"] = 2] = "start";
-    AnimateState[AnimateState["stop"] = 3] = "stop";
+    AnimateState[AnimateState["Start"] = 2] = "Start";
+    AnimateState[AnimateState["Playing"] = 3] = "Playing";
+    AnimateState[AnimateState["Stop"] = 4] = "Stop";
 })(AnimateState = exports.AnimateState || (exports.AnimateState = {}));
 
 cc._RF.pop();
