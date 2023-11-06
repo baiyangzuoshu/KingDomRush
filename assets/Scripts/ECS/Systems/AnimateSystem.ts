@@ -37,12 +37,84 @@ export default class AnimateSystem extends cc.Component {
         return AnimateSystem._instance;
     }
     //
-    async onTowerUpdate(dt:number,towerRoleComponent:RoleComponent,arrowAnimateComponent:AnimateComponent,arrowBaseComponent:BaseComponent,towerAttackComponent:AttackComponent){
+    async onTowerUpdate(dt:number,towerRoleComponent:RoleComponent,towerAnimateComponent:AnimateComponent,towerBaseComponent:BaseComponent,towerAttackComponent:AttackComponent){
         if(TowerType.Arrow==towerRoleComponent.type){
-            await this.onArrowUpdate(dt,arrowAnimateComponent,arrowBaseComponent,towerAttackComponent);
+            await this.onArrowUpdate(dt,towerAnimateComponent,towerBaseComponent,towerAttackComponent);
         }
         else if(TowerType.Warlock==towerRoleComponent.type){
-            await this.onWarlockUpdate(dt,arrowAnimateComponent,arrowBaseComponent,towerAttackComponent);
+            await this.onWarlockUpdate(dt,towerAnimateComponent,towerBaseComponent,towerAttackComponent);
+        }
+        else if(TowerType.Cannon==towerRoleComponent.type){
+            await this.onCannonUpdate(dt,towerAnimateComponent,towerBaseComponent,towerAttackComponent);
+        }
+    }
+
+    async onCannonUpdate(dt:number,cannonAnimateComponent:AnimateComponent,cannonBaseComponent:BaseComponent,towerAttackComponent:AttackComponent){
+        let anim=cannonBaseComponent.gameObject.getChildByName("anim");
+        let tower_level=1;
+        let bullet_level=1;
+
+        cannonAnimateComponent.time-=dt;
+        if(cannonAnimateComponent.state==AnimateState.Start){
+            var frame_anim = anim.addComponent(FrameAnimate);
+    
+            let shoot_anim:cc.SpriteFrame[]=[];
+            for(let i=0;i<=8;i++){
+                let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/pao_tower/pao1/pao1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+                shoot_anim.push(sf);
+            }
+            frame_anim.sprite_frames = shoot_anim;
+            frame_anim.duration = 0.1;
+            //frame_anim.play_once(this.set_tower_idle.bind(this));
+            //this._play_preload_bullet_anim();
+            var start_pos_set = [cc.v2(-24, 2), cc.v2(-24, 3), cc.v2(-24, 2), cc.v2(-24, 2)];
+            var end_pos_set = [cc.v2(3, 20), cc.v2(3, 21), cc.v2(3, 24), cc.v2(3, 24)];
+            var delay_time_set = [0.8, 1.5, 1.2];
+            var rot_degree_set = [180 + Math.random() * 90, 180 + Math.random() * 90, 45];
+
+            let bullet_icon=cannonBaseComponent.gameObject.getChildByName("anim").getChildByName("bullet_icon")
+            let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/pao_tower/bullet/pao1_bullet",cc.SpriteFrame) as cc.SpriteFrame;
+            bullet_icon.getComponent(cc.Sprite).spriteFrame = sf;
+            var delay = cc.delayTime(delay_time_set[tower_level - 1]);
+            var func = cc.callFunc(function() {
+                bullet_icon.scale = 1; // 子弹显示出来。
+                bullet_icon.x = start_pos_set[tower_level - 1].x;
+                bullet_icon.y = start_pos_set[tower_level - 1].y;
+                bullet_icon.angle = -45; // 开始的旋转角度
+                // 运行一个旋转
+                var rot = cc.rotateBy(0.4, rot_degree_set[tower_level - 1]);
+                bullet_icon.runAction(rot);
+                // end 
+            }.bind(this), bullet_icon);
+            
+            var bz_array = [cc.v2(-10, 30), cc.v2(-10, 30), end_pos_set[tower_level - 1]];
+            var bz_action = cc.bezierTo(0.4, bz_array);
+            
+            var s = cc.scaleTo(0.1, 0);
+            var seq = cc.sequence([delay, func, bz_action, s]);
+            bullet_icon.runAction(seq);
+
+            cannonAnimateComponent.time=0.1;
+            cannonAnimateComponent.state=AnimateState.Playing
+        }
+        else if(cannonAnimateComponent.state==AnimateState.Playing&&cannonAnimateComponent.time<=0){
+            // 炮塔根据自己的等级来生成对应的子弹,配合炮塔动画来发射
+            var delay_set = [0.7, 0.8, 0.6, 1.3, 3.5];
+            var start_pos_set = [cc.v2(3, 16), cc.v2(3, 16), cc.v2(3, 16), cc.v2(-1, 20), cc.v2(-22, 24)];
+            // end 
+            
+            var start_w_pos = anim.convertToWorldSpaceAR(start_pos_set[bullet_level - 1]);
+            var delay = cc.delayTime(delay_set[bullet_level - 1]);
+            var func = cc.callFunc(function(){
+                //cannon_bullet.shoot_at(bullet_level, start_w_pos, w_dst_pos);
+                
+            }.bind(this), cannonBaseComponent.gameObject);
+            
+            var seq = cc.sequence([delay, func]);
+            cannonBaseComponent.gameObject.runAction(seq);  
+
+            towerAttackComponent.enemyID = cannonAnimateComponent.id;
+            cannonAnimateComponent.state=AnimateState.Stop;
         }
     }
 
@@ -60,6 +132,7 @@ export default class AnimateSystem extends cc.Component {
             }
             frame_anim.sprite_frames = tower_anim;
             frame_anim.duration =0.1;
+
             warlockAnimateComponent.time=0.1;
             warlockAnimateComponent.state=AnimateState.Playing;
         }
@@ -143,6 +216,91 @@ export default class AnimateSystem extends cc.Component {
         else if(TowerType.Warlock==bulletRoleComponent.type){
             await this.onWarlockBulletUpdate(dt,bulletRoleComponent,bulletAnimateComponent,bulletAttackComponent,bulletBaseComponent);
         }
+        else if(TowerType.Cannon==bulletRoleComponent.type){
+            await this.onCannonBulletUpdate(dt,bulletRoleComponent,bulletAnimateComponent,bulletAttackComponent,bulletBaseComponent);
+        }
+    }
+
+    async onCannonBulletUpdate(dt:number,bulletRoleComponent:RoleComponent,bulletAnimateComponent:AnimateComponent,
+        bulletAttackComponent:AttackComponent,bulletBaseComponent:BaseComponent){
+            let enemyEntity:EnemyEntity=ECSManager.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
+            let shoot_enemy = enemyEntity.baseComponent.gameObject;//enemy;
+            let attack = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
+            let anim=bulletBaseComponent.gameObject.getChildByName("anim")
+            //this._set_bullet_idle();
+            let bullet_level = bulletRoleComponent.level;
+            
+            let phy_params = GameDataManager.getInstance().cannon_bullet[bullet_level - 1];
+            let w_start_pos=bulletAnimateComponent.srcPos;
+            let w_dst_pos=bulletAnimateComponent.dstPos;
+            var start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(cc.v2(w_start_pos.x,w_start_pos.y+29));
+            var dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(bulletAnimateComponent.dstPos);
+            // 发射的时候调整我们角度,设置好位置
+            bulletBaseComponent.gameObject.setPosition(start_pos);
+            anim.angle = 0;
+            // end  
+            
+            // 创建一个贝塞尔的action来控制我们的子弹的发射
+            // var dir = cc.pSub(w_dst_pos, w_start_pos);
+            var dir = w_dst_pos.sub(w_start_pos);
+            // var len = cc.pLength(dir);
+            var len = (dir.mag());
+            var time = len / phy_params.speed;
+            // end 
+            var after_pos = cc.v2(0,0);//actor.position_after_time(time);
+            w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
+            dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
+            // 求贝塞尔曲线的控制点，中点，然后拉高xxxxx
+            var ctrl_x;
+            var ctrl_y;
+            
+            {
+                ctrl_x = (start_pos.x + dst_pos.x) * 0.5;
+                ctrl_y = (dst_pos.y > start_pos.y) ? dst_pos.y : start_pos.y;
+                ctrl_y += 40;
+            }
+            // end 
+            
+            var ctrl_point_set = [cc.v2(ctrl_x, ctrl_y), cc.v2(ctrl_x, ctrl_y), dst_pos];
+            var bto_action = cc.bezierTo(time, ctrl_point_set);
+            let bomb_anim_frames:cc.SpriteFrame[]=[];
+            for(let i=1;i<=10;i++){
+                let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/pao_tower/bom/bom"+i,cc.SpriteFrame) as cc.SpriteFrame;
+                bomb_anim_frames.push(sf);
+            }
+            // 播放爆炸动画，播放完后删除
+            var end_func = cc.callFunc(function(){
+                var bomb_R = phy_params.bomb_R;
+                var bomb_pos = bulletBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0));
+                ECSUtil.getInstance().on_bullet_bomb(w_dst_pos,bomb_R,attack);
+                //this.play_bullet_bomb_anim();
+                anim.angle = 0;
+                var frame_com = anim.addComponent(FrameAnimate);
+                frame_com.sprite_frames = bomb_anim_frames;
+                frame_com.duration = 0.1;
+                
+                // 爆炸结束后，删除子弹
+                frame_com.play_once(function() {
+                    //this.node.removeFromParent();
+                    bulletRoleComponent.isDead=true;
+                    bulletAttackComponent.enemyID=0;
+                }.bind(this));
+            }.bind(this), bulletBaseComponent.gameObject);
+            var seq = cc.sequence([bto_action, end_func]);
+            bulletBaseComponent.gameObject.runAction(seq);
+            
+            // 逻辑与图像分离
+            var degree;
+            if (w_dst_pos.x < w_start_pos.x) { // 在左边
+                degree = -180 + Math.random() * 10;
+            }
+            else {
+                degree = 180 - Math.random() * 10;
+            }
+            var rot = cc.rotateBy(time, degree);
+            anim.runAction(rot);
+
+            bulletAnimateComponent.state=AnimateState.Stop;
     }
 
     async onWarlockBulletUpdate(dt:number,bulletRoleComponent:RoleComponent,bulletAnimateComponent:AnimateComponent,

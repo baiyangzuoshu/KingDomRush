@@ -11,6 +11,7 @@ import { GameUI } from "../EventName";
 import BaseComponent from "./Components/BaseComponent";
 import RoleComponent from "./Components/RoleComponent";
 import UnitComponent from "./Components/UnitComponent";
+import ECSManager from "./ECSManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -44,5 +45,19 @@ export default class ECSUtil extends cc.Component {
         
         var per = enemyUnitComponent.health / enemyUnitComponent.maxHp;
         enemyBaseComponent.gameObject.getChildByName("blood_bar").getComponent(cc.ProgressBar).progress = per;
+    }
+    // 炸弹是砸伤一片
+    public on_bullet_bomb(bomb_pos,bomb_R,attack_value) {
+        let len=ECSManager.getInstance().getEnemyTotal();
+        for(var i = 0; i < len; i ++) {
+            let enemy= ECSManager.getInstance().getEnemyEntityByIndex(i);
+            if(enemy&&!enemy.roleComponent.isDead){
+                var pos = enemy.baseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0));
+                var dir = pos.sub(bomb_pos);
+                if ((dir.mag()) <= bomb_R) {
+                    this.on_arrowBullet_shoot(attack_value,enemy.unitComponent,enemy.baseComponent,enemy.roleComponent);
+                }
+            }
+        }
     }
 }

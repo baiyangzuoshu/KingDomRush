@@ -38,6 +38,18 @@ export default class ECSManager extends cc.Component {
     private enemyEntityList:EnemyEntity[]=[];
     private bulletEntityList:BulletEntity[]=[];
     //
+    public getEnemyTotal(){
+        return this.enemyEntityList.length;
+    }
+    public getEnemyEntityByIndex(index:number):EnemyEntity{
+        for(let i=0;i<this.enemyEntityList.length;i++){
+            if(i==index){
+                return this.enemyEntityList[i];
+            }
+        }
+        return null;
+    }
+    //
     async createBulletEntity(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number){
         if(TowerType.Arrow==tower_type){
             let entity:BulletEntity=await ECSFactory.getInstance().createArrowBulletEntity(tower_type,tower_level, w_pos, w_dst_pos, enemyID);

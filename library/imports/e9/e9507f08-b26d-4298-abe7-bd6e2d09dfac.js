@@ -95,6 +95,18 @@ var ECSManager = /** @class */ (function (_super) {
         return ECSManager_1._instance;
     };
     //
+    ECSManager.prototype.getEnemyTotal = function () {
+        return this.enemyEntityList.length;
+    };
+    ECSManager.prototype.getEnemyEntityByIndex = function (index) {
+        for (var i = 0; i < this.enemyEntityList.length; i++) {
+            if (i == index) {
+                return this.enemyEntityList[i];
+            }
+        }
+        return null;
+    };
+    //
     ECSManager.prototype.createBulletEntity = function (tower_type, tower_level, w_pos, w_dst_pos, enemyID) {
         return __awaiter(this, void 0, void 0, function () {
             var entity, entity, entity, entity;

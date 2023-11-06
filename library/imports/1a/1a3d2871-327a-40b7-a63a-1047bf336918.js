@@ -32,6 +32,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var EventManager_1 = require("../../FrameWork/manager/EventManager");
 var GameDataManager_1 = require("../Data/GameDataManager");
 var EventName_1 = require("../EventName");
+var ECSManager_1 = require("./ECSManager");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var ECSUtil = /** @class */ (function (_super) {
     __extends(ECSUtil, _super);
@@ -63,6 +64,20 @@ var ECSUtil = /** @class */ (function (_super) {
         }
         var per = enemyUnitComponent.health / enemyUnitComponent.maxHp;
         enemyBaseComponent.gameObject.getChildByName("blood_bar").getComponent(cc.ProgressBar).progress = per;
+    };
+    // 炸弹是砸伤一片
+    ECSUtil.prototype.on_bullet_bomb = function (bomb_pos, bomb_R, attack_value) {
+        var len = ECSManager_1.default.getInstance().getEnemyTotal();
+        for (var i = 0; i < len; i++) {
+            var enemy = ECSManager_1.default.getInstance().getEnemyEntityByIndex(i);
+            if (enemy && !enemy.roleComponent.isDead) {
+                var pos = enemy.baseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
+                var dir = pos.sub(bomb_pos);
+                if ((dir.mag()) <= bomb_R) {
+                    this.on_arrowBullet_shoot(attack_value, enemy.unitComponent, enemy.baseComponent, enemy.roleComponent);
+                }
+            }
+        }
     };
     var ECSUtil_1;
     ECSUtil._instance = null;

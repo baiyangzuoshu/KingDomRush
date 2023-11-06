@@ -5714,11 +5714,6 @@
     "meta": 1699066339119,
     "relativePath": "Scripts\\GameLanch.ts"
   },
-  "1a3d2871-327a-40b7-a63a-1047bf336918": {
-    "asset": 1699148016577,
-    "meta": 1699148074524,
-    "relativePath": "Scripts\\ECS\\ECSUtil.ts"
-  },
   "538b1798-5026-4faf-a1b5-b6da97998c68": {
     "asset": 1699150074069,
     "meta": 1699150775586,
@@ -5744,11 +5739,6 @@
     "meta": 1699186465811,
     "relativePath": "Scripts\\Data\\GameDataManager.ts"
   },
-  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
-    "asset": 1699187343716,
-    "meta": 1699187350799,
-    "relativePath": "Scripts\\ECS\\ECSManager.ts"
-  },
   "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
     "asset": 1699187878605,
     "meta": 1699187885485,
@@ -5759,9 +5749,19 @@
     "meta": 1699187885495,
     "relativePath": "Scripts\\ECS\\Systems\\AISystem.ts"
   },
+  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
+    "asset": 1699266867093,
+    "meta": 1699267427939,
+    "relativePath": "Scripts\\ECS\\ECSManager.ts"
+  },
+  "1a3d2871-327a-40b7-a63a-1047bf336918": {
+    "asset": 1699269755609,
+    "meta": 1699269807571,
+    "relativePath": "Scripts\\ECS\\ECSUtil.ts"
+  },
   "fa0c3372-1ff1-493f-9215-70ba3fa96b76": {
-    "asset": 1699189850587,
-    "meta": 1699189853050,
+    "asset": 1699269916916,
+    "meta": 1699269924165,
     "relativePath": "Scripts\\ECS\\Systems\\AnimateSystem.ts"
   }
 }
