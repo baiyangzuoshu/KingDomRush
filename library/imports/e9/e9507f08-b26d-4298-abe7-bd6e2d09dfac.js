@@ -257,7 +257,7 @@ var ECSManager = /** @class */ (function (_super) {
             var tower = this.towerEntityList[i];
             if (tower.attackComponent.enemyID > 0) {
                 var enemy = this.getEnemyEntityByID(tower.attackComponent.enemyID);
-                if (!enemy.roleComponent.isDead) {
+                if (enemy && !enemy.roleComponent.isDead) {
                     AttackSystem_1.default.getInstance().onUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
                 }
             }

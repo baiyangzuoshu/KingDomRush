@@ -126,7 +126,7 @@ var AnimateSystem = /** @class */ (function (_super) {
     };
     AnimateSystem.prototype.onInfantryUpdate = function (dt, infantryAnimateComponent, infantryBaseComponent, infantryAttackComponent) {
         return __awaiter(this, void 0, void 0, function () {
-            var anim, frame_anim, open_anim, i, sf;
+            var anim, frame_anim, open_anim, i, sf, i, sf, i, sf;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -149,8 +149,35 @@ var AnimateSystem = /** @class */ (function (_super) {
                         i++;
                         return [3 /*break*/, 1];
                     case 4:
+                        i = 0;
+                        _a.label = 5;
+                    case 5:
+                        if (!(i <= 7)) return [3 /*break*/, 8];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/bing_tower/bing1/bing1_" + 3, cc.SpriteFrame)];
+                    case 6:
+                        sf = _a.sent();
+                        open_anim.push(sf);
+                        _a.label = 7;
+                    case 7:
+                        i++;
+                        return [3 /*break*/, 5];
+                    case 8:
+                        i = 3;
+                        _a.label = 9;
+                    case 9:
+                        if (!(i > 0)) return [3 /*break*/, 12];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/bing_tower/bing1/bing1_" + i, cc.SpriteFrame)];
+                    case 10:
+                        sf = _a.sent();
+                        open_anim.push(sf);
+                        _a.label = 11;
+                    case 11:
+                        i--;
+                        return [3 /*break*/, 9];
+                    case 12:
                         frame_anim.sprite_frames = open_anim;
-                        frame_anim.duration = 0.1;
+                        frame_anim.duration = 0.2;
+                        frame_anim.play_once(function () { });
                         infantryAnimateComponent.state = Enum_1.AnimateState.Stop;
                         return [2 /*return*/];
                 }
@@ -168,7 +195,10 @@ var AnimateSystem = /** @class */ (function (_super) {
                         bullet_level = 1;
                         cannonAnimateComponent.time -= dt;
                         if (!(cannonAnimateComponent.state == Enum_1.AnimateState.Start)) return [3 /*break*/, 6];
-                        frame_anim = anim.addComponent(FrameAnimate_1.default);
+                        frame_anim = anim.getComponent(FrameAnimate_1.default);
+                        if (!frame_anim) {
+                            frame_anim = anim.addComponent(FrameAnimate_1.default);
+                        }
                         shoot_anim = [];
                         i = 0;
                         _a.label = 1;
@@ -244,7 +274,10 @@ var AnimateSystem = /** @class */ (function (_super) {
                         warlockAnimateComponent.time -= dt;
                         if (!(warlockAnimateComponent.state == Enum_1.AnimateState.Start)) return [3 /*break*/, 5];
                         anim = warlockBaseComponent.gameObject.getChildByName("anim");
-                        frame_anim = anim.addComponent(FrameAnimate_1.default);
+                        frame_anim = anim.getComponent(FrameAnimate_1.default);
+                        if (!frame_anim) {
+                            frame_anim = anim.addComponent(FrameAnimate_1.default);
+                        }
                         tower_anim = [];
                         i = 0;
                         _a.label = 1;
@@ -261,13 +294,17 @@ var AnimateSystem = /** @class */ (function (_super) {
                     case 4:
                         frame_anim.sprite_frames = tower_anim;
                         frame_anim.duration = 0.1;
+                        frame_anim.play_once(function () { });
                         warlockAnimateComponent.time = 0.1;
                         warlockAnimateComponent.state = Enum_1.AnimateState.Playing;
                         return [3 /*break*/, 16];
                     case 5:
                         if (!(warlockAnimateComponent.state == Enum_1.AnimateState.Playing && warlockAnimateComponent.time <= 0)) return [3 /*break*/, 16];
                         man = warlockBaseComponent.gameObject.getChildByName("man");
-                        frame_anim = man.addComponent(FrameAnimate_1.default);
+                        frame_anim = man.getComponent(FrameAnimate_1.default);
+                        if (!frame_anim) {
+                            frame_anim = man.addComponent(FrameAnimate_1.default);
+                        }
                         w_start_pos = man.convertToWorldSpaceAR(cc.v2(0, 0));
                         w_dst_pos = warlockAnimateComponent.dstPos;
                         b_up = w_start_pos.y < w_dst_pos.y;
@@ -308,6 +345,7 @@ var AnimateSystem = /** @class */ (function (_super) {
                         frame_anim.duration = 0.1;
                         _a.label = 15;
                     case 15:
+                        frame_anim.play_once(function () { });
                         //end
                         towerAttackComponent.enemyID = warlockAnimateComponent.id;
                         warlockAnimateComponent.state = Enum_1.AnimateState.Stop;
@@ -461,7 +499,10 @@ var AnimateSystem = /** @class */ (function (_super) {
                         end_func = cc.callFunc(function () {
                             //this.play_bullet_bomb_anim();
                             anim_1.angle = 0;
-                            var frame_com = anim_1.addComponent(FrameAnimate_1.default);
+                            var frame_com = anim_1.getComponent(FrameAnimate_1.default);
+                            if (!frame_com) {
+                                frame_com = anim_1.addComponent(FrameAnimate_1.default);
+                            }
                             frame_com.sprite_frames = bomb_anim_frames_1;
                             frame_com.duration = 0.1;
                             // 爆炸结束后，删除子弹
@@ -538,7 +579,10 @@ var AnimateSystem = /** @class */ (function (_super) {
                         return [3 /*break*/, 1];
                     case 4:
                         func = cc.callFunc(function () {
-                            var frame_anim = anim_2.addComponent(FrameAnimate_1.default);
+                            var frame_anim = anim_2.getComponent(FrameAnimate_1.default);
+                            if (!frame_anim) {
+                                frame_anim = anim_2.addComponent(FrameAnimate_1.default);
+                            }
                             frame_anim.sprite_frames = bomb_anim_1;
                             frame_anim.duration = 0.1;
                             frame_anim.play_once(function () {

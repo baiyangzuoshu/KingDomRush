@@ -55,6 +55,7 @@ export default class AnimateSystem extends cc.Component {
     async onInfantryUpdate(dt:number,infantryAnimateComponent:AnimateComponent,infantryBaseComponent:BaseComponent,infantryAttackComponent:AttackComponent){
          // 播放放开门的动画
          //this._play_open_door_anim();
+         
         let anim=infantryBaseComponent.gameObject.getChildByName("anim");
         var frame_anim = anim.getComponent(FrameAnimate);
         if(!frame_anim){
@@ -65,8 +66,17 @@ export default class AnimateSystem extends cc.Component {
             let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
             open_anim.push(sf);
         }
+        for(let i=0;i<=7;i++){
+            let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+3,cc.SpriteFrame) as cc.SpriteFrame;
+            open_anim.push(sf);
+        }
+        for(let i=3;i>0;i--){
+            let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+            open_anim.push(sf);
+        }
         frame_anim.sprite_frames = open_anim;
-        frame_anim.duration = 0.1;
+        frame_anim.duration = 0.2;
+        frame_anim.play_once(function(){});
 
         infantryAnimateComponent.state=AnimateState.Stop;
         //frame_anim.play_once(this._set_tower_idle.bind(this));
@@ -83,8 +93,10 @@ export default class AnimateSystem extends cc.Component {
 
         cannonAnimateComponent.time-=dt;
         if(cannonAnimateComponent.state==AnimateState.Start){
-            var frame_anim = anim.addComponent(FrameAnimate);
-    
+            var frame_anim = anim.getComponent(FrameAnimate);
+            if(!frame_anim){
+                frame_anim=anim.addComponent(FrameAnimate);
+            }
             let shoot_anim:cc.SpriteFrame[]=[];
             for(let i=0;i<=8;i++){
                 let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/pao_tower/pao1/pao1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
@@ -151,7 +163,10 @@ export default class AnimateSystem extends cc.Component {
         warlockAnimateComponent.time-=dt;
         if(warlockAnimateComponent.state==AnimateState.Start){
             let anim=warlockBaseComponent.gameObject.getChildByName("anim");
-            var frame_anim = anim.addComponent(FrameAnimate);
+            var frame_anim = anim.getComponent(FrameAnimate);
+            if(!frame_anim){
+                frame_anim=anim.addComponent(FrameAnimate);
+            }
             let tower_anim:cc.SpriteFrame[]=[];
             for(let i=0;i<=4;i++){
                 let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/fashi_tower/fashi1/fashi_"+i,cc.SpriteFrame) as cc.SpriteFrame;
@@ -159,13 +174,17 @@ export default class AnimateSystem extends cc.Component {
             }
             frame_anim.sprite_frames = tower_anim;
             frame_anim.duration =0.1;
+            frame_anim.play_once(function(){});
 
             warlockAnimateComponent.time=0.1;
             warlockAnimateComponent.state=AnimateState.Playing;
         }
         else if(warlockAnimateComponent.state==AnimateState.Playing&&warlockAnimateComponent.time<=0){
             let man=warlockBaseComponent.gameObject.getChildByName("man");
-            var frame_anim = man.addComponent(FrameAnimate);
+            var frame_anim = man.getComponent(FrameAnimate);
+            if(!frame_anim){
+                frame_anim=man.addComponent(FrameAnimate);
+            }
             var w_start_pos = man.convertToWorldSpaceAR(cc.v2(0, 0));
             let w_dst_pos=warlockAnimateComponent.dstPos;
             var b_up = w_start_pos.y < w_dst_pos.y;
@@ -188,6 +207,7 @@ export default class AnimateSystem extends cc.Component {
                 frame_anim.sprite_frames = shoot_down_anim;
                 frame_anim.duration = 0.1;
             }
+            frame_anim.play_once(function(){});
             //end
             towerAttackComponent.enemyID = warlockAnimateComponent.id;
             warlockAnimateComponent.state=AnimateState.Stop;
@@ -301,7 +321,10 @@ export default class AnimateSystem extends cc.Component {
                     
                     //this.play_bullet_bomb_anim();
                     anim.angle = 0;
-                    var frame_com = anim.addComponent(FrameAnimate);
+                    var frame_com = anim.getComponent(FrameAnimate);
+                    if(!frame_com){
+                        frame_com=anim.addComponent(FrameAnimate)
+                    }
                     frame_com.sprite_frames = bomb_anim_frames;
                     frame_com.duration = 0.1;
                     
@@ -376,7 +399,10 @@ export default class AnimateSystem extends cc.Component {
                 bomb_anim.push(sf);
             }
             var func = cc.callFunc(function(){
-                var frame_anim = anim.addComponent(FrameAnimate);
+                var frame_anim = anim.getComponent(FrameAnimate);
+                if(!frame_anim){
+                    frame_anim=anim.addComponent(FrameAnimate)
+                }
                 frame_anim.sprite_frames = bomb_anim;
                 frame_anim.duration = 0.1;
                 frame_anim.play_once(function(){

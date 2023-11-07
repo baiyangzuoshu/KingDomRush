@@ -164,7 +164,7 @@ export default class ECSManager extends cc.Component {
             let tower=this.towerEntityList[i];
             if(tower.attackComponent.enemyID>0){
                 let enemy=this.getEnemyEntityByID(tower.attackComponent.enemyID);
-                if(!enemy.roleComponent.isDead){
+                if(enemy&&!enemy.roleComponent.isDead){
                     AttackSystem.getInstance().onUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
                 }
             }
