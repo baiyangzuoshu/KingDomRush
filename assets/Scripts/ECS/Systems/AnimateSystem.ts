@@ -47,6 +47,33 @@ export default class AnimateSystem extends cc.Component {
         else if(TowerType.Cannon==towerRoleComponent.type){
             await this.onCannonUpdate(dt,towerAnimateComponent,towerBaseComponent,towerAttackComponent);
         }
+        else if(TowerType.Infantry==towerRoleComponent.type){
+            await this.onInfantryUpdate(dt,towerAnimateComponent,towerBaseComponent,towerAttackComponent);
+        }
+    }
+
+    async onInfantryUpdate(dt:number,infantryAnimateComponent:AnimateComponent,infantryBaseComponent:BaseComponent,infantryAttackComponent:AttackComponent){
+         // 播放放开门的动画
+         //this._play_open_door_anim();
+        let anim=infantryBaseComponent.gameObject.getChildByName("anim");
+        var frame_anim = anim.getComponent(FrameAnimate);
+        if(!frame_anim){
+            frame_anim=anim.addComponent(FrameAnimate);
+        }
+        let open_anim:cc.SpriteFrame[]=[];
+        for(let i=0;i<=3;i++){
+            let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+            open_anim.push(sf);
+        }
+        frame_anim.sprite_frames = open_anim;
+        frame_anim.duration = 0.1;
+
+        infantryAnimateComponent.state=AnimateState.Stop;
+        //frame_anim.play_once(this._set_tower_idle.bind(this));
+         // end 
+         
+         // 放出多少个兵
+         //this._gen_actor(w_dst_pos);
     }
 
     async onCannonUpdate(dt:number,cannonAnimateComponent:AnimateComponent,cannonBaseComponent:BaseComponent,towerAttackComponent:AttackComponent){
@@ -176,7 +203,6 @@ export default class AnimateSystem extends cc.Component {
         }
         let w_dst_pos=arrowAnimateComponent.dstPos;
         var w_pos = man.convertToWorldSpaceAR(cc.v2(0, 0));
-        // var dir = cc.pSub(w_dst_pos, w_pos);
         var dir = w_dst_pos.sub(w_pos);
         // 判断当前是要播放上，还是下
         if (dir.y > 0) { // 上的动画
@@ -223,92 +249,107 @@ export default class AnimateSystem extends cc.Component {
 
     async onCannonBulletUpdate(dt:number,bulletRoleComponent:RoleComponent,bulletAnimateComponent:AnimateComponent,
         bulletAttackComponent:AttackComponent,bulletBaseComponent:BaseComponent){
-            let enemyEntity:EnemyEntity=ECSManager.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
-            let shoot_enemy = enemyEntity.baseComponent.gameObject;//enemy;
-            let attack = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
-            let anim=bulletBaseComponent.gameObject.getChildByName("anim")
-            //this._set_bullet_idle();
             let bullet_level = bulletRoleComponent.level;
-            
             let phy_params = GameDataManager.getInstance().cannon_bullet[bullet_level - 1];
-            let w_start_pos=bulletAnimateComponent.srcPos;
-            let w_dst_pos=bulletAnimateComponent.dstPos;
-            var start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(cc.v2(w_start_pos.x,w_start_pos.y+29));
-            var dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(bulletAnimateComponent.dstPos);
-            // 发射的时候调整我们角度,设置好位置
-            bulletBaseComponent.gameObject.setPosition(start_pos);
-            anim.angle = 0;
-            // end  
-            
-            // 创建一个贝塞尔的action来控制我们的子弹的发射
-            // var dir = cc.pSub(w_dst_pos, w_start_pos);
-            var dir = w_dst_pos.sub(w_start_pos);
-            // var len = cc.pLength(dir);
-            var len = (dir.mag());
-            var time = len / phy_params.speed;
-            // end 
-            var after_pos = cc.v2(0,0);//actor.position_after_time(time);
-            w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
-            dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
-            // 求贝塞尔曲线的控制点，中点，然后拉高xxxxx
-            var ctrl_x;
-            var ctrl_y;
-            
-            {
-                ctrl_x = (start_pos.x + dst_pos.x) * 0.5;
-                ctrl_y = (dst_pos.y > start_pos.y) ? dst_pos.y : start_pos.y;
-                ctrl_y += 40;
-            }
-            // end 
-            
-            var ctrl_point_set = [cc.v2(ctrl_x, ctrl_y), cc.v2(ctrl_x, ctrl_y), dst_pos];
-            var bto_action = cc.bezierTo(time, ctrl_point_set);
-            let bomb_anim_frames:cc.SpriteFrame[]=[];
-            for(let i=1;i<=10;i++){
-                let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/pao_tower/bom/bom"+i,cc.SpriteFrame) as cc.SpriteFrame;
-                bomb_anim_frames.push(sf);
-            }
-            // 播放爆炸动画，播放完后删除
-            var end_func = cc.callFunc(function(){
-                var bomb_R = phy_params.bomb_R;
-                var bomb_pos = bulletBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0));
-                ECSUtil.getInstance().on_bullet_bomb(w_dst_pos,bomb_R,attack);
-                //this.play_bullet_bomb_anim();
-                anim.angle = 0;
-                var frame_com = anim.addComponent(FrameAnimate);
-                frame_com.sprite_frames = bomb_anim_frames;
-                frame_com.duration = 0.1;
-                
-                // 爆炸结束后，删除子弹
-                frame_com.play_once(function() {
-                    //this.node.removeFromParent();
-                    bulletRoleComponent.isDead=true;
-                    bulletAttackComponent.enemyID=0;
-                }.bind(this));
-            }.bind(this), bulletBaseComponent.gameObject);
-            var seq = cc.sequence([bto_action, end_func]);
-            bulletBaseComponent.gameObject.runAction(seq);
-            
-            // 逻辑与图像分离
-            var degree;
-            if (w_dst_pos.x < w_start_pos.x) { // 在左边
-                degree = -180 + Math.random() * 10;
-            }
-            else {
-                degree = 180 - Math.random() * 10;
-            }
-            var rot = cc.rotateBy(time, degree);
-            anim.runAction(rot);
+            let attack = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
 
-            bulletAnimateComponent.state=AnimateState.Stop;
+            bulletAnimateComponent.time-=dt;
+            if(bulletAnimateComponent.state==AnimateState.Start){
+                let enemyEntity:EnemyEntity=ECSManager.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
+                let shoot_enemy = enemyEntity.baseComponent.gameObject;//enemy;
+                let anim=bulletBaseComponent.gameObject.getChildByName("anim")
+                //this._set_bullet_idle();
+                let w_start_pos=bulletAnimateComponent.srcPos;
+                let w_dst_pos=bulletAnimateComponent.dstPos;
+                var start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(cc.v2(w_start_pos.x,w_start_pos.y+29));
+                var dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(bulletAnimateComponent.dstPos);
+                // 发射的时候调整我们角度,设置好位置
+                bulletBaseComponent.gameObject.setPosition(start_pos);
+                anim.angle = 0;
+                // end  
+                
+                // 创建一个贝塞尔的action来控制我们的子弹的发射
+                // var dir = cc.pSub(w_dst_pos, w_start_pos);
+                var dir = w_dst_pos.sub(w_start_pos);
+                // var len = cc.pLength(dir);
+                var len = (dir.mag());
+                var time = len / phy_params.speed;
+                // end 
+                var after_pos = cc.v2(0,0);//actor.position_after_time(time);
+                w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
+                dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
+                // 求贝塞尔曲线的控制点，中点，然后拉高xxxxx
+                var ctrl_x;
+                var ctrl_y;
+                
+                {
+                    ctrl_x = (start_pos.x + dst_pos.x) * 0.5;
+                    ctrl_y = (dst_pos.y > start_pos.y) ? dst_pos.y : start_pos.y;
+                    ctrl_y += 40;
+                }
+                // end 
+                
+                var ctrl_point_set = [cc.v2(ctrl_x, ctrl_y), cc.v2(ctrl_x, ctrl_y), dst_pos];
+                var bto_action = cc.bezierTo(time, ctrl_point_set);
+                let bomb_anim_frames:cc.SpriteFrame[]=[];
+                for(let i=1;i<=10;i++){
+                    let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/pao_tower/bom/bom"+i,cc.SpriteFrame) as cc.SpriteFrame;
+                    bomb_anim_frames.push(sf);
+                }
+                // 播放爆炸动画，播放完后删除
+                var end_func = cc.callFunc(function(){
+                    
+                    //this.play_bullet_bomb_anim();
+                    anim.angle = 0;
+                    var frame_com = anim.addComponent(FrameAnimate);
+                    frame_com.sprite_frames = bomb_anim_frames;
+                    frame_com.duration = 0.1;
+                    
+                    // 爆炸结束后，删除子弹
+                    frame_com.play_once(function() {
+                        //this.node.removeFromParent();
+                        
+                    }.bind(this));
+                }.bind(this), bulletBaseComponent.gameObject);
+                var seq = cc.sequence([bto_action, end_func]);
+                bulletBaseComponent.gameObject.runAction(seq);
+                
+                // 逻辑与图像分离
+                var degree;
+                if (w_dst_pos.x < w_start_pos.x) { // 在左边
+                    degree = -180 + Math.random() * 10;
+                }
+                else {
+                    degree = 180 - Math.random() * 10;
+                }
+                var rot = cc.rotateBy(time, degree);
+                anim.runAction(rot);
+
+                bulletAnimateComponent.state=AnimateState.Playing;
+                bulletAnimateComponent.time=0.8;
+            }
+            else if(bulletAnimateComponent.state==AnimateState.Playing&&bulletAnimateComponent.time<=0){
+                var bomb_R = phy_params.bomb_R;
+                var w_dst_pos = bulletBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0));
+                ECSUtil.getInstance().on_bullet_bomb(w_dst_pos,bomb_R,attack);
+
+                bulletRoleComponent.isDead=true;
+                bulletAttackComponent.enemyID=0;
+                bulletAnimateComponent.state=AnimateState.Stop;
+            }
     }
 
     async onWarlockBulletUpdate(dt:number,bulletRoleComponent:RoleComponent,bulletAnimateComponent:AnimateComponent,
         bulletAttackComponent:AttackComponent,bulletBaseComponent:BaseComponent){
+
+        let enemyEntity:EnemyEntity=ECSManager.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
+        let attack = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
+
+        bulletAnimateComponent.time-=dt;
+
+        if(bulletAnimateComponent.state==AnimateState.Start){
             let bullet_level = bulletRoleComponent.level;
             let speed = GameDataManager.getInstance().warlock_bullet_params[bullet_level - 1].speed;
-            let attack = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
-            let enemyEntity:EnemyEntity=ECSManager.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
             let shoot_enemy = enemyEntity.baseComponent.gameObject;
             let w_start_pos=bulletAnimateComponent.srcPos;
             let w_dst_pos=bulletAnimateComponent.dstPos;
@@ -335,8 +376,6 @@ export default class AnimateSystem extends cc.Component {
                 bomb_anim.push(sf);
             }
             var func = cc.callFunc(function(){
-                ECSUtil.getInstance().on_arrowBullet_shoot(attack,enemyEntity.unitComponent,enemyEntity.baseComponent,enemyEntity.roleComponent);
-
                 var frame_anim = anim.addComponent(FrameAnimate);
                 frame_anim.sprite_frames = bomb_anim;
                 frame_anim.duration = 0.1;
@@ -348,95 +387,118 @@ export default class AnimateSystem extends cc.Component {
             }.bind(this),anim);
 
             var end_func = cc.callFunc(function(){
-                bulletRoleComponent.isDead=true;
-                bulletAttackComponent.enemyID=0;
+                
             }.bind(this), bulletBaseComponent.gameObject);
 
             var seq = cc.sequence([m, func,cc.delayTime(0.1),end_func]);
             bulletBaseComponent.gameObject.runAction(seq);
 
-           
+            bulletAnimateComponent.state=AnimateState.Playing;
+            bulletAnimateComponent.time=0.8;
+        }
+        else if(bulletAnimateComponent.state==AnimateState.Playing&&bulletAnimateComponent.time<=0){
             bulletAnimateComponent.state=AnimateState.Stop;
+            bulletRoleComponent.isDead=true;
+            bulletAttackComponent.enemyID=0;
+
+            if(enemyEntity){
+                ECSUtil.getInstance().on_arrowBullet_shoot(attack,enemyEntity.unitComponent,enemyEntity.baseComponent,enemyEntity.roleComponent);
+            }
+        }
     }
 
     async onArrowBulletUpdate(dt:number,bulletRoleComponent:RoleComponent,bulletAnimateComponent:AnimateComponent,
         bulletAttackComponent:AttackComponent,bulletBaseComponent:BaseComponent){
 
-        let speed = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].speed;
-        let attack = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
         let enemyEntity:EnemyEntity=ECSManager.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
-        let shoot_enemy = enemyEntity.baseComponent.gameObject;//enemy;
-        let anim=bulletBaseComponent.gameObject.getChildByName("anim")
-        var start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(bulletAnimateComponent.srcPos);
-        var dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(bulletAnimateComponent.dstPos);
-        
-        // 发射的时候调整我们角度,设置好位置
-        bulletBaseComponent.gameObject.setPosition(start_pos);
-        anim.angle = 270;
-        // end  
-        // 创建一个贝塞尔的action来控制我们的子弹的发射
-        // var dir = cc.pSub(w_dst_pos, w_start_pos);
-        var dir = bulletAnimateComponent.dstPos.sub(bulletAnimateComponent.srcPos);
+        let attack = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
+        bulletAnimateComponent.time-=dt;
 
-        // var len = cc.pLength(dir);
-        var len = (dir.mag());
-        var time = len / speed;
+        if(bulletAnimateComponent.state==AnimateState.Start){
+            let speed = GameDataManager.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].speed;
+            
+            let shoot_enemy = enemyEntity.baseComponent.gameObject;//enemy;
+            let anim=bulletBaseComponent.gameObject.getChildByName("anim")
+            var start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(cc.v2(bulletAnimateComponent.srcPos.x,bulletAnimateComponent.srcPos.y+30));
+            var dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(bulletAnimateComponent.dstPos);
+            
+            // 发射的时候调整我们角度,设置好位置
+            bulletBaseComponent.gameObject.setPosition(start_pos);
+            anim.angle = 270;
+            // end  
+            // 创建一个贝塞尔的action来控制我们的子弹的发射
+            // var dir = cc.pSub(w_dst_pos, w_start_pos);
+            var dir = bulletAnimateComponent.dstPos.sub(bulletAnimateComponent.srcPos);
 
-        var after_pos = cc.v2(0,-29);//actor.position_after_time(time);
-        let w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
-        dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
-        // end 
-        // 求贝塞尔曲线的控制点，中点，然后拉高xxxxx
-        var ctrl_x;
-        var ctrl_y;
-        
-        // if (Math.abs(dir.x) <= 10 && dir.y < 0) {
-        if (0) {
-            ctrl_y = (start_pos.y + dst_pos.y) * 0.5;
-            if (start_pos.x > dst_pos.x) {
-                ctrl_x = dst_pos.x;
-                // ctrl_x -= 20;
+            // var len = cc.pLength(dir);
+            var len = (dir.mag());
+            var time = len / speed;
+
+            var after_pos = cc.v2(0,-29);//actor.position_after_time(time);
+            let w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
+            dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
+            // end 
+            // 求贝塞尔曲线的控制点，中点，然后拉高xxxxx
+            var ctrl_x;
+            var ctrl_y;
+            
+            // if (Math.abs(dir.x) <= 10 && dir.y < 0) {
+            if (0) {
+                ctrl_y = (start_pos.y + dst_pos.y) * 0.5;
+                if (start_pos.x > dst_pos.x) {
+                    ctrl_x = dst_pos.x;
+                    // ctrl_x -= 20;
+                }
+                else {
+                    ctrl_x = dst_pos.x;
+                    // ctrl_x += 20;
+                }
             }
             else {
-                ctrl_x = dst_pos.x;
-                // ctrl_x += 20;
+                ctrl_x = (start_pos.x + dst_pos.x) * 0.5;
+                ctrl_y = (dst_pos.y > start_pos.y) ? dst_pos.y : start_pos.y;
+                ctrl_y += 40;
             }
+            // end 
+            var ctrl_point_set = [cc.v2(ctrl_x, ctrl_y), cc.v2(ctrl_x, ctrl_y), dst_pos];
+            var bto_action = cc.bezierTo(time, ctrl_point_set);
+            // this.node.runAction(bto_action); // 发射到目标点;
+            // 换图，把这个完整的键，换成我们的半截键
+            let decal_arrow_sprite_frame:cc.SpriteFrame=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/arrow_tower/bullet/decal_arrow",cc.SpriteFrame) as cc.SpriteFrame;
+            var func = cc.callFunc(function(){
+                var s = anim.getComponent(cc.Sprite);
+                s.spriteFrame = decal_arrow_sprite_frame;
+                
+            }.bind(this), bulletBaseComponent.gameObject);
+            
+            var end_func = cc.callFunc(function(){
+                
+                //bulletBaseComponent.gameObject.removeFromParent();
+            }.bind(this), bulletBaseComponent.gameObject);
+            var seq = cc.sequence([bto_action, func, cc.delayTime(1), cc.fadeOut(0.3), end_func]);
+            bulletBaseComponent.gameObject.runAction(seq);
+            // 逻辑与图像分离
+            var degree;
+            if (bulletAnimateComponent.dstPos.x < bulletAnimateComponent.srcPos.x) { // 在左边
+                degree = -180 + Math.random() * 10;
+            }
+            else {
+                degree = 180 - Math.random() * 10;
+            }
+            var rot = cc.rotateBy(time, degree);
+            anim.runAction(rot);
+
+            bulletAnimateComponent.state=AnimateState.Playing;
+            bulletAnimateComponent.time=0.8;
         }
-        else {
-            ctrl_x = (start_pos.x + dst_pos.x) * 0.5;
-            ctrl_y = (dst_pos.y > start_pos.y) ? dst_pos.y : start_pos.y;
-            ctrl_y += 40;
-        }
-        // end 
-        var ctrl_point_set = [cc.v2(ctrl_x, ctrl_y), cc.v2(ctrl_x, ctrl_y), dst_pos];
-        var bto_action = cc.bezierTo(time, ctrl_point_set);
-        // this.node.runAction(bto_action); // 发射到目标点;
-        // 换图，把这个完整的键，换成我们的半截键
-        let decal_arrow_sprite_frame:cc.SpriteFrame=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/arrow_tower/bullet/decal_arrow",cc.SpriteFrame) as cc.SpriteFrame;
-        var func = cc.callFunc(function(){
-            var s = anim.getComponent(cc.Sprite);
-            s.spriteFrame = decal_arrow_sprite_frame;
-            ECSUtil.getInstance().on_arrowBullet_shoot(attack,enemyEntity.unitComponent,enemyEntity.baseComponent,enemyEntity.roleComponent);
-        }.bind(this), bulletBaseComponent.gameObject);
-        
-        var end_func = cc.callFunc(function(){
+        else if(bulletAnimateComponent.state==AnimateState.Playing&&bulletAnimateComponent.time<=0){
+            bulletAnimateComponent.state=AnimateState.Stop;
             bulletRoleComponent.isDead=true;
             bulletAttackComponent.enemyID=0;
-            //bulletBaseComponent.gameObject.removeFromParent();
-        }.bind(this), bulletBaseComponent.gameObject);
-        var seq = cc.sequence([bto_action, func, cc.delayTime(1), cc.fadeOut(0.3), end_func]);
-        bulletBaseComponent.gameObject.runAction(seq);
-        // 逻辑与图像分离
-        var degree;
-        if (bulletAnimateComponent.dstPos.x < bulletAnimateComponent.srcPos.x) { // 在左边
-            degree = -180 + Math.random() * 10;
+            if(enemyEntity){
+                ECSUtil.getInstance().on_arrowBullet_shoot(attack,enemyEntity.unitComponent,enemyEntity.baseComponent,enemyEntity.roleComponent);
+            }
         }
-        else {
-            degree = 180 - Math.random() * 10;
-        }
-        var rot = cc.rotateBy(time, degree);
-        anim.runAction(rot);
-
-        bulletAnimateComponent.state=AnimateState.Stop;
+        
     }
 }

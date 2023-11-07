@@ -178,7 +178,7 @@ export default class ECSManager extends cc.Component {
                 continue;
             }
 
-            if(bullet.animateComponent.state!=AnimateState.Stop){
+            if(bullet.animateComponent.state==AnimateState.Start||bullet.animateComponent.state==AnimateState.Playing){
                 await AnimateSystem.getInstance().onBulletUpdate(dt,bullet.roleComponent,bullet.animateComponent,bullet.attackComponent,bullet.baseComponent);
             }
         }
@@ -190,7 +190,7 @@ export default class ECSManager extends cc.Component {
             if(tower.roleComponent.isDead){
                 continue;
             }
-            if(tower.animateComponent.state!=AnimateState.Stop){
+            if(tower.animateComponent.state==AnimateState.Start||tower.animateComponent.state==AnimateState.Playing){
                 await AnimateSystem.getInstance().onTowerUpdate(dt,tower.roleComponent,tower.animateComponent,tower.baseComponent,tower.attackComponent);
             }
         }

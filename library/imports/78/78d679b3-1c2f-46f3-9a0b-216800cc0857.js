@@ -51,17 +51,27 @@ var AISystem = /** @class */ (function (_super) {
         return AISystem_1._instance;
     };
     AISystem.prototype.onUpdate = function (dt, towerAnimateComponent, towerRoleComponent, towerAttackComponent, towerBaseComponent, enemyTransformComponent, enemyBaseComponent) {
-        var src = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
-        var search_R = GameDataManager_1.default.getInstance().arrow_tower_params[towerRoleComponent.level - 1].search_R;
-        var dst = enemyBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
-        var dir = dst.sub(src);
-        if (search_R >= (dir.mag())) {
-            // 攻击
-            towerAttackComponent.activeTime = 1.0;
-            towerAnimateComponent.id = enemyBaseComponent.entityID;
-            towerAnimateComponent.dstPos = dst;
+        if (towerRoleComponent.type == Enum_1.TowerType.Infantry) {
+            towerAttackComponent.activeTime = 4.0;
             towerAnimateComponent.state = Enum_1.AnimateState.Start;
-            return true;
+            var R = 60;
+            var r = Math.random() * 2 * Math.PI;
+            var w_dst_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(R * Math.cos(r), R * Math.sin(r)));
+            towerAnimateComponent.dstPos = w_dst_pos;
+        }
+        else {
+            var src = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
+            var search_R = GameDataManager_1.default.getInstance().arrow_tower_params[towerRoleComponent.level - 1].search_R;
+            var dst = enemyBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
+            var dir = dst.sub(src);
+            if (search_R >= (dir.mag())) {
+                // 攻击
+                towerAttackComponent.activeTime = 1.0;
+                towerAnimateComponent.id = enemyBaseComponent.entityID;
+                towerAnimateComponent.dstPos = dst;
+                towerAnimateComponent.state = Enum_1.AnimateState.Start;
+                return true;
+            }
         }
         return false;
     };

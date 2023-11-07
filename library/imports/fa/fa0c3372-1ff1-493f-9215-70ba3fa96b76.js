@@ -100,20 +100,59 @@ var AnimateSystem = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.onArrowUpdate(dt, towerAnimateComponent, towerBaseComponent, towerAttackComponent)];
                     case 1:
                         _a.sent();
-                        return [3 /*break*/, 6];
+                        return [3 /*break*/, 8];
                     case 2:
                         if (!(Enum_1.TowerType.Warlock == towerRoleComponent.type)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.onWarlockUpdate(dt, towerAnimateComponent, towerBaseComponent, towerAttackComponent)];
                     case 3:
                         _a.sent();
-                        return [3 /*break*/, 6];
+                        return [3 /*break*/, 8];
                     case 4:
                         if (!(Enum_1.TowerType.Cannon == towerRoleComponent.type)) return [3 /*break*/, 6];
                         return [4 /*yield*/, this.onCannonUpdate(dt, towerAnimateComponent, towerBaseComponent, towerAttackComponent)];
                     case 5:
                         _a.sent();
-                        _a.label = 6;
-                    case 6: return [2 /*return*/];
+                        return [3 /*break*/, 8];
+                    case 6:
+                        if (!(Enum_1.TowerType.Infantry == towerRoleComponent.type)) return [3 /*break*/, 8];
+                        return [4 /*yield*/, this.onInfantryUpdate(dt, towerAnimateComponent, towerBaseComponent, towerAttackComponent)];
+                    case 7:
+                        _a.sent();
+                        _a.label = 8;
+                    case 8: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AnimateSystem.prototype.onInfantryUpdate = function (dt, infantryAnimateComponent, infantryBaseComponent, infantryAttackComponent) {
+        return __awaiter(this, void 0, void 0, function () {
+            var anim, frame_anim, open_anim, i, sf;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        anim = infantryBaseComponent.gameObject.getChildByName("anim");
+                        frame_anim = anim.getComponent(FrameAnimate_1.default);
+                        if (!frame_anim) {
+                            frame_anim = anim.addComponent(FrameAnimate_1.default);
+                        }
+                        open_anim = [];
+                        i = 0;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i <= 3)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/bing_tower/bing1/bing1_" + i, cc.SpriteFrame)];
+                    case 2:
+                        sf = _a.sent();
+                        open_anim.push(sf);
+                        _a.label = 3;
+                    case 3:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 4:
+                        frame_anim.sprite_frames = open_anim;
+                        frame_anim.duration = 0.1;
+                        infantryAnimateComponent.state = Enum_1.AnimateState.Stop;
+                        return [2 /*return*/];
                 }
             });
         });
@@ -373,29 +412,31 @@ var AnimateSystem = /** @class */ (function (_super) {
     };
     AnimateSystem.prototype.onCannonBulletUpdate = function (dt, bulletRoleComponent, bulletAnimateComponent, bulletAttackComponent, bulletBaseComponent) {
         return __awaiter(this, void 0, void 0, function () {
-            var enemyEntity, shoot_enemy, attack, anim, bullet_level, phy_params, w_start_pos, w_dst_pos, start_pos, dst_pos, dir, len, time, after_pos, ctrl_x, ctrl_y, ctrl_point_set, bto_action, bomb_anim_frames, i, sf, end_func, seq, degree, rot;
+            var bullet_level, phy_params, attack, enemyEntity, shoot_enemy, anim_1, w_start_pos, w_dst_pos_1, start_pos, dst_pos, dir, len, time, after_pos, ctrl_x, ctrl_y, ctrl_point_set, bto_action, bomb_anim_frames_1, i, sf, end_func, seq, degree, rot, bomb_R, w_dst_pos;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        enemyEntity = ECSManager_1.default.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
-                        shoot_enemy = enemyEntity.baseComponent.gameObject;
-                        attack = GameDataManager_1.default.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
-                        anim = bulletBaseComponent.gameObject.getChildByName("anim");
                         bullet_level = bulletRoleComponent.level;
                         phy_params = GameDataManager_1.default.getInstance().cannon_bullet[bullet_level - 1];
+                        attack = GameDataManager_1.default.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
+                        bulletAnimateComponent.time -= dt;
+                        if (!(bulletAnimateComponent.state == Enum_1.AnimateState.Start)) return [3 /*break*/, 5];
+                        enemyEntity = ECSManager_1.default.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
+                        shoot_enemy = enemyEntity.baseComponent.gameObject;
+                        anim_1 = bulletBaseComponent.gameObject.getChildByName("anim");
                         w_start_pos = bulletAnimateComponent.srcPos;
-                        w_dst_pos = bulletAnimateComponent.dstPos;
+                        w_dst_pos_1 = bulletAnimateComponent.dstPos;
                         start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(cc.v2(w_start_pos.x, w_start_pos.y + 29));
                         dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(bulletAnimateComponent.dstPos);
                         // 发射的时候调整我们角度,设置好位置
                         bulletBaseComponent.gameObject.setPosition(start_pos);
-                        anim.angle = 0;
-                        dir = w_dst_pos.sub(w_start_pos);
+                        anim_1.angle = 0;
+                        dir = w_dst_pos_1.sub(w_start_pos);
                         len = (dir.mag());
                         time = len / phy_params.speed;
                         after_pos = cc.v2(0, 0);
-                        w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
-                        dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
+                        w_dst_pos_1 = shoot_enemy.convertToWorldSpaceAR(after_pos);
+                        dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos_1);
                         {
                             ctrl_x = (start_pos.x + dst_pos.x) * 0.5;
                             ctrl_y = (dst_pos.y > start_pos.y) ? dst_pos.y : start_pos.y;
@@ -403,7 +444,7 @@ var AnimateSystem = /** @class */ (function (_super) {
                         }
                         ctrl_point_set = [cc.v2(ctrl_x, ctrl_y), cc.v2(ctrl_x, ctrl_y), dst_pos];
                         bto_action = cc.bezierTo(time, ctrl_point_set);
-                        bomb_anim_frames = [];
+                        bomb_anim_frames_1 = [];
                         i = 1;
                         _a.label = 1;
                     case 1:
@@ -411,58 +452,67 @@ var AnimateSystem = /** @class */ (function (_super) {
                         return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/pao_tower/bom/bom" + i, cc.SpriteFrame)];
                     case 2:
                         sf = _a.sent();
-                        bomb_anim_frames.push(sf);
+                        bomb_anim_frames_1.push(sf);
                         _a.label = 3;
                     case 3:
                         i++;
                         return [3 /*break*/, 1];
                     case 4:
                         end_func = cc.callFunc(function () {
-                            var bomb_R = phy_params.bomb_R;
-                            var bomb_pos = bulletBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
-                            ECSUtil_1.default.getInstance().on_bullet_bomb(w_dst_pos, bomb_R, attack);
                             //this.play_bullet_bomb_anim();
-                            anim.angle = 0;
-                            var frame_com = anim.addComponent(FrameAnimate_1.default);
-                            frame_com.sprite_frames = bomb_anim_frames;
+                            anim_1.angle = 0;
+                            var frame_com = anim_1.addComponent(FrameAnimate_1.default);
+                            frame_com.sprite_frames = bomb_anim_frames_1;
                             frame_com.duration = 0.1;
                             // 爆炸结束后，删除子弹
                             frame_com.play_once(function () {
                                 //this.node.removeFromParent();
-                                bulletRoleComponent.isDead = true;
-                                bulletAttackComponent.enemyID = 0;
                             }.bind(this));
                         }.bind(this), bulletBaseComponent.gameObject);
                         seq = cc.sequence([bto_action, end_func]);
                         bulletBaseComponent.gameObject.runAction(seq);
-                        if (w_dst_pos.x < w_start_pos.x) { // 在左边
+                        if (w_dst_pos_1.x < w_start_pos.x) { // 在左边
                             degree = -180 + Math.random() * 10;
                         }
                         else {
                             degree = 180 - Math.random() * 10;
                         }
                         rot = cc.rotateBy(time, degree);
-                        anim.runAction(rot);
-                        bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
-                        return [2 /*return*/];
+                        anim_1.runAction(rot);
+                        bulletAnimateComponent.state = Enum_1.AnimateState.Playing;
+                        bulletAnimateComponent.time = 0.8;
+                        return [3 /*break*/, 6];
+                    case 5:
+                        if (bulletAnimateComponent.state == Enum_1.AnimateState.Playing && bulletAnimateComponent.time <= 0) {
+                            bomb_R = phy_params.bomb_R;
+                            w_dst_pos = bulletBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
+                            ECSUtil_1.default.getInstance().on_bullet_bomb(w_dst_pos, bomb_R, attack);
+                            bulletRoleComponent.isDead = true;
+                            bulletAttackComponent.enemyID = 0;
+                            bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
+                        }
+                        _a.label = 6;
+                    case 6: return [2 /*return*/];
                 }
             });
         });
     };
     AnimateSystem.prototype.onWarlockBulletUpdate = function (dt, bulletRoleComponent, bulletAnimateComponent, bulletAttackComponent, bulletBaseComponent) {
         return __awaiter(this, void 0, void 0, function () {
-            var bullet_level, speed, attack, enemyEntity, shoot_enemy, w_start_pos, w_dst_pos, anim, start_pos, dst_pos, dir, len, time, after_pos, m, bomb_anim, i, sf, func, end_func, seq;
+            var enemyEntity, attack, bullet_level, speed, shoot_enemy, w_start_pos, w_dst_pos, anim_2, start_pos, dst_pos, dir, len, time, after_pos, m, bomb_anim_1, i, sf, func, end_func, seq;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        enemyEntity = ECSManager_1.default.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
+                        attack = GameDataManager_1.default.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
+                        bulletAnimateComponent.time -= dt;
+                        if (!(bulletAnimateComponent.state == Enum_1.AnimateState.Start)) return [3 /*break*/, 5];
                         bullet_level = bulletRoleComponent.level;
                         speed = GameDataManager_1.default.getInstance().warlock_bullet_params[bullet_level - 1].speed;
-                        attack = GameDataManager_1.default.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
-                        enemyEntity = ECSManager_1.default.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
                         shoot_enemy = enemyEntity.baseComponent.gameObject;
                         w_start_pos = bulletAnimateComponent.srcPos;
                         w_dst_pos = bulletAnimateComponent.dstPos;
-                        anim = bulletBaseComponent.gameObject.getChildByName("anim");
+                        anim_2 = bulletBaseComponent.gameObject.getChildByName("anim");
                         start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(cc.v2(w_start_pos.x, w_start_pos.y + 30));
                         dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
                         bulletBaseComponent.gameObject.setPosition(start_pos);
@@ -473,7 +523,7 @@ var AnimateSystem = /** @class */ (function (_super) {
                         w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
                         dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
                         m = cc.moveBy(time, w_dst_pos.x - w_start_pos.x, w_dst_pos.y - w_start_pos.y);
-                        bomb_anim = [];
+                        bomb_anim_1 = [];
                         i = 0;
                         _a.label = 1;
                     case 1:
@@ -481,51 +531,62 @@ var AnimateSystem = /** @class */ (function (_super) {
                         return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/fashi_tower/bomb/bomb_" + i, cc.SpriteFrame)];
                     case 2:
                         sf = _a.sent();
-                        bomb_anim.push(sf);
+                        bomb_anim_1.push(sf);
                         _a.label = 3;
                     case 3:
                         i++;
                         return [3 /*break*/, 1];
                     case 4:
                         func = cc.callFunc(function () {
-                            ECSUtil_1.default.getInstance().on_arrowBullet_shoot(attack, enemyEntity.unitComponent, enemyEntity.baseComponent, enemyEntity.roleComponent);
-                            var frame_anim = anim.addComponent(FrameAnimate_1.default);
-                            frame_anim.sprite_frames = bomb_anim;
+                            var frame_anim = anim_2.addComponent(FrameAnimate_1.default);
+                            frame_anim.sprite_frames = bomb_anim_1;
                             frame_anim.duration = 0.1;
                             frame_anim.play_once(function () {
                                 //this.on_bullet_bomb(w_dst_pos);
                                 //this.node.removeFromParent();
                             }.bind(this));
                             // 播放爆炸动画
-                        }.bind(this), anim);
+                        }.bind(this), anim_2);
                         end_func = cc.callFunc(function () {
-                            bulletRoleComponent.isDead = true;
-                            bulletAttackComponent.enemyID = 0;
                         }.bind(this), bulletBaseComponent.gameObject);
                         seq = cc.sequence([m, func, cc.delayTime(0.1), end_func]);
                         bulletBaseComponent.gameObject.runAction(seq);
-                        bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
-                        return [2 /*return*/];
+                        bulletAnimateComponent.state = Enum_1.AnimateState.Playing;
+                        bulletAnimateComponent.time = 0.8;
+                        return [3 /*break*/, 6];
+                    case 5:
+                        if (bulletAnimateComponent.state == Enum_1.AnimateState.Playing && bulletAnimateComponent.time <= 0) {
+                            bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
+                            bulletRoleComponent.isDead = true;
+                            bulletAttackComponent.enemyID = 0;
+                            if (enemyEntity) {
+                                ECSUtil_1.default.getInstance().on_arrowBullet_shoot(attack, enemyEntity.unitComponent, enemyEntity.baseComponent, enemyEntity.roleComponent);
+                            }
+                        }
+                        _a.label = 6;
+                    case 6: return [2 /*return*/];
                 }
             });
         });
     };
     AnimateSystem.prototype.onArrowBulletUpdate = function (dt, bulletRoleComponent, bulletAnimateComponent, bulletAttackComponent, bulletBaseComponent) {
         return __awaiter(this, void 0, void 0, function () {
-            var speed, attack, enemyEntity, shoot_enemy, anim, start_pos, dst_pos, dir, len, time, after_pos, w_dst_pos, ctrl_x, ctrl_y, ctrl_point_set, bto_action, decal_arrow_sprite_frame, func, end_func, seq, degree, rot;
+            var enemyEntity, attack, speed, shoot_enemy, anim_3, start_pos, dst_pos, dir, len, time, after_pos, w_dst_pos, ctrl_x, ctrl_y, ctrl_point_set, bto_action, decal_arrow_sprite_frame_1, func, end_func, seq, degree, rot;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        speed = GameDataManager_1.default.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].speed;
-                        attack = GameDataManager_1.default.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
                         enemyEntity = ECSManager_1.default.getInstance().getEnemyEntityByID(bulletAttackComponent.enemyID);
+                        attack = GameDataManager_1.default.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].attack;
+                        bulletAnimateComponent.time -= dt;
+                        if (!(bulletAnimateComponent.state == Enum_1.AnimateState.Start)) return [3 /*break*/, 2];
+                        speed = GameDataManager_1.default.getInstance().arrow_bullet_params[bulletRoleComponent.level - 1].speed;
                         shoot_enemy = enemyEntity.baseComponent.gameObject;
-                        anim = bulletBaseComponent.gameObject.getChildByName("anim");
-                        start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(bulletAnimateComponent.srcPos);
+                        anim_3 = bulletBaseComponent.gameObject.getChildByName("anim");
+                        start_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(cc.v2(bulletAnimateComponent.srcPos.x, bulletAnimateComponent.srcPos.y + 30));
                         dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(bulletAnimateComponent.dstPos);
                         // 发射的时候调整我们角度,设置好位置
                         bulletBaseComponent.gameObject.setPosition(start_pos);
-                        anim.angle = 270;
+                        anim_3.angle = 270;
                         dir = bulletAnimateComponent.dstPos.sub(bulletAnimateComponent.srcPos);
                         len = (dir.mag());
                         time = len / speed;
@@ -553,15 +614,12 @@ var AnimateSystem = /** @class */ (function (_super) {
                         bto_action = cc.bezierTo(time, ctrl_point_set);
                         return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/arrow_tower/bullet/decal_arrow", cc.SpriteFrame)];
                     case 1:
-                        decal_arrow_sprite_frame = _a.sent();
+                        decal_arrow_sprite_frame_1 = _a.sent();
                         func = cc.callFunc(function () {
-                            var s = anim.getComponent(cc.Sprite);
-                            s.spriteFrame = decal_arrow_sprite_frame;
-                            ECSUtil_1.default.getInstance().on_arrowBullet_shoot(attack, enemyEntity.unitComponent, enemyEntity.baseComponent, enemyEntity.roleComponent);
+                            var s = anim_3.getComponent(cc.Sprite);
+                            s.spriteFrame = decal_arrow_sprite_frame_1;
                         }.bind(this), bulletBaseComponent.gameObject);
                         end_func = cc.callFunc(function () {
-                            bulletRoleComponent.isDead = true;
-                            bulletAttackComponent.enemyID = 0;
                             //bulletBaseComponent.gameObject.removeFromParent();
                         }.bind(this), bulletBaseComponent.gameObject);
                         seq = cc.sequence([bto_action, func, cc.delayTime(1), cc.fadeOut(0.3), end_func]);
@@ -573,9 +631,21 @@ var AnimateSystem = /** @class */ (function (_super) {
                             degree = 180 - Math.random() * 10;
                         }
                         rot = cc.rotateBy(time, degree);
-                        anim.runAction(rot);
-                        bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
-                        return [2 /*return*/];
+                        anim_3.runAction(rot);
+                        bulletAnimateComponent.state = Enum_1.AnimateState.Playing;
+                        bulletAnimateComponent.time = 0.8;
+                        return [3 /*break*/, 3];
+                    case 2:
+                        if (bulletAnimateComponent.state == Enum_1.AnimateState.Playing && bulletAnimateComponent.time <= 0) {
+                            bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
+                            bulletRoleComponent.isDead = true;
+                            bulletAttackComponent.enemyID = 0;
+                            if (enemyEntity) {
+                                ECSUtil_1.default.getInstance().on_arrowBullet_shoot(attack, enemyEntity.unitComponent, enemyEntity.baseComponent, enemyEntity.roleComponent);
+                            }
+                        }
+                        _a.label = 3;
+                    case 3: return [2 /*return*/];
                 }
             });
         });

@@ -277,7 +277,7 @@ var ECSManager = /** @class */ (function (_super) {
                         if (bullet.roleComponent.isDead) {
                             return [3 /*break*/, 3];
                         }
-                        if (!(bullet.animateComponent.state != Enum_1.AnimateState.Stop)) return [3 /*break*/, 3];
+                        if (!(bullet.animateComponent.state == Enum_1.AnimateState.Start || bullet.animateComponent.state == Enum_1.AnimateState.Playing)) return [3 /*break*/, 3];
                         return [4 /*yield*/, AnimateSystem_1.default.getInstance().onBulletUpdate(dt, bullet.roleComponent, bullet.animateComponent, bullet.attackComponent, bullet.baseComponent)];
                     case 2:
                         _a.sent();
@@ -304,7 +304,7 @@ var ECSManager = /** @class */ (function (_super) {
                         if (tower.roleComponent.isDead) {
                             return [3 /*break*/, 3];
                         }
-                        if (!(tower.animateComponent.state != Enum_1.AnimateState.Stop)) return [3 /*break*/, 3];
+                        if (!(tower.animateComponent.state == Enum_1.AnimateState.Start || tower.animateComponent.state == Enum_1.AnimateState.Playing)) return [3 /*break*/, 3];
                         return [4 /*yield*/, AnimateSystem_1.default.getInstance().onTowerUpdate(dt, tower.roleComponent, tower.animateComponent, tower.baseComponent, tower.attackComponent)];
                     case 2:
                         _a.sent();
