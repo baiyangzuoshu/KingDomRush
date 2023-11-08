@@ -9,6 +9,7 @@ import { AnimateState, TowerType } from "../Enum";
 import ECSFactory from "./ECSFactory";
 import BulletEntity from "./Entities/BulletEntity";
 import EnemyEntity from "./Entities/EnemyEntity";
+import { InfantryActor } from "./Entities/InfantryActor";
 import TowerEntity from "./Entities/TowerEntity";
 import AISystem from "./Systems/AISystem";
 import AnimateSystem from "./Systems/AnimateSystem";
@@ -37,6 +38,7 @@ export default class ECSManager extends cc.Component {
     private towerEntityList:TowerEntity[]=[];
     private enemyEntityList:EnemyEntity[]=[];
     private bulletEntityList:BulletEntity[]=[];
+    private actorEntityList:InfantryActor[]=[];
     //
     public getEnemyTotal(){
         return this.enemyEntityList.length;
@@ -60,8 +62,8 @@ export default class ECSManager extends cc.Component {
             this.bulletEntityList.push(entity);
         }
         else if(TowerType.Infantry==tower_type){
-            let entity:BulletEntity=await ECSFactory.getInstance().createInfantryBulletEntity(tower_type,tower_level, w_pos, w_dst_pos, enemyID);
-            this.bulletEntityList.push(entity);
+            let entity:InfantryActor=await ECSFactory.getInstance().createInfantryBulletEntity(tower_type,tower_level, w_pos, w_dst_pos, enemyID);
+            this.actorEntityList.push(entity);
         }
         else if(TowerType.Warlock==tower_type){
             let entity:BulletEntity=await ECSFactory.getInstance().createWarlockBulletEntity(tower_type,tower_level, w_pos, w_dst_pos, enemyID);
@@ -127,11 +129,19 @@ export default class ECSManager extends cc.Component {
     }
     //
     navSystemEnemyUpdate(dt:number){
+        //敌人
         for(let i=0;i<this.enemyEntityList.length;++i){
             if(this.enemyEntityList[i].roleComponent.isDead){
                 continue;
             }
-            NavSystem.getInstance().onUpdate(dt,this.enemyEntityList[i].navComponent,this.enemyEntityList[i].baseComponent,this.enemyEntityList[i].transformComponent);
+            NavSystem.getInstance().onEnemyUpdate(dt,this.enemyEntityList[i].navComponent,this.enemyEntityList[i].baseComponent,this.enemyEntityList[i].transformComponent);
+        }
+        //兵站士兵
+        for(let i=0;i<this.actorEntityList.length;++i){
+            if(this.actorEntityList[i].roleComponent.isDead){
+                continue;
+            }
+            NavSystem.getInstance().onActorUpdate(dt,this.actorEntityList[i].navComponent,this.actorEntityList[i].baseComponent,this.actorEntityList[i].transformComponent);
         }
     }
 
@@ -152,7 +162,7 @@ export default class ECSManager extends cc.Component {
                     continue;
                 }
 
-                AISystem.getInstance().onUpdate(dt,this.towerEntityList[i].animateComponent,this.towerEntityList[i].roleComponent,
+                AISystem.getInstance().onTowerUpdate(dt,this.towerEntityList[i].animateComponent,this.towerEntityList[i].roleComponent,
                     towerAttackComponent,this.towerEntityList[i].baseComponent,
                     this.enemyEntityList[j].transformComponent,this.enemyEntityList[j].baseComponent);
             }
@@ -163,9 +173,14 @@ export default class ECSManager extends cc.Component {
         for(let i=0;i<this.towerEntityList.length;++i){
             let tower=this.towerEntityList[i];
             if(tower.attackComponent.enemyID>0){
-                let enemy=this.getEnemyEntityByID(tower.attackComponent.enemyID);
-                if(enemy&&!enemy.roleComponent.isDead){
-                    AttackSystem.getInstance().onUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
+                if(6666==tower.attackComponent.enemyID){
+                    AttackSystem.getInstance().onInfantryActorUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
+                }
+                else{
+                    let enemy=this.getEnemyEntityByID(tower.attackComponent.enemyID);
+                    if(enemy&&!enemy.roleComponent.isDead){
+                        AttackSystem.getInstance().onUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
+                    }
                 }
             }
         }

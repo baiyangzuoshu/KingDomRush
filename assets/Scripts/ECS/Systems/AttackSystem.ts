@@ -6,6 +6,7 @@
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
 import GameDataManager from "../../Data/GameDataManager";
+import { TowerType } from "../../Enum";
 import AttackComponent from "../Components/AttackComponent";
 import BaseComponent from "../Components/BaseComponent";
 import RoleComponent from "../Components/RoleComponent";
@@ -34,15 +35,27 @@ export default class AttackSystem extends cc.Component {
 
     onUpdate(dt:number,towerAttackComponent:AttackComponent,towerBaseComponent:BaseComponent,
         towerRoleComponent:RoleComponent){
+        
         let enemyEntity:EnemyEntity=ECSManager.getInstance().getEnemyEntityByID(towerAttackComponent.enemyID);
         if(null==enemyEntity){
             return
         }
         
         var center_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
-        var enemy_pos=enemyEntity.baseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
+        var enemy_pos:cc.Vec2=enemyEntity.baseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
         
         ECSManager.getInstance().createBulletEntity(towerRoleComponent.type,towerRoleComponent.level,center_pos,enemy_pos,towerAttackComponent.enemyID);
         towerAttackComponent.enemyID=0;
-    } 
+    }
+    
+    onInfantryActorUpdate(dt,towerAttackComponent:AttackComponent,towerBaseComponent:BaseComponent,
+        towerRoleComponent:RoleComponent){
+        var center_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, -15));
+        var R = 60;
+        var r = Math.random() * 2 * Math.PI;
+        var w_dst_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(R * Math.cos(r), R * Math.sin(r)));
+        
+        ECSManager.getInstance().createBulletEntity(towerRoleComponent.type,towerRoleComponent.level,center_pos,w_dst_pos,towerAttackComponent.enemyID);
+        towerAttackComponent.enemyID=0;
+    }
 }

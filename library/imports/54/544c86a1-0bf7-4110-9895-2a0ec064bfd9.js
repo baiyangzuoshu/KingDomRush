@@ -59,6 +59,14 @@ var AttackSystem = /** @class */ (function (_super) {
         ECSManager_1.default.getInstance().createBulletEntity(towerRoleComponent.type, towerRoleComponent.level, center_pos, enemy_pos, towerAttackComponent.enemyID);
         towerAttackComponent.enemyID = 0;
     };
+    AttackSystem.prototype.onInfantryActorUpdate = function (dt, towerAttackComponent, towerBaseComponent, towerRoleComponent) {
+        var center_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, -15));
+        var R = 60;
+        var r = Math.random() * 2 * Math.PI;
+        var w_dst_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(R * Math.cos(r), R * Math.sin(r)));
+        ECSManager_1.default.getInstance().createBulletEntity(towerRoleComponent.type, towerRoleComponent.level, center_pos, w_dst_pos, towerAttackComponent.enemyID);
+        towerAttackComponent.enemyID = 0;
+    };
     var AttackSystem_1;
     AttackSystem._instance = null;
     AttackSystem = AttackSystem_1 = __decorate([

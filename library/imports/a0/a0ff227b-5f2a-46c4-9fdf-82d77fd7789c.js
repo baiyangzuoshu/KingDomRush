@@ -66,9 +66,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
+var GameDataManager_1 = require("../Data/GameDataManager");
 var Enum_1 = require("../Enum");
+var FrameAnimate_1 = require("../Tools/FrameAnimate");
 var BulletEntity_1 = require("./Entities/BulletEntity");
 var EnemyEntity_1 = require("./Entities/EnemyEntity");
+var InfantryActor_1 = require("./Entities/InfantryActor");
 var ArrowEntity_1 = require("./Entities/Tower/ArrowEntity");
 var CannonEntity_1 = require("./Entities/Tower/CannonEntity");
 var InfantryEntity_1 = require("./Entities/Tower/InfantryEntity");
@@ -163,12 +166,12 @@ var ECSFactory = /** @class */ (function (_super) {
     };
     ECSFactory.prototype.createInfantryBulletEntity = function (tower_type, tower_level, w_pos, w_dst_pos, enemyID) {
         return __awaiter(this, void 0, Promise, function () {
-            var entity, prefab, bullet, center_pos;
+            var entity, prefab, bullet, center_pos, anim, frame_anim, walk_anim, i, frame;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        entity = new BulletEntity_1.default();
-                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/infantry_bullet", cc.Prefab)];
+                        entity = new InfantryActor_1.InfantryActor();
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("prefabs", "Game/infantry_actor", cc.Prefab)];
                     case 1:
                         prefab = _a.sent();
                         bullet = cc.instantiate(prefab);
@@ -185,6 +188,30 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.animateComponent.state = Enum_1.AnimateState.Start;
                         entity.roleComponent.level = tower_level;
                         entity.roleComponent.type = tower_type;
+                        entity.navComponent.path.push(w_pos);
+                        entity.navComponent.path.push(w_dst_pos);
+                        entity.navComponent.curTime = 0;
+                        entity.navComponent.curIndex = 0;
+                        entity.navComponent.speed = GameDataManager_1.default.getInstance().infantry_actor[tower_level - 1].speed;
+                        anim = bullet.getChildByName("anim");
+                        frame_anim = anim.addComponent(FrameAnimate_1.default);
+                        walk_anim = new Array();
+                        i = 0;
+                        _a.label = 2;
+                    case 2:
+                        if (!(i < 6)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, ResManagerPro_1.ResManagerPro.Instance.IE_GetAsset("textures", "game_scene/tower/bing_tower/actor1/walk/walk1_" + i, cc.SpriteFrame)];
+                    case 3:
+                        frame = _a.sent();
+                        walk_anim.push(frame);
+                        _a.label = 4;
+                    case 4:
+                        i++;
+                        return [3 /*break*/, 2];
+                    case 5:
+                        frame_anim.sprite_frames = walk_anim;
+                        frame_anim.duration = 0.1;
+                        frame_anim.play_loop();
                         entity.attackComponent.enemyID = enemyID;
                         return [2 /*return*/, entity];
                 }

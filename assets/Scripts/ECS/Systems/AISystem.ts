@@ -7,6 +7,7 @@
 
 import GameDataManager from "../../Data/GameDataManager";
 import { AnimateState, TowerType } from "../../Enum";
+import AIComponent from "../Components/AIComponent";
 import AnimateComponent from "../Components/AnimateComponent";
 import AttackComponent from "../Components/AttackComponent";
 import BaseComponent from "../Components/BaseComponent";
@@ -33,16 +34,12 @@ export default class AISystem extends cc.Component {
         return AISystem._instance;
     }
 
-    onUpdate(dt:number,towerAnimateComponent:AnimateComponent,towerRoleComponent:RoleComponent,towerAttackComponent:AttackComponent,
+    onTowerUpdate(dt:number,towerAnimateComponent:AnimateComponent,towerRoleComponent:RoleComponent,towerAttackComponent:AttackComponent,
         towerBaseComponent,enemyTransformComponent:TransformComponent,enemyBaseComponent:BaseComponent){
         
         if(towerRoleComponent.type==TowerType.Infantry){
             towerAttackComponent.activeTime=4.0;
             towerAnimateComponent.state=AnimateState.Start;
-            var R = 60;
-            var r = Math.random() * 2 * Math.PI;
-            var w_dst_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(R * Math.cos(r), R * Math.sin(r)));
-            towerAnimateComponent.dstPos=w_dst_pos;
         }
         else{
             var src = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0))
@@ -60,5 +57,16 @@ export default class AISystem extends cc.Component {
         }
         
         return false
+    }
+
+    onInfantryActorUpdate(dt:number,actorAIComponent:AIComponent,actorBaseComponent:BaseComponent,enemyBaseComponent:BaseComponent){
+        var src = actorBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0))
+        var search_R = actorAIComponent.search_R;
+        var dst = enemyBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0))
+        var dir = dst.sub(src);
+        if (search_R >= (dir.mag())) {
+            // 攻击
+            
+        }
     }
 }

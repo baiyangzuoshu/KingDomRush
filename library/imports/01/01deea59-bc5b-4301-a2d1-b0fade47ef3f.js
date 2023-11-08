@@ -48,13 +48,41 @@ var NavSystem = /** @class */ (function (_super) {
     NavSystem.getInstance = function () {
         return NavSystem_1._instance;
     };
-    NavSystem.prototype.onUpdate = function (dt, navComponent, baseComponent, transformComponent) {
+    NavSystem.prototype.onEnemyUpdate = function (dt, navComponent, baseComponent, transformComponent) {
         if (navComponent.curTime > 0) {
             navComponent.curTime -= dt;
             baseComponent.gameObject.x = navComponent.vx * dt + transformComponent.x;
             baseComponent.gameObject.y = navComponent.vy * dt + transformComponent.y;
             transformComponent.x = baseComponent.gameObject.x;
             transformComponent.y = baseComponent.gameObject.y;
+            return;
+        }
+        if (navComponent.curIndex >= navComponent.path.length - 1) {
+            return;
+        }
+        var curPos = navComponent.path[navComponent.curIndex];
+        var nextPos = navComponent.path[navComponent.curIndex + 1];
+        var dx = nextPos.x - curPos.x;
+        var dy = nextPos.y - curPos.y;
+        var dis = Math.sqrt(dx * dx + dy * dy);
+        navComponent.vx = dx / dis * navComponent.speed;
+        navComponent.vy = dy / dis * navComponent.speed;
+        navComponent.curTime = dis / navComponent.speed;
+        navComponent.curIndex++;
+    };
+    NavSystem.prototype.onActorUpdate = function (dt, navComponent, baseComponent, transformComponent) {
+        if (navComponent.curTime > 0) {
+            navComponent.curTime -= dt;
+            baseComponent.gameObject.x = navComponent.vx * dt + transformComponent.x;
+            baseComponent.gameObject.y = navComponent.vy * dt + transformComponent.y;
+            transformComponent.x = baseComponent.gameObject.x;
+            transformComponent.y = baseComponent.gameObject.y;
+            if (navComponent.vx < 0) {
+                baseComponent.gameObject.getChildByName("anim").scaleX = -1;
+            }
+            else {
+                baseComponent.gameObject.getChildByName("anim").scaleX = 1;
+            }
             return;
         }
         if (navComponent.curIndex >= navComponent.path.length - 1) {

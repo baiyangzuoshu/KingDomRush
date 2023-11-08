@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets\\Scripts\\ECS\\Components\\AIComponent.ts"],"names":[],"mappings":";;;;;;AACA;IAAA;QACW,aAAQ,GAAQ,CAAC,CAAC;QAClB,aAAQ,GAAQ,CAAC,CAAC;IAC7B,CAAC;IAAD,kBAAC;AAAD,CAHA,AAGC,IAAA","file":"","sourceRoot":"/","sourcesContent":["\nexport default class AIComponent {\n    public attack_R:number=0;\n    public search_R:number=0;\n}\n"]}

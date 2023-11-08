@@ -130,6 +130,10 @@ var AnimateSystem = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        // 播放放开门的动画
+                        //this._play_open_door_anim();
+                        infantryAnimateComponent.time -= dt;
+                        if (!(infantryAnimateComponent.state == Enum_1.AnimateState.Start)) return [3 /*break*/, 13];
                         anim = infantryBaseComponent.gameObject.getChildByName("anim");
                         frame_anim = anim.getComponent(FrameAnimate_1.default);
                         if (!frame_anim) {
@@ -178,8 +182,18 @@ var AnimateSystem = /** @class */ (function (_super) {
                         frame_anim.sprite_frames = open_anim;
                         frame_anim.duration = 0.2;
                         frame_anim.play_once(function () { });
-                        infantryAnimateComponent.state = Enum_1.AnimateState.Stop;
-                        return [2 /*return*/];
+                        infantryAnimateComponent.state = Enum_1.AnimateState.Playing;
+                        infantryAnimateComponent.time = 0.8;
+                        return [3 /*break*/, 14];
+                    case 13:
+                        if (infantryAnimateComponent.state == Enum_1.AnimateState.Playing && infantryAnimateComponent.time <= 0) {
+                            // 放出多少个兵
+                            //this._gen_actor(w_dst_pos);
+                            infantryAttackComponent.enemyID = 6666;
+                            infantryAnimateComponent.state = Enum_1.AnimateState.Stop;
+                        }
+                        _a.label = 14;
+                    case 14: return [2 /*return*/];
                 }
             });
         });

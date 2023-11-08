@@ -28,13 +28,44 @@ export default class NavSystem extends cc.Component {
         return NavSystem._instance
     }
 
-    onUpdate(dt:number,navComponent:NavComponent,baseComponent:BaseComponent,transformComponent:TransformComponent){
+    onEnemyUpdate(dt:number,navComponent:NavComponent,baseComponent:BaseComponent,transformComponent:TransformComponent){
         if(navComponent.curTime>0){
             navComponent.curTime-=dt;
             baseComponent.gameObject.x=navComponent.vx*dt+transformComponent.x;
             baseComponent.gameObject.y=navComponent.vy*dt+transformComponent.y;
             transformComponent.x=baseComponent.gameObject.x;
             transformComponent.y=baseComponent.gameObject.y;
+            return;
+        }
+        if(navComponent.curIndex>=navComponent.path.length-1){
+            return;
+        }
+        let curPos:cc.Vec2=navComponent.path[navComponent.curIndex];
+        let nextPos:cc.Vec2=navComponent.path[navComponent.curIndex+1];
+        let dx=nextPos.x-curPos.x;
+        let dy=nextPos.y-curPos.y;
+        let dis=Math.sqrt(dx*dx+dy*dy);
+        navComponent.vx=dx/dis*navComponent.speed;
+        navComponent.vy=dy/dis*navComponent.speed;
+        navComponent.curTime=dis/navComponent.speed;
+        navComponent.curIndex++;
+    }
+
+    onActorUpdate(dt:number,navComponent:NavComponent,baseComponent:BaseComponent,transformComponent:TransformComponent){
+        if(navComponent.curTime>0){
+            navComponent.curTime-=dt;
+            baseComponent.gameObject.x=navComponent.vx*dt+transformComponent.x;
+            baseComponent.gameObject.y=navComponent.vy*dt+transformComponent.y;
+            transformComponent.x=baseComponent.gameObject.x;
+            transformComponent.y=baseComponent.gameObject.y;
+
+            if (navComponent.vx < 0) {
+                baseComponent.gameObject.getChildByName("anim").scaleX = -1;
+            }
+            else {
+                baseComponent.gameObject.getChildByName("anim").scaleX = 1;
+            }
+
             return;
         }
         if(navComponent.curIndex>=navComponent.path.length-1){

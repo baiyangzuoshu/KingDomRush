@@ -6,9 +6,12 @@
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
 import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
+import GameDataManager from "../Data/GameDataManager";
 import { AnimateState, Enemy, TowerType } from "../Enum";
+import FrameAnimate from "../Tools/FrameAnimate";
 import BulletEntity from "./Entities/BulletEntity";
 import EnemyEntity from "./Entities/EnemyEntity";
+import { InfantryActor } from "./Entities/InfantryActor";
 import ArrowEntity from "./Entities/Tower/ArrowEntity";
 import CannonEntity from "./Entities/Tower/CannonEntity";
 import InfantryEntity from "./Entities/Tower/InfantryEntity";
@@ -104,10 +107,10 @@ export default class ECSFactory extends cc.Component {
         return entity;
     }
 
-    async createInfantryBulletEntity(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number):Promise<BulletEntity>{
-        let entity:BulletEntity=new BulletEntity();
+    async createInfantryBulletEntity(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number):Promise<InfantryActor>{
+        let entity:InfantryActor=new InfantryActor();
 
-        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/infantry_bullet",cc.Prefab) as cc.Prefab;
+        let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/infantry_actor",cc.Prefab) as cc.Prefab;
 
         let bullet = cc.instantiate(prefab) as cc.Node;
         this.bulletNode.addChild(bullet);
@@ -128,6 +131,24 @@ export default class ECSFactory extends cc.Component {
 
         entity.roleComponent.level=tower_level;
         entity.roleComponent.type=tower_type;
+
+        entity.navComponent.path.push(w_pos);
+        entity.navComponent.path.push(w_dst_pos);
+        entity.navComponent.curTime=0;
+        entity.navComponent.curIndex=0;
+        entity.navComponent.speed=GameDataManager.getInstance().infantry_actor[tower_level - 1].speed;
+
+        // 播放行走动画
+        let anim=bullet.getChildByName("anim");
+        var frame_anim = anim.addComponent(FrameAnimate);
+        let walk_anim:cc.SpriteFrame[]=new Array();
+        for(let i=0;i<6;i++){
+            let frame=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/actor1/walk/walk1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+            walk_anim.push(frame);
+        }
+        frame_anim.sprite_frames = walk_anim;
+        frame_anim.duration = 0.1;
+        frame_anim.play_loop();
 
         entity.attackComponent.enemyID=enemyID;
 

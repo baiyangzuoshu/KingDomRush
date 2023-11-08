@@ -79,6 +79,7 @@ var ECSManager = /** @class */ (function (_super) {
         _this.towerEntityList = [];
         _this.enemyEntityList = [];
         _this.bulletEntityList = [];
+        _this.actorEntityList = [];
         return _this;
     }
     ECSManager_1 = ECSManager;
@@ -131,7 +132,7 @@ var ECSManager = /** @class */ (function (_super) {
                         return [4 /*yield*/, ECSFactory_1.default.getInstance().createInfantryBulletEntity(tower_type, tower_level, w_pos, w_dst_pos, enemyID)];
                     case 5:
                         entity = _a.sent();
-                        this.bulletEntityList.push(entity);
+                        this.actorEntityList.push(entity);
                         return [3 /*break*/, 8];
                     case 6:
                         if (!(Enum_1.TowerType.Warlock == tower_type)) return [3 /*break*/, 8];
@@ -227,11 +228,19 @@ var ECSManager = /** @class */ (function (_super) {
     };
     //
     ECSManager.prototype.navSystemEnemyUpdate = function (dt) {
+        //敌人
         for (var i = 0; i < this.enemyEntityList.length; ++i) {
             if (this.enemyEntityList[i].roleComponent.isDead) {
                 continue;
             }
-            NavSystem_1.default.getInstance().onUpdate(dt, this.enemyEntityList[i].navComponent, this.enemyEntityList[i].baseComponent, this.enemyEntityList[i].transformComponent);
+            NavSystem_1.default.getInstance().onEnemyUpdate(dt, this.enemyEntityList[i].navComponent, this.enemyEntityList[i].baseComponent, this.enemyEntityList[i].transformComponent);
+        }
+        //兵站士兵
+        for (var i = 0; i < this.actorEntityList.length; ++i) {
+            if (this.actorEntityList[i].roleComponent.isDead) {
+                continue;
+            }
+            NavSystem_1.default.getInstance().onActorUpdate(dt, this.actorEntityList[i].navComponent, this.actorEntityList[i].baseComponent, this.actorEntityList[i].transformComponent);
         }
     };
     ECSManager.prototype.AISystemTower = function (dt) {
@@ -248,7 +257,7 @@ var ECSManager = /** @class */ (function (_super) {
                 if (this.enemyEntityList[j].roleComponent.isDead) {
                     continue;
                 }
-                AISystem_1.default.getInstance().onUpdate(dt, this.towerEntityList[i].animateComponent, this.towerEntityList[i].roleComponent, towerAttackComponent, this.towerEntityList[i].baseComponent, this.enemyEntityList[j].transformComponent, this.enemyEntityList[j].baseComponent);
+                AISystem_1.default.getInstance().onTowerUpdate(dt, this.towerEntityList[i].animateComponent, this.towerEntityList[i].roleComponent, towerAttackComponent, this.towerEntityList[i].baseComponent, this.enemyEntityList[j].transformComponent, this.enemyEntityList[j].baseComponent);
             }
         }
     };
@@ -256,9 +265,14 @@ var ECSManager = /** @class */ (function (_super) {
         for (var i = 0; i < this.towerEntityList.length; ++i) {
             var tower = this.towerEntityList[i];
             if (tower.attackComponent.enemyID > 0) {
-                var enemy = this.getEnemyEntityByID(tower.attackComponent.enemyID);
-                if (enemy && !enemy.roleComponent.isDead) {
-                    AttackSystem_1.default.getInstance().onUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
+                if (6666 == tower.attackComponent.enemyID) {
+                    AttackSystem_1.default.getInstance().onInfantryActorUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
+                }
+                else {
+                    var enemy = this.getEnemyEntityByID(tower.attackComponent.enemyID);
+                    if (enemy && !enemy.roleComponent.isDead) {
+                        AttackSystem_1.default.getInstance().onUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
+                    }
                 }
             }
         }

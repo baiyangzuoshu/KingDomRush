@@ -55,35 +55,39 @@ export default class AnimateSystem extends cc.Component {
     async onInfantryUpdate(dt:number,infantryAnimateComponent:AnimateComponent,infantryBaseComponent:BaseComponent,infantryAttackComponent:AttackComponent){
          // 播放放开门的动画
          //this._play_open_door_anim();
-         
-        let anim=infantryBaseComponent.gameObject.getChildByName("anim");
-        var frame_anim = anim.getComponent(FrameAnimate);
-        if(!frame_anim){
-            frame_anim=anim.addComponent(FrameAnimate);
+        infantryAnimateComponent.time-=dt;
+        if(infantryAnimateComponent.state==AnimateState.Start){
+            let anim=infantryBaseComponent.gameObject.getChildByName("anim");
+            var frame_anim = anim.getComponent(FrameAnimate);
+            if(!frame_anim){
+                frame_anim=anim.addComponent(FrameAnimate);
+            }
+            let open_anim:cc.SpriteFrame[]=[];
+            for(let i=0;i<=3;i++){
+                let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+                open_anim.push(sf);
+            }
+            for(let i=0;i<=7;i++){
+                let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+3,cc.SpriteFrame) as cc.SpriteFrame;
+                open_anim.push(sf);
+            }
+            for(let i=3;i>0;i--){
+                let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
+                open_anim.push(sf);
+            }
+            frame_anim.sprite_frames = open_anim;
+            frame_anim.duration = 0.2;
+            frame_anim.play_once(function(){});
+    
+            infantryAnimateComponent.state=AnimateState.Playing;
+            infantryAnimateComponent.time=0.8;
         }
-        let open_anim:cc.SpriteFrame[]=[];
-        for(let i=0;i<=3;i++){
-            let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
-            open_anim.push(sf);
+        else if(infantryAnimateComponent.state==AnimateState.Playing&&infantryAnimateComponent.time<=0){
+            // 放出多少个兵
+            //this._gen_actor(w_dst_pos);
+            infantryAttackComponent.enemyID = 6666;
+            infantryAnimateComponent.state=AnimateState.Stop;
         }
-        for(let i=0;i<=7;i++){
-            let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+3,cc.SpriteFrame) as cc.SpriteFrame;
-            open_anim.push(sf);
-        }
-        for(let i=3;i>0;i--){
-            let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/bing_tower/bing1/bing1_"+i,cc.SpriteFrame) as cc.SpriteFrame;
-            open_anim.push(sf);
-        }
-        frame_anim.sprite_frames = open_anim;
-        frame_anim.duration = 0.2;
-        frame_anim.play_once(function(){});
-
-        infantryAnimateComponent.state=AnimateState.Stop;
-        //frame_anim.play_once(this._set_tower_idle.bind(this));
-         // end 
-         
-         // 放出多少个兵
-         //this._gen_actor(w_dst_pos);
     }
 
     async onCannonUpdate(dt:number,cannonAnimateComponent:AnimateComponent,cannonBaseComponent:BaseComponent,towerAttackComponent:AttackComponent){

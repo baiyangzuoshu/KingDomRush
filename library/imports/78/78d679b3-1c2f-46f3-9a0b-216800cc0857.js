@@ -50,14 +50,10 @@ var AISystem = /** @class */ (function (_super) {
     AISystem.getInstance = function () {
         return AISystem_1._instance;
     };
-    AISystem.prototype.onUpdate = function (dt, towerAnimateComponent, towerRoleComponent, towerAttackComponent, towerBaseComponent, enemyTransformComponent, enemyBaseComponent) {
+    AISystem.prototype.onTowerUpdate = function (dt, towerAnimateComponent, towerRoleComponent, towerAttackComponent, towerBaseComponent, enemyTransformComponent, enemyBaseComponent) {
         if (towerRoleComponent.type == Enum_1.TowerType.Infantry) {
             towerAttackComponent.activeTime = 4.0;
             towerAnimateComponent.state = Enum_1.AnimateState.Start;
-            var R = 60;
-            var r = Math.random() * 2 * Math.PI;
-            var w_dst_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(R * Math.cos(r), R * Math.sin(r)));
-            towerAnimateComponent.dstPos = w_dst_pos;
         }
         else {
             var src = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
@@ -74,6 +70,15 @@ var AISystem = /** @class */ (function (_super) {
             }
         }
         return false;
+    };
+    AISystem.prototype.onInfantryActorUpdate = function (dt, actorAIComponent, actorBaseComponent, enemyBaseComponent) {
+        var src = actorBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
+        var search_R = actorAIComponent.search_R;
+        var dst = enemyBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
+        var dir = dst.sub(src);
+        if (search_R >= (dir.mag())) {
+            // 攻击
+        }
     };
     var AISystem_1;
     AISystem._instance = null;
