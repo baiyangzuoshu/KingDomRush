@@ -129,7 +129,7 @@ var ECSManager = /** @class */ (function (_super) {
                         return [3 /*break*/, 8];
                     case 4:
                         if (!(Enum_1.TowerType.Infantry == tower_type)) return [3 /*break*/, 6];
-                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createInfantryBulletEntity(tower_type, tower_level, w_pos, w_dst_pos, enemyID)];
+                        return [4 /*yield*/, ECSFactory_1.default.getInstance().createInfantryActor(tower_type, tower_level, w_pos, w_dst_pos, enemyID)];
                     case 5:
                         entity = _a.sent();
                         this.actorEntityList.push(entity);
@@ -244,34 +244,68 @@ var ECSManager = /** @class */ (function (_super) {
         }
     };
     ECSManager.prototype.AISystemTower = function (dt) {
-        for (var i = 0; i < this.towerEntityList.length; ++i) {
-            var towerAttackComponent = this.towerEntityList[i].attackComponent;
-            if (towerAttackComponent.enemyID > 0) {
-                continue;
-            }
-            towerAttackComponent.activeTime -= dt;
-            if (towerAttackComponent.activeTime > 0) {
-                continue;
-            }
-            for (var j = 0; j < this.enemyEntityList.length; ++j) {
-                if (this.enemyEntityList[j].roleComponent.isDead) {
-                    continue;
+        return __awaiter(this, void 0, void 0, function () {
+            var i, towerAttackComponent, j, i, j;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        for (i = 0; i < this.towerEntityList.length; ++i) {
+                            towerAttackComponent = this.towerEntityList[i].attackComponent;
+                            if (towerAttackComponent.enemyID > 0) {
+                                continue;
+                            }
+                            towerAttackComponent.activeTime -= dt;
+                            if (towerAttackComponent.activeTime > 0) {
+                                continue;
+                            }
+                            for (j = 0; j < this.enemyEntityList.length; ++j) {
+                                if (this.enemyEntityList[j].roleComponent.isDead) {
+                                    continue;
+                                }
+                                AISystem_1.default.getInstance().onTowerUpdate(dt, this.towerEntityList[i].animateComponent, this.towerEntityList[i].roleComponent, towerAttackComponent, this.towerEntityList[i].baseComponent, this.enemyEntityList[j].transformComponent, this.enemyEntityList[j].baseComponent);
+                            }
+                        }
+                        i = 0;
+                        _a.label = 1;
+                    case 1:
+                        if (!(i < this.actorEntityList.length)) return [3 /*break*/, 6];
+                        this.actorEntityList[i].aiComponent.thinkTime -= dt;
+                        if (this.actorEntityList[i].aiComponent.thinkTime > 0) {
+                            return [3 /*break*/, 5];
+                        }
+                        j = 0;
+                        _a.label = 2;
+                    case 2:
+                        if (!(j < this.enemyEntityList.length)) return [3 /*break*/, 5];
+                        if (this.enemyEntityList[j].roleComponent.isDead) {
+                            return [3 /*break*/, 4];
+                        }
+                        return [4 /*yield*/, AISystem_1.default.getInstance().onInfantryActorUpdate(dt, this.actorEntityList[i].aiComponent, this.actorEntityList[i].baseComponent, this.enemyEntityList[j].unitComponent, this.enemyEntityList[j].baseComponent, this.enemyEntityList[j].roleComponent)];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4:
+                        ++j;
+                        return [3 /*break*/, 2];
+                    case 5:
+                        ++i;
+                        return [3 /*break*/, 1];
+                    case 6: return [2 /*return*/];
                 }
-                AISystem_1.default.getInstance().onTowerUpdate(dt, this.towerEntityList[i].animateComponent, this.towerEntityList[i].roleComponent, towerAttackComponent, this.towerEntityList[i].baseComponent, this.enemyEntityList[j].transformComponent, this.enemyEntityList[j].baseComponent);
-            }
-        }
+            });
+        });
     };
     ECSManager.prototype.attackSystemTower = function (dt) {
         for (var i = 0; i < this.towerEntityList.length; ++i) {
             var tower = this.towerEntityList[i];
             if (tower.attackComponent.enemyID > 0) {
                 if (6666 == tower.attackComponent.enemyID) {
-                    AttackSystem_1.default.getInstance().onInfantryActorUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
+                    AttackSystem_1.default.getInstance().createInfantryActorUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
                 }
                 else {
                     var enemy = this.getEnemyEntityByID(tower.attackComponent.enemyID);
                     if (enemy && !enemy.roleComponent.isDead) {
-                        AttackSystem_1.default.getInstance().onUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
+                        AttackSystem_1.default.getInstance().onTowerUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
                     }
                 }
             }
@@ -339,16 +373,19 @@ var ECSManager = /** @class */ (function (_super) {
                         //敌军导航
                         this.navSystemEnemyUpdate(dt);
                         //塔的AI
-                        this.AISystemTower(dt);
+                        return [4 /*yield*/, this.AISystemTower(dt)];
+                    case 1:
+                        //塔的AI
+                        _a.sent();
                         //
                         this.attackSystemTower(dt);
                         //
                         return [4 /*yield*/, this.animateSystemBullet(dt)];
-                    case 1:
+                    case 2:
                         //
                         _a.sent();
                         return [4 /*yield*/, this.animateSystemArrow(dt)];
-                    case 2:
+                    case 3:
                         _a.sent();
                         //
                         this.cleanBulletEntity();

@@ -49,7 +49,7 @@ var AttackSystem = /** @class */ (function (_super) {
     AttackSystem.getInstance = function () {
         return AttackSystem_1._instance;
     };
-    AttackSystem.prototype.onUpdate = function (dt, towerAttackComponent, towerBaseComponent, towerRoleComponent) {
+    AttackSystem.prototype.onTowerUpdate = function (dt, towerAttackComponent, towerBaseComponent, towerRoleComponent) {
         var enemyEntity = ECSManager_1.default.getInstance().getEnemyEntityByID(towerAttackComponent.enemyID);
         if (null == enemyEntity) {
             return;
@@ -59,7 +59,7 @@ var AttackSystem = /** @class */ (function (_super) {
         ECSManager_1.default.getInstance().createBulletEntity(towerRoleComponent.type, towerRoleComponent.level, center_pos, enemy_pos, towerAttackComponent.enemyID);
         towerAttackComponent.enemyID = 0;
     };
-    AttackSystem.prototype.onInfantryActorUpdate = function (dt, towerAttackComponent, towerBaseComponent, towerRoleComponent) {
+    AttackSystem.prototype.createInfantryActorUpdate = function (dt, towerAttackComponent, towerBaseComponent, towerRoleComponent) {
         var center_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, -15));
         var R = 60;
         var r = Math.random() * 2 * Math.PI;

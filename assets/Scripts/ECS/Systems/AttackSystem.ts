@@ -33,7 +33,7 @@ export default class AttackSystem extends cc.Component {
         return AttackSystem._instance;
     }
 
-    onUpdate(dt:number,towerAttackComponent:AttackComponent,towerBaseComponent:BaseComponent,
+    onTowerUpdate(dt:number,towerAttackComponent:AttackComponent,towerBaseComponent:BaseComponent,
         towerRoleComponent:RoleComponent){
         
         let enemyEntity:EnemyEntity=ECSManager.getInstance().getEnemyEntityByID(towerAttackComponent.enemyID);
@@ -48,7 +48,7 @@ export default class AttackSystem extends cc.Component {
         towerAttackComponent.enemyID=0;
     }
     
-    onInfantryActorUpdate(dt,towerAttackComponent:AttackComponent,towerBaseComponent:BaseComponent,
+    createInfantryActorUpdate(dt,towerAttackComponent:AttackComponent,towerBaseComponent:BaseComponent,
         towerRoleComponent:RoleComponent){
         var center_pos = towerBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, -15));
         var R = 60;

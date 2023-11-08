@@ -62,7 +62,7 @@ export default class ECSManager extends cc.Component {
             this.bulletEntityList.push(entity);
         }
         else if(TowerType.Infantry==tower_type){
-            let entity:InfantryActor=await ECSFactory.getInstance().createInfantryBulletEntity(tower_type,tower_level, w_pos, w_dst_pos, enemyID);
+            let entity:InfantryActor=await ECSFactory.getInstance().createInfantryActor(tower_type,tower_level, w_pos, w_dst_pos, enemyID);
             this.actorEntityList.push(entity);
         }
         else if(TowerType.Warlock==tower_type){
@@ -145,7 +145,7 @@ export default class ECSManager extends cc.Component {
         }
     }
 
-    AISystemTower(dt:number){
+    async AISystemTower(dt:number){
         for(let i=0;i<this.towerEntityList.length;++i){
             let towerAttackComponent=this.towerEntityList[i].attackComponent;
             if(towerAttackComponent.enemyID>0){
@@ -167,6 +167,22 @@ export default class ECSManager extends cc.Component {
                     this.enemyEntityList[j].transformComponent,this.enemyEntityList[j].baseComponent);
             }
         }
+
+        for(let i=0;i<this.actorEntityList.length;++i){
+            this.actorEntityList[i].aiComponent.thinkTime-=dt;
+            if(this.actorEntityList[i].aiComponent.thinkTime>0){
+                continue;
+            }
+
+            for(let j=0;j<this.enemyEntityList.length;++j){
+                if(this.enemyEntityList[j].roleComponent.isDead){
+                    continue;
+                }
+
+                await AISystem.getInstance().onInfantryActorUpdate(dt,this.actorEntityList[i].aiComponent,this.actorEntityList[i].baseComponent,
+                    this.enemyEntityList[j].unitComponent,this.enemyEntityList[j].baseComponent,this.enemyEntityList[j].roleComponent);
+            }
+        }
     }
 
     attackSystemTower(dt:number){
@@ -174,12 +190,12 @@ export default class ECSManager extends cc.Component {
             let tower=this.towerEntityList[i];
             if(tower.attackComponent.enemyID>0){
                 if(6666==tower.attackComponent.enemyID){
-                    AttackSystem.getInstance().onInfantryActorUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
+                    AttackSystem.getInstance().createInfantryActorUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
                 }
                 else{
                     let enemy=this.getEnemyEntityByID(tower.attackComponent.enemyID);
                     if(enemy&&!enemy.roleComponent.isDead){
-                        AttackSystem.getInstance().onUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
+                        AttackSystem.getInstance().onTowerUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
                     }
                 }
             }
@@ -215,7 +231,7 @@ export default class ECSManager extends cc.Component {
         //敌军导航
         this.navSystemEnemyUpdate(dt);
         //塔的AI
-        this.AISystemTower(dt);
+        await this.AISystemTower(dt);
         //
         this.attackSystemTower(dt);
         //

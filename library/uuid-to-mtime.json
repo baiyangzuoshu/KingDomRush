@@ -5234,11 +5234,6 @@
     "meta": 1699360003680,
     "relativePath": "Scripts\\ECS\\Systems\\AnimateSystem.ts"
   },
-  "544c86a1-0bf7-4110-9895-2a0ec064bfd9": {
-    "asset": 1699360290481,
-    "meta": 1699360296223,
-    "relativePath": "Scripts\\ECS\\Systems\\AttackSystem.ts"
-  },
   "713c621a-1b88-4b96-8cc6-812b27bade59": {
     "asset": 1699361494072,
     "meta": 1699361730028,
@@ -5659,11 +5654,6 @@
     "meta": 1699362078387,
     "relativePath": "prefab\\videoplayer.prefab"
   },
-  "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
-    "asset": 1699362068262,
-    "meta": 1699362078466,
-    "relativePath": "Scripts\\ECS\\ECSFactory.ts"
-  },
   "61906da3-7003-4bda-9abc-5769c76faee4": {
     "asset": 1685959570692,
     "meta": 1699362078467,
@@ -5754,24 +5744,34 @@
     "meta": 1699362259018,
     "relativePath": "Scripts\\ECS\\Systems\\NavSystem.ts"
   },
-  "ca60dd32-8f27-4940-9c2c-c59e36cd094d": {
-    "asset": 1699363547568,
-    "meta": 1699422533584,
-    "relativePath": "Scripts\\ECS\\Components\\AIComponent.ts"
-  },
-  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
-    "asset": 1699362439804,
-    "meta": 1699422533652,
-    "relativePath": "Scripts\\ECS\\ECSManager.ts"
-  },
   "2bbc652f-028c-4f4b-9516-d71a8aa78323": {
     "asset": 1699362417302,
     "meta": 1699422533658,
     "relativePath": "Scripts\\ECS\\Entities\\InfantryActor.ts"
   },
+  "544c86a1-0bf7-4110-9895-2a0ec064bfd9": {
+    "asset": 1699423252197,
+    "meta": 1699423822598,
+    "relativePath": "Scripts\\ECS\\Systems\\AttackSystem.ts"
+  },
+  "ca60dd32-8f27-4940-9c2c-c59e36cd094d": {
+    "asset": 1699424962702,
+    "meta": 1699425124776,
+    "relativePath": "Scripts\\ECS\\Components\\AIComponent.ts"
+  },
   "78d679b3-1c2f-46f3-9a0b-216800cc0857": {
-    "asset": 1699363585332,
-    "meta": 1699422533674,
+    "asset": 1699425018254,
+    "meta": 1699425124938,
     "relativePath": "Scripts\\ECS\\Systems\\AISystem.ts"
+  },
+  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
+    "asset": 1699425395669,
+    "meta": 1699425424655,
+    "relativePath": "Scripts\\ECS\\ECSManager.ts"
+  },
+  "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
+    "asset": 1699425478850,
+    "meta": 1699425481567,
+    "relativePath": "Scripts\\ECS\\ECSFactory.ts"
   }
 }

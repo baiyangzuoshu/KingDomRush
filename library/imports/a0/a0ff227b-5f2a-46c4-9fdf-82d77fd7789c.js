@@ -164,7 +164,7 @@ var ECSFactory = /** @class */ (function (_super) {
             });
         });
     };
-    ECSFactory.prototype.createInfantryBulletEntity = function (tower_type, tower_level, w_pos, w_dst_pos, enemyID) {
+    ECSFactory.prototype.createInfantryActor = function (tower_type, tower_level, w_pos, w_dst_pos, enemyID) {
         return __awaiter(this, void 0, Promise, function () {
             var entity, prefab, bullet, center_pos, anim, frame_anim, walk_anim, i, frame;
             return __generator(this, function (_a) {
@@ -193,6 +193,9 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.navComponent.curTime = 0;
                         entity.navComponent.curIndex = 0;
                         entity.navComponent.speed = GameDataManager_1.default.getInstance().infantry_actor[tower_level - 1].speed;
+                        entity.aiComponent.attack_R = 20;
+                        entity.aiComponent.search_R = 60;
+                        entity.aiComponent.thinkTime = 0;
                         anim = bullet.getChildByName("anim");
                         frame_anim = anim.addComponent(FrameAnimate_1.default);
                         walk_anim = new Array();

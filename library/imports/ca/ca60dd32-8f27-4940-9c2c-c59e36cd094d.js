@@ -8,6 +8,7 @@ var AIComponent = /** @class */ (function () {
     function AIComponent() {
         this.attack_R = 0;
         this.search_R = 0;
+        this.thinkTime = 0;
     }
     return AIComponent;
 }());

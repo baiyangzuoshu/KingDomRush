@@ -107,7 +107,7 @@ export default class ECSFactory extends cc.Component {
         return entity;
     }
 
-    async createInfantryBulletEntity(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number):Promise<InfantryActor>{
+    async createInfantryActor(tower_type:number,tower_level:number, w_pos:cc.Vec2, w_dst_pos:cc.Vec2, enemyID:number):Promise<InfantryActor>{
         let entity:InfantryActor=new InfantryActor();
 
         let prefab=await ResManagerPro.Instance.IE_GetAsset("prefabs","Game/infantry_actor",cc.Prefab) as cc.Prefab;
@@ -137,6 +137,10 @@ export default class ECSFactory extends cc.Component {
         entity.navComponent.curTime=0;
         entity.navComponent.curIndex=0;
         entity.navComponent.speed=GameDataManager.getInstance().infantry_actor[tower_level - 1].speed;
+
+        entity.aiComponent.attack_R=20;
+        entity.aiComponent.search_R=60;
+        entity.aiComponent.thinkTime=0;
 
         // 播放行走动画
         let anim=bullet.getChildByName("anim");
