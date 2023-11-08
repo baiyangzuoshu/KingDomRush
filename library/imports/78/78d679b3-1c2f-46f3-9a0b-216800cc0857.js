@@ -110,18 +110,19 @@ var AISystem = /** @class */ (function (_super) {
         }
         return false;
     };
-    AISystem.prototype.onInfantryActorUpdate = function (dt, actorAIComponent, actorBaseComponent, enemyUnitComponent, enemyBaseComponent, enemyRoleComponent) {
+    AISystem.prototype.onInfantryActorUpdate = function (dt, actorAIComponent, actorBaseComponent, actorTransformComponent, actorNavComponent, enemyUnitComponent, enemyBaseComponent, enemyRoleComponent) {
         return __awaiter(this, void 0, void 0, function () {
-            var src, attack_R, dst, dir, anim, frame_anim, walk_anim, i, frame;
+            var src, attack_R, search_R, dst, dir, anim, frame_anim, walk_anim, i, frame, dx, dy, dis, vx, vy;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         src = actorBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
                         attack_R = actorAIComponent.attack_R;
+                        search_R = actorAIComponent.search_R;
                         dst = enemyBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
                         dir = dst.sub(src);
                         if (!(attack_R >= (dir.mag()))) return [3 /*break*/, 5];
-                        actorAIComponent.thinkTime = 0.3;
+                        actorAIComponent.thinkTime = 1;
                         anim = actorBaseComponent.gameObject.getChildByName("anim");
                         frame_anim = anim.addComponent(FrameAnimate_1.default);
                         walk_anim = new Array();
@@ -143,8 +144,27 @@ var AISystem = /** @class */ (function (_super) {
                         frame_anim.play_once(function () {
                         });
                         ECSUtil_1.default.getInstance().on_arrowBullet_shoot(10, enemyUnitComponent, enemyBaseComponent, enemyRoleComponent);
-                        _a.label = 5;
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 5:
+                        if (search_R >= (dir.mag())) { //追击
+                            dx = dst.x - src.x;
+                            dy = dst.y - src.y;
+                            dis = Math.sqrt(dx * dx + dy * dy);
+                            vx = dx / dis * actorNavComponent.speed;
+                            vy = dy / dis * actorNavComponent.speed;
+                            actorBaseComponent.gameObject.x = vx * dt + actorTransformComponent.x;
+                            actorBaseComponent.gameObject.y = vy * dt + actorTransformComponent.y;
+                            actorTransformComponent.x = actorBaseComponent.gameObject.x;
+                            actorTransformComponent.y = actorBaseComponent.gameObject.y;
+                            if (vx < 0) {
+                                actorBaseComponent.gameObject.getChildByName("anim").scaleX = -1;
+                            }
+                            else {
+                                actorBaseComponent.gameObject.getChildByName("anim").scaleX = 1;
+                            }
+                        }
+                        _a.label = 6;
+                    case 6: return [2 /*return*/];
                 }
             });
         });

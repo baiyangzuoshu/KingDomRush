@@ -179,7 +179,8 @@ export default class ECSManager extends cc.Component {
                     continue;
                 }
 
-                await AISystem.getInstance().onInfantryActorUpdate(dt,this.actorEntityList[i].aiComponent,this.actorEntityList[i].baseComponent,
+                await AISystem.getInstance().onInfantryActorUpdate(dt,
+                    this.actorEntityList[i].aiComponent,this.actorEntityList[i].baseComponent,this.actorEntityList[i].transformComponent,this.actorEntityList[i].navComponent,
                     this.enemyEntityList[j].unitComponent,this.enemyEntityList[j].baseComponent,this.enemyEntityList[j].roleComponent);
             }
         }

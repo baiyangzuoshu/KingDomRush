@@ -64,13 +64,16 @@ export default class AISystem extends cc.Component {
         return false
     }
 
-    async onInfantryActorUpdate(dt:number,actorAIComponent:AIComponent,actorBaseComponent:BaseComponent,enemyUnitComponent:UnitComponent,enemyBaseComponent:BaseComponent,enemyRoleComponent:RoleComponent){
+    async onInfantryActorUpdate(dt:number,
+        actorAIComponent:AIComponent,actorBaseComponent:BaseComponent,actorTransformComponent:TransformComponent,actorNavComponent:NavComponent,
+        enemyUnitComponent:UnitComponent,enemyBaseComponent:BaseComponent,enemyRoleComponent:RoleComponent){
         var src = actorBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0))
         var attack_R = actorAIComponent.attack_R;
+        let search_R = actorAIComponent.search_R;
         var dst = enemyBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0))
         var dir = dst.sub(src);
         if (attack_R >= (dir.mag())) {// 攻击
-            actorAIComponent.thinkTime=0.3;
+            actorAIComponent.thinkTime=1;
             // 播放攻击动画
             let anim=actorBaseComponent.gameObject.getChildByName("anim");
             var frame_anim = anim.addComponent(FrameAnimate);
@@ -86,6 +89,25 @@ export default class AISystem extends cc.Component {
             });
 
             ECSUtil.getInstance().on_arrowBullet_shoot(10,enemyUnitComponent,enemyBaseComponent,enemyRoleComponent);
+        }
+        else if(search_R>=(dir.mag())){//追击
+            let dx=dst.x-src.x;
+            let dy=dst.y-src.y;
+            let dis=Math.sqrt(dx*dx+dy*dy);
+            let vx=dx/dis*actorNavComponent.speed;
+            let vy=dy/dis*actorNavComponent.speed;
+
+            actorBaseComponent.gameObject.x=vx*dt+actorTransformComponent.x;
+            actorBaseComponent.gameObject.y=vy*dt+actorTransformComponent.y;
+            actorTransformComponent.x=actorBaseComponent.gameObject.x;
+            actorTransformComponent.y=actorBaseComponent.gameObject.y;
+
+            if (vx < 0) {
+                actorBaseComponent.gameObject.getChildByName("anim").scaleX = -1;
+            }
+            else {
+                actorBaseComponent.gameObject.getChildByName("anim").scaleX = 1;
+            }
         }
     }
 }

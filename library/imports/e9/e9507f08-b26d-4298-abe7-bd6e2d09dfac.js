@@ -280,7 +280,7 @@ var ECSManager = /** @class */ (function (_super) {
                         if (this.enemyEntityList[j].roleComponent.isDead) {
                             return [3 /*break*/, 4];
                         }
-                        return [4 /*yield*/, AISystem_1.default.getInstance().onInfantryActorUpdate(dt, this.actorEntityList[i].aiComponent, this.actorEntityList[i].baseComponent, this.enemyEntityList[j].unitComponent, this.enemyEntityList[j].baseComponent, this.enemyEntityList[j].roleComponent)];
+                        return [4 /*yield*/, AISystem_1.default.getInstance().onInfantryActorUpdate(dt, this.actorEntityList[i].aiComponent, this.actorEntityList[i].baseComponent, this.actorEntityList[i].transformComponent, this.actorEntityList[i].navComponent, this.enemyEntityList[j].unitComponent, this.enemyEntityList[j].baseComponent, this.enemyEntityList[j].roleComponent)];
                     case 3:
                         _a.sent();
                         _a.label = 4;
