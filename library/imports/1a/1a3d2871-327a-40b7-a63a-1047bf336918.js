@@ -31,6 +31,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var EventManager_1 = require("../../FrameWork/manager/EventManager");
 var GameDataManager_1 = require("../Data/GameDataManager");
+var Enum_1 = require("../Enum");
 var EventName_1 = require("../EventName");
 var ECSManager_1 = require("./ECSManager");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
@@ -56,7 +57,7 @@ var ECSUtil = /** @class */ (function (_super) {
         enemyUnitComponent.health -= attack_value;
         if (enemyUnitComponent.health <= 0) {
             enemyUnitComponent.health = 0;
-            enemyRoleComponent.isDead = true;
+            enemyRoleComponent.state = Enum_1.RoleState.Dead;
             // 加金币
             GameDataManager_1.default.getInstance().add_chip(enemyUnitComponent.bonues_chip);
             EventManager_1.EventManager.getInstance().emit(EventName_1.GameUI.show_game_uchip);
@@ -70,7 +71,7 @@ var ECSUtil = /** @class */ (function (_super) {
         var len = ECSManager_1.default.getInstance().getEnemyTotal();
         for (var i = 0; i < len; i++) {
             var enemy = ECSManager_1.default.getInstance().getEnemyEntityByIndex(i);
-            if (enemy && !enemy.roleComponent.isDead) {
+            if (enemy && enemy.roleComponent.state == Enum_1.RoleState.Active) {
                 var pos = enemy.baseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
                 var dir = pos.sub(bomb_pos);
                 if ((dir.mag()) <= bomb_R) {

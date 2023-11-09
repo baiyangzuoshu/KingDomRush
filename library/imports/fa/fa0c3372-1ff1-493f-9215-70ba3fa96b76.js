@@ -542,7 +542,7 @@ var AnimateSystem = /** @class */ (function (_super) {
                             bomb_R = phy_params.bomb_R;
                             w_dst_pos = bulletBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0, 0));
                             ECSUtil_1.default.getInstance().on_bullet_bomb(w_dst_pos, bomb_R, attack);
-                            bulletRoleComponent.isDead = true;
+                            bulletRoleComponent.state = Enum_1.RoleState.Dead;
                             bulletAttackComponent.enemyID = 0;
                             bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
                         }
@@ -615,7 +615,7 @@ var AnimateSystem = /** @class */ (function (_super) {
                     case 5:
                         if (bulletAnimateComponent.state == Enum_1.AnimateState.Playing && bulletAnimateComponent.time <= 0) {
                             bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
-                            bulletRoleComponent.isDead = true;
+                            bulletRoleComponent.state = Enum_1.RoleState.Dead;
                             bulletAttackComponent.enemyID = 0;
                             if (enemyEntity) {
                                 ECSUtil_1.default.getInstance().on_arrowBullet_shoot(attack, enemyEntity.unitComponent, enemyEntity.baseComponent, enemyEntity.roleComponent);
@@ -696,7 +696,7 @@ var AnimateSystem = /** @class */ (function (_super) {
                     case 2:
                         if (bulletAnimateComponent.state == Enum_1.AnimateState.Playing && bulletAnimateComponent.time <= 0) {
                             bulletAnimateComponent.state = Enum_1.AnimateState.Stop;
-                            bulletRoleComponent.isDead = true;
+                            bulletRoleComponent.state = Enum_1.RoleState.Dead;
                             bulletAttackComponent.enemyID = 0;
                             if (enemyEntity) {
                                 ECSUtil_1.default.getInstance().on_arrowBullet_shoot(attack, enemyEntity.unitComponent, enemyEntity.baseComponent, enemyEntity.roleComponent);

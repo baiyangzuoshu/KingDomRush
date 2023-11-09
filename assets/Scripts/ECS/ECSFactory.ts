@@ -238,6 +238,8 @@ export default class ECSFactory extends cc.Component {
         entity.unitComponent.player_hurt=actor_params.player_hurt;
         entity.unitComponent.bonues_chip=actor_params.bonues_chip;
 
+        entity.roleComponent.type=enemy_type;
+
         return entity;
     }
     //

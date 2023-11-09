@@ -5,7 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
-import { AnimateState, TowerType } from "../Enum";
+import { AnimateState, RoleState, TowerType } from "../Enum";
 import ECSFactory from "./ECSFactory";
 import BulletEntity from "./Entities/BulletEntity";
 import EnemyEntity from "./Entities/EnemyEntity";
@@ -102,7 +102,7 @@ export default class ECSManager extends cc.Component {
     //
     public cleanBulletEntity(){
         for(let i=0;i<this.bulletEntityList.length;++i){
-            if(this.bulletEntityList[i].roleComponent.isDead){
+            if(this.bulletEntityList[i].roleComponent.state==RoleState.Dead){
                 this.bulletEntityList[i].baseComponent.gameObject.destroy();
                 this.bulletEntityList.splice(i,1);
                 --i;
@@ -111,9 +111,18 @@ export default class ECSManager extends cc.Component {
     }
     public cleanEnemyEntity(){
         for(let i=0;i<this.enemyEntityList.length;++i){
-            if(this.enemyEntityList[i].roleComponent.isDead){
+            if(this.enemyEntityList[i].roleComponent.state==RoleState.Dead){
                 this.enemyEntityList[i].baseComponent.gameObject.destroy();
                 this.enemyEntityList.splice(i,1);
+                --i;
+            }
+        }
+    }
+    public cleanActorEntity(){
+        for(let i=0;i<this.actorEntityList.length;++i){
+            if(this.actorEntityList[i].roleComponent.state==RoleState.Dead){
+                this.actorEntityList[i].baseComponent.gameObject.destroy();
+                this.actorEntityList.splice(i,1);
                 --i;
             }
         }
@@ -131,14 +140,17 @@ export default class ECSManager extends cc.Component {
     navSystemEnemyUpdate(dt:number){
         //敌人
         for(let i=0;i<this.enemyEntityList.length;++i){
-            if(this.enemyEntityList[i].roleComponent.isDead){
+            if(this.enemyEntityList[i].roleComponent.state==RoleState.Dead){
                 continue;
             }
             NavSystem.getInstance().onEnemyUpdate(dt,this.enemyEntityList[i].navComponent,this.enemyEntityList[i].baseComponent,this.enemyEntityList[i].transformComponent);
         }
+    }
+
+    navSystemActorUpdate(dt:number){
         //兵站士兵
         for(let i=0;i<this.actorEntityList.length;++i){
-            if(this.actorEntityList[i].roleComponent.isDead){
+            if(this.actorEntityList[i].roleComponent.state==RoleState.Dead){
                 continue;
             }
             NavSystem.getInstance().onActorUpdate(dt,this.actorEntityList[i].navComponent,this.actorEntityList[i].baseComponent,this.actorEntityList[i].transformComponent);
@@ -158,7 +170,7 @@ export default class ECSManager extends cc.Component {
             }
 
             for(let j=0;j<this.enemyEntityList.length;++j){
-                if(this.enemyEntityList[j].roleComponent.isDead){
+                if(this.enemyEntityList[j].roleComponent.state==RoleState.Dead){
                     continue;
                 }
 
@@ -170,17 +182,18 @@ export default class ECSManager extends cc.Component {
 
         for(let i=0;i<this.actorEntityList.length;++i){
             this.actorEntityList[i].aiComponent.thinkTime-=dt;
-            if(this.actorEntityList[i].aiComponent.thinkTime>0){
+            if(this.actorEntityList[i].aiComponent.thinkTime>0&&this.actorEntityList[i].roleComponent.state==RoleState.Dead){
                 continue;
             }
 
             for(let j=0;j<this.enemyEntityList.length;++j){
-                if(this.enemyEntityList[j].roleComponent.isDead){
+                if(this.enemyEntityList[j].roleComponent.state==RoleState.Dead){
                     continue;
                 }
 
                 await AISystem.getInstance().onInfantryActorUpdate(dt,
-                    this.actorEntityList[i].aiComponent,this.actorEntityList[i].baseComponent,this.actorEntityList[i].transformComponent,this.actorEntityList[i].navComponent,
+                    this.actorEntityList[i].aiComponent,this.actorEntityList[i].baseComponent,this.actorEntityList[i].transformComponent,
+                    this.actorEntityList[i].navComponent,this.actorEntityList[i].roleComponent,
                     this.enemyEntityList[j].unitComponent,this.enemyEntityList[j].baseComponent,this.enemyEntityList[j].roleComponent);
             }
         }
@@ -195,7 +208,7 @@ export default class ECSManager extends cc.Component {
                 }
                 else{
                     let enemy=this.getEnemyEntityByID(tower.attackComponent.enemyID);
-                    if(enemy&&!enemy.roleComponent.isDead){
+                    if(enemy&&enemy.roleComponent.state==RoleState.Active){
                         AttackSystem.getInstance().onTowerUpdate(dt,tower.attackComponent,tower.baseComponent,tower.roleComponent);
                     }
                 }
@@ -206,7 +219,7 @@ export default class ECSManager extends cc.Component {
     async animateSystemBullet(dt:number){
         for(let i=0;i<this.bulletEntityList.length;++i){
             let bullet=this.bulletEntityList[i];
-            if(bullet.roleComponent.isDead){
+            if(bullet.roleComponent.state==RoleState.Dead){
                 continue;
             }
 
@@ -219,7 +232,7 @@ export default class ECSManager extends cc.Component {
     async animateSystemArrow(dt:number){
         for(let i=0;i<this.towerEntityList.length;++i){
             let tower=this.towerEntityList[i];
-            if(tower.roleComponent.isDead){
+            if(tower.roleComponent.state==RoleState.Dead){
                 continue;
             }
             if(tower.animateComponent.state==AnimateState.Start||tower.animateComponent.state==AnimateState.Playing){
@@ -231,6 +244,8 @@ export default class ECSManager extends cc.Component {
     async update (dt) {
         //敌军导航
         this.navSystemEnemyUpdate(dt);
+        //
+        this.navSystemActorUpdate(dt);
         //塔的AI
         await this.AISystemTower(dt);
         //
@@ -241,5 +256,6 @@ export default class ECSManager extends cc.Component {
         //
         this.cleanBulletEntity();
         this.cleanEnemyEntity();
+        this.cleanActorEntity();
     }
 }

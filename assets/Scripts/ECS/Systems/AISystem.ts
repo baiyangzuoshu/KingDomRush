@@ -7,7 +7,7 @@
 
 import { ResManagerPro } from "../../../FrameWork/manager/ResManagerPro";
 import GameDataManager from "../../Data/GameDataManager";
-import { AnimateState, TowerType } from "../../Enum";
+import { AnimateState, RoleState, TowerType } from "../../Enum";
 import FrameAnimate from "../../Tools/FrameAnimate";
 import AIComponent from "../Components/AIComponent";
 import AnimateComponent from "../Components/AnimateComponent";
@@ -65,7 +65,8 @@ export default class AISystem extends cc.Component {
     }
 
     async onInfantryActorUpdate(dt:number,
-        actorAIComponent:AIComponent,actorBaseComponent:BaseComponent,actorTransformComponent:TransformComponent,actorNavComponent:NavComponent,
+        actorAIComponent:AIComponent,actorBaseComponent:BaseComponent,actorTransformComponent:TransformComponent,
+        actorNavComponent:NavComponent,actorRoleComponent:RoleComponent,
         enemyUnitComponent:UnitComponent,enemyBaseComponent:BaseComponent,enemyRoleComponent:RoleComponent){
         var src = actorBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0))
         var attack_R = actorAIComponent.attack_R;
@@ -85,7 +86,7 @@ export default class AISystem extends cc.Component {
             frame_anim.sprite_frames = walk_anim;
             frame_anim.duration = 0.1;
             frame_anim.play_once(function(){
-                
+                actorRoleComponent.state=RoleState.Dead
             });
 
             ECSUtil.getInstance().on_arrowBullet_shoot(10,enemyUnitComponent,enemyBaseComponent,enemyRoleComponent);

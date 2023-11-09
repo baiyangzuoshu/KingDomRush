@@ -201,7 +201,7 @@ var ECSManager = /** @class */ (function (_super) {
     //
     ECSManager.prototype.cleanBulletEntity = function () {
         for (var i = 0; i < this.bulletEntityList.length; ++i) {
-            if (this.bulletEntityList[i].roleComponent.isDead) {
+            if (this.bulletEntityList[i].roleComponent.state == Enum_1.RoleState.Dead) {
                 this.bulletEntityList[i].baseComponent.gameObject.destroy();
                 this.bulletEntityList.splice(i, 1);
                 --i;
@@ -210,9 +210,18 @@ var ECSManager = /** @class */ (function (_super) {
     };
     ECSManager.prototype.cleanEnemyEntity = function () {
         for (var i = 0; i < this.enemyEntityList.length; ++i) {
-            if (this.enemyEntityList[i].roleComponent.isDead) {
+            if (this.enemyEntityList[i].roleComponent.state == Enum_1.RoleState.Dead) {
                 this.enemyEntityList[i].baseComponent.gameObject.destroy();
                 this.enemyEntityList.splice(i, 1);
+                --i;
+            }
+        }
+    };
+    ECSManager.prototype.cleanActorEntity = function () {
+        for (var i = 0; i < this.actorEntityList.length; ++i) {
+            if (this.actorEntityList[i].roleComponent.state == Enum_1.RoleState.Dead) {
+                this.actorEntityList[i].baseComponent.gameObject.destroy();
+                this.actorEntityList.splice(i, 1);
                 --i;
             }
         }
@@ -230,14 +239,16 @@ var ECSManager = /** @class */ (function (_super) {
     ECSManager.prototype.navSystemEnemyUpdate = function (dt) {
         //敌人
         for (var i = 0; i < this.enemyEntityList.length; ++i) {
-            if (this.enemyEntityList[i].roleComponent.isDead) {
+            if (this.enemyEntityList[i].roleComponent.state == Enum_1.RoleState.Dead) {
                 continue;
             }
             NavSystem_1.default.getInstance().onEnemyUpdate(dt, this.enemyEntityList[i].navComponent, this.enemyEntityList[i].baseComponent, this.enemyEntityList[i].transformComponent);
         }
+    };
+    ECSManager.prototype.navSystemActorUpdate = function (dt) {
         //兵站士兵
         for (var i = 0; i < this.actorEntityList.length; ++i) {
-            if (this.actorEntityList[i].roleComponent.isDead) {
+            if (this.actorEntityList[i].roleComponent.state == Enum_1.RoleState.Dead) {
                 continue;
             }
             NavSystem_1.default.getInstance().onActorUpdate(dt, this.actorEntityList[i].navComponent, this.actorEntityList[i].baseComponent, this.actorEntityList[i].transformComponent);
@@ -259,7 +270,7 @@ var ECSManager = /** @class */ (function (_super) {
                                 continue;
                             }
                             for (j = 0; j < this.enemyEntityList.length; ++j) {
-                                if (this.enemyEntityList[j].roleComponent.isDead) {
+                                if (this.enemyEntityList[j].roleComponent.state == Enum_1.RoleState.Dead) {
                                     continue;
                                 }
                                 AISystem_1.default.getInstance().onTowerUpdate(dt, this.towerEntityList[i].animateComponent, this.towerEntityList[i].roleComponent, towerAttackComponent, this.towerEntityList[i].baseComponent, this.enemyEntityList[j].transformComponent, this.enemyEntityList[j].baseComponent);
@@ -270,17 +281,17 @@ var ECSManager = /** @class */ (function (_super) {
                     case 1:
                         if (!(i < this.actorEntityList.length)) return [3 /*break*/, 6];
                         this.actorEntityList[i].aiComponent.thinkTime -= dt;
-                        if (this.actorEntityList[i].aiComponent.thinkTime > 0) {
+                        if (this.actorEntityList[i].aiComponent.thinkTime > 0 && this.actorEntityList[i].roleComponent.state == Enum_1.RoleState.Dead) {
                             return [3 /*break*/, 5];
                         }
                         j = 0;
                         _a.label = 2;
                     case 2:
                         if (!(j < this.enemyEntityList.length)) return [3 /*break*/, 5];
-                        if (this.enemyEntityList[j].roleComponent.isDead) {
+                        if (this.enemyEntityList[j].roleComponent.state == Enum_1.RoleState.Dead) {
                             return [3 /*break*/, 4];
                         }
-                        return [4 /*yield*/, AISystem_1.default.getInstance().onInfantryActorUpdate(dt, this.actorEntityList[i].aiComponent, this.actorEntityList[i].baseComponent, this.actorEntityList[i].transformComponent, this.actorEntityList[i].navComponent, this.enemyEntityList[j].unitComponent, this.enemyEntityList[j].baseComponent, this.enemyEntityList[j].roleComponent)];
+                        return [4 /*yield*/, AISystem_1.default.getInstance().onInfantryActorUpdate(dt, this.actorEntityList[i].aiComponent, this.actorEntityList[i].baseComponent, this.actorEntityList[i].transformComponent, this.actorEntityList[i].navComponent, this.actorEntityList[i].roleComponent, this.enemyEntityList[j].unitComponent, this.enemyEntityList[j].baseComponent, this.enemyEntityList[j].roleComponent)];
                     case 3:
                         _a.sent();
                         _a.label = 4;
@@ -304,7 +315,7 @@ var ECSManager = /** @class */ (function (_super) {
                 }
                 else {
                     var enemy = this.getEnemyEntityByID(tower.attackComponent.enemyID);
-                    if (enemy && !enemy.roleComponent.isDead) {
+                    if (enemy && enemy.roleComponent.state == Enum_1.RoleState.Active) {
                         AttackSystem_1.default.getInstance().onTowerUpdate(dt, tower.attackComponent, tower.baseComponent, tower.roleComponent);
                     }
                 }
@@ -322,7 +333,7 @@ var ECSManager = /** @class */ (function (_super) {
                     case 1:
                         if (!(i < this.bulletEntityList.length)) return [3 /*break*/, 4];
                         bullet = this.bulletEntityList[i];
-                        if (bullet.roleComponent.isDead) {
+                        if (bullet.roleComponent.state == Enum_1.RoleState.Dead) {
                             return [3 /*break*/, 3];
                         }
                         if (!(bullet.animateComponent.state == Enum_1.AnimateState.Start || bullet.animateComponent.state == Enum_1.AnimateState.Playing)) return [3 /*break*/, 3];
@@ -349,7 +360,7 @@ var ECSManager = /** @class */ (function (_super) {
                     case 1:
                         if (!(i < this.towerEntityList.length)) return [3 /*break*/, 4];
                         tower = this.towerEntityList[i];
-                        if (tower.roleComponent.isDead) {
+                        if (tower.roleComponent.state == Enum_1.RoleState.Dead) {
                             return [3 /*break*/, 3];
                         }
                         if (!(tower.animateComponent.state == Enum_1.AnimateState.Start || tower.animateComponent.state == Enum_1.AnimateState.Playing)) return [3 /*break*/, 3];
@@ -372,6 +383,8 @@ var ECSManager = /** @class */ (function (_super) {
                     case 0:
                         //敌军导航
                         this.navSystemEnemyUpdate(dt);
+                        //
+                        this.navSystemActorUpdate(dt);
                         //塔的AI
                         return [4 /*yield*/, this.AISystemTower(dt)];
                     case 1:
@@ -390,6 +403,7 @@ var ECSManager = /** @class */ (function (_super) {
                         //
                         this.cleanBulletEntity();
                         this.cleanEnemyEntity();
+                        this.cleanActorEntity();
                         return [2 /*return*/];
                 }
             });

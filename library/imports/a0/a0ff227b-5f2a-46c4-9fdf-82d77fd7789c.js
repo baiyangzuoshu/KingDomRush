@@ -320,6 +320,7 @@ var ECSFactory = /** @class */ (function (_super) {
                         entity.unitComponent.maxHp = actor_params.health;
                         entity.unitComponent.player_hurt = actor_params.player_hurt;
                         entity.unitComponent.bonues_chip = actor_params.bonues_chip;
+                        entity.roleComponent.type = enemy_type;
                         return [2 /*return*/, entity];
                 }
             });

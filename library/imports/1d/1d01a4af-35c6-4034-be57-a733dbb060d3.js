@@ -8,6 +8,7 @@ var BaseComponent = /** @class */ (function () {
     function BaseComponent() {
         this.gameObject = null;
         this.entityID = 0;
+        this.cleanTime = 0.5;
     }
     return BaseComponent;
 }());

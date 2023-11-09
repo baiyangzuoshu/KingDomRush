@@ -7,6 +7,7 @@
 
 import { EventManager } from "../../FrameWork/manager/EventManager";
 import GameDataManager from "../Data/GameDataManager";
+import { RoleState } from "../Enum";
 import { GameUI } from "../EventName";
 import BaseComponent from "./Components/BaseComponent";
 import RoleComponent from "./Components/RoleComponent";
@@ -36,7 +37,7 @@ export default class ECSUtil extends cc.Component {
         enemyUnitComponent.health -= attack_value;
         if (enemyUnitComponent.health <= 0) {
             enemyUnitComponent.health = 0;
-            enemyRoleComponent.isDead=true;
+            enemyRoleComponent.state=RoleState.Dead;
             // 加金币
             GameDataManager.getInstance().add_chip(enemyUnitComponent.bonues_chip);
             EventManager.getInstance().emit(GameUI.show_game_uchip);
@@ -51,7 +52,7 @@ export default class ECSUtil extends cc.Component {
         let len=ECSManager.getInstance().getEnemyTotal();
         for(var i = 0; i < len; i ++) {
             let enemy= ECSManager.getInstance().getEnemyEntityByIndex(i);
-            if(enemy&&!enemy.roleComponent.isDead){
+            if(enemy&&enemy.roleComponent.state==RoleState.Active){
                 var pos = enemy.baseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0));
                 var dir = pos.sub(bomb_pos);
                 if ((dir.mag()) <= bomb_R) {

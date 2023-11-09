@@ -7,7 +7,7 @@
 
 import { ResManagerPro } from "../../../FrameWork/manager/ResManagerPro";
 import GameDataManager from "../../Data/GameDataManager";
-import { AnimateState, TowerType } from "../../Enum";
+import { AnimateState, RoleState, TowerType } from "../../Enum";
 import FrameAnimate from "../../Tools/FrameAnimate";
 import AnimateComponent from "../Components/AnimateComponent";
 import AttackComponent from "../Components/AttackComponent";
@@ -360,7 +360,7 @@ export default class AnimateSystem extends cc.Component {
                 var w_dst_pos = bulletBaseComponent.gameObject.convertToWorldSpaceAR(cc.v2(0,0));
                 ECSUtil.getInstance().on_bullet_bomb(w_dst_pos,bomb_R,attack);
 
-                bulletRoleComponent.isDead=true;
+                bulletRoleComponent.state=RoleState.Dead
                 bulletAttackComponent.enemyID=0;
                 bulletAnimateComponent.state=AnimateState.Stop;
             }
@@ -428,7 +428,7 @@ export default class AnimateSystem extends cc.Component {
         }
         else if(bulletAnimateComponent.state==AnimateState.Playing&&bulletAnimateComponent.time<=0){
             bulletAnimateComponent.state=AnimateState.Stop;
-            bulletRoleComponent.isDead=true;
+            bulletRoleComponent.state=RoleState.Dead
             bulletAttackComponent.enemyID=0;
 
             if(enemyEntity){
@@ -523,7 +523,7 @@ export default class AnimateSystem extends cc.Component {
         }
         else if(bulletAnimateComponent.state==AnimateState.Playing&&bulletAnimateComponent.time<=0){
             bulletAnimateComponent.state=AnimateState.Stop;
-            bulletRoleComponent.isDead=true;
+            bulletRoleComponent.state=RoleState.Dead
             bulletAttackComponent.enemyID=0;
             if(enemyEntity){
                 ECSUtil.getInstance().on_arrowBullet_shoot(attack,enemyEntity.unitComponent,enemyEntity.baseComponent,enemyEntity.roleComponent);

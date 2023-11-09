@@ -4,7 +4,7 @@ cc._RF.push(module, 'f0baeMKOwVFyaXHSKBviCZ5', 'Enum');
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AnimateState = exports.TowerType = exports.Enemy = exports.ViewUI = void 0;
+exports.RoleState = exports.ActorDirection = exports.ActorState = exports.AnimateState = exports.TowerType = exports.Enemy = exports.ViewUI = void 0;
 var ViewUI;
 (function (ViewUI) {
     ViewUI["HomeUI"] = "HomeUI";
@@ -36,5 +36,28 @@ var AnimateState;
     AnimateState[AnimateState["Playing"] = 3] = "Playing";
     AnimateState[AnimateState["Stop"] = 4] = "Stop";
 })(AnimateState = exports.AnimateState || (exports.AnimateState = {}));
+var ActorState;
+(function (ActorState) {
+    ActorState[ActorState["IDLE"] = 0] = "IDLE";
+    ActorState[ActorState["WALK"] = 1] = "WALK";
+    ActorState[ActorState["ATTACK"] = 2] = "ATTACK";
+    ActorState[ActorState["DEAD"] = 3] = "DEAD";
+    ActorState[ActorState["ARRIVED"] = 4] = "ARRIVED";
+})(ActorState = exports.ActorState || (exports.ActorState = {}));
+var ActorDirection;
+(function (ActorDirection) {
+    ActorDirection[ActorDirection["INVALID_DIR"] = -1] = "INVALID_DIR";
+    ActorDirection[ActorDirection["UP_DIR"] = 0] = "UP_DIR";
+    ActorDirection[ActorDirection["DOWN_DIR"] = 1] = "DOWN_DIR";
+    ActorDirection[ActorDirection["LEFT_DIR"] = 2] = "LEFT_DIR";
+    ActorDirection[ActorDirection["RIGHT_DIR"] = 3] = "RIGHT_DIR";
+})(ActorDirection = exports.ActorDirection || (exports.ActorDirection = {}));
+var RoleState;
+(function (RoleState) {
+    RoleState[RoleState["None"] = 1] = "None";
+    RoleState[RoleState["Active"] = 2] = "Active";
+    RoleState[RoleState["Dead"] = 3] = "Dead";
+    RoleState[RoleState["Clean"] = 4] = "Clean";
+})(RoleState = exports.RoleState || (exports.RoleState = {}));
 
 cc._RF.pop();

@@ -110,7 +110,7 @@ var AISystem = /** @class */ (function (_super) {
         }
         return false;
     };
-    AISystem.prototype.onInfantryActorUpdate = function (dt, actorAIComponent, actorBaseComponent, actorTransformComponent, actorNavComponent, enemyUnitComponent, enemyBaseComponent, enemyRoleComponent) {
+    AISystem.prototype.onInfantryActorUpdate = function (dt, actorAIComponent, actorBaseComponent, actorTransformComponent, actorNavComponent, actorRoleComponent, enemyUnitComponent, enemyBaseComponent, enemyRoleComponent) {
         return __awaiter(this, void 0, void 0, function () {
             var src, attack_R, search_R, dst, dir, anim, frame_anim, walk_anim, i, frame, dx, dy, dis, vx, vy;
             return __generator(this, function (_a) {
@@ -142,6 +142,7 @@ var AISystem = /** @class */ (function (_super) {
                         frame_anim.sprite_frames = walk_anim;
                         frame_anim.duration = 0.1;
                         frame_anim.play_once(function () {
+                            actorRoleComponent.state = Enum_1.RoleState.Dead;
                         });
                         ECSUtil_1.default.getInstance().on_arrowBullet_shoot(10, enemyUnitComponent, enemyBaseComponent, enemyRoleComponent);
                         return [3 /*break*/, 6];
