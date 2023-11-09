@@ -69,6 +69,7 @@ var ResManagerPro_1 = require("../../FrameWork/manager/ResManagerPro");
 var GameDataManager_1 = require("../Data/GameDataManager");
 var Enum_1 = require("../Enum");
 var FrameAnimate_1 = require("../Tools/FrameAnimate");
+var ECSUtil_1 = require("./ECSUtil");
 var BulletEntity_1 = require("./Entities/BulletEntity");
 var EnemyEntity_1 = require("./Entities/EnemyEntity");
 var InfantryActor_1 = require("./Entities/InfantryActor");
@@ -430,6 +431,11 @@ var ECSFactory = /** @class */ (function (_super) {
                 }
             });
         });
+    };
+    ECSFactory.prototype.update = function (dt) {
+        ECSUtil_1.default.getInstance().zorderSortNode(this.bulletNode);
+        ECSUtil_1.default.getInstance().zorderSortNode(this.enemyNode);
+        ECSUtil_1.default.getInstance().zorderSortNode(this.towerNode);
     };
     var ECSFactory_1;
     ECSFactory._instance = null;

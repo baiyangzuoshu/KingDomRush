@@ -123,6 +123,7 @@ var AISystem = /** @class */ (function (_super) {
                         dir = dst.sub(src);
                         if (!(attack_R >= (dir.mag()))) return [3 /*break*/, 5];
                         actorAIComponent.thinkTime = 1;
+                        actorRoleComponent.state = Enum_1.RoleState.Dead;
                         anim = actorBaseComponent.gameObject.getChildByName("anim");
                         frame_anim = anim.addComponent(FrameAnimate_1.default);
                         walk_anim = new Array();
@@ -142,7 +143,6 @@ var AISystem = /** @class */ (function (_super) {
                         frame_anim.sprite_frames = walk_anim;
                         frame_anim.duration = 0.1;
                         frame_anim.play_once(function () {
-                            actorRoleComponent.state = Enum_1.RoleState.Dead;
                         });
                         ECSUtil_1.default.getInstance().on_arrowBullet_shoot(10, enemyUnitComponent, enemyBaseComponent, enemyRoleComponent);
                         return [3 /*break*/, 6];

@@ -284,7 +284,7 @@ var GameDataManager = /** @class */ (function (_super) {
     };
     GameDataManager.prototype.get_uchip = function () {
         var cur_user = this.get_cur_user();
-        return 999999; //cur_user.chip;
+        return cur_user.chip;
     };
     // 同步数据
     GameDataManager.prototype.sync_user_data = function () {

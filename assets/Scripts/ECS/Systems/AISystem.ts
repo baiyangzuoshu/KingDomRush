@@ -75,6 +75,7 @@ export default class AISystem extends cc.Component {
         var dir = dst.sub(src);
         if (attack_R >= (dir.mag())) {// 攻击
             actorAIComponent.thinkTime=1;
+            actorRoleComponent.state=RoleState.Dead
             // 播放攻击动画
             let anim=actorBaseComponent.gameObject.getChildByName("anim");
             var frame_anim = anim.addComponent(FrameAnimate);
@@ -86,7 +87,7 @@ export default class AISystem extends cc.Component {
             frame_anim.sprite_frames = walk_anim;
             frame_anim.duration = 0.1;
             frame_anim.play_once(function(){
-                actorRoleComponent.state=RoleState.Dead
+                
             });
 
             ECSUtil.getInstance().on_arrowBullet_shoot(10,enemyUnitComponent,enemyBaseComponent,enemyRoleComponent);

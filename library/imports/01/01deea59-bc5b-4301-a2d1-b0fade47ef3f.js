@@ -29,6 +29,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var EventManager_1 = require("../../../FrameWork/manager/EventManager");
+var EventName_1 = require("../../EventName");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var NavSystem = /** @class */ (function (_super) {
     __extends(NavSystem, _super);
@@ -69,6 +71,9 @@ var NavSystem = /** @class */ (function (_super) {
         navComponent.vy = dy / dis * navComponent.speed;
         navComponent.curTime = dis / navComponent.speed;
         navComponent.curIndex++;
+        if (navComponent.curIndex >= navComponent.path.length - 1) {
+            EventManager_1.EventManager.getInstance().emit(EventName_1.GameUI.on_player_attacked, { hurt: 1 });
+        }
     };
     NavSystem.prototype.onActorUpdate = function (dt, navComponent, baseComponent, transformComponent) {
         if (navComponent.curTime > 0) {

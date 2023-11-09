@@ -199,7 +199,7 @@ var ECSManager = /** @class */ (function (_super) {
         });
     };
     //
-    ECSManager.prototype.cleanBulletEntity = function () {
+    ECSManager.prototype.cleanBulletEntity = function (dt) {
         for (var i = 0; i < this.bulletEntityList.length; ++i) {
             if (this.bulletEntityList[i].roleComponent.state == Enum_1.RoleState.Dead) {
                 this.bulletEntityList[i].baseComponent.gameObject.destroy();
@@ -208,21 +208,27 @@ var ECSManager = /** @class */ (function (_super) {
             }
         }
     };
-    ECSManager.prototype.cleanEnemyEntity = function () {
+    ECSManager.prototype.cleanEnemyEntity = function (dt) {
         for (var i = 0; i < this.enemyEntityList.length; ++i) {
             if (this.enemyEntityList[i].roleComponent.state == Enum_1.RoleState.Dead) {
-                this.enemyEntityList[i].baseComponent.gameObject.destroy();
-                this.enemyEntityList.splice(i, 1);
-                --i;
+                this.enemyEntityList[i].baseComponent.cleanTime -= dt;
+                if (this.enemyEntityList[i].baseComponent.cleanTime < 0) {
+                    this.enemyEntityList[i].baseComponent.gameObject.destroy();
+                    this.enemyEntityList.splice(i, 1);
+                    --i;
+                }
             }
         }
     };
-    ECSManager.prototype.cleanActorEntity = function () {
+    ECSManager.prototype.cleanActorEntity = function (dt) {
         for (var i = 0; i < this.actorEntityList.length; ++i) {
             if (this.actorEntityList[i].roleComponent.state == Enum_1.RoleState.Dead) {
-                this.actorEntityList[i].baseComponent.gameObject.destroy();
-                this.actorEntityList.splice(i, 1);
-                --i;
+                this.actorEntityList[i].baseComponent.cleanTime -= dt;
+                if (this.actorEntityList[i].baseComponent.cleanTime < 0) {
+                    this.actorEntityList[i].baseComponent.gameObject.destroy();
+                    this.actorEntityList.splice(i, 1);
+                    --i;
+                }
             }
         }
     };
@@ -401,9 +407,9 @@ var ECSManager = /** @class */ (function (_super) {
                     case 3:
                         _a.sent();
                         //
-                        this.cleanBulletEntity();
-                        this.cleanEnemyEntity();
-                        this.cleanActorEntity();
+                        this.cleanBulletEntity(dt);
+                        this.cleanEnemyEntity(dt);
+                        this.cleanActorEntity(dt);
                         return [2 /*return*/];
                 }
             });

@@ -122,7 +122,7 @@ export default class GameDataManager extends cc.Component {
 
     get_uchip() {
         var cur_user = this.get_cur_user();
-        return 999999//cur_user.chip;
+        return cur_user.chip;
     }
 
     // 同步数据

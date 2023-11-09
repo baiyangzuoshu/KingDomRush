@@ -91,11 +91,13 @@ export default class GameUIControl extends UIControl {
 
         EventManager.getInstance().addEventListener(GameUI.show_tower_builder, this.show_tower_builder, this);
         EventManager.getInstance().addEventListener(GameUI.show_game_uchip, this.show_game_uchip, this);
+        EventManager.getInstance().addEventListener(GameUI.on_player_attacked, this.on_player_attacked, this);
     }
 
     protected onDestroy(): void {
         EventManager.getInstance().removeEventListener(GameUI.show_tower_builder, this.show_tower_builder, this);
         EventManager.getInstance().removeEventListener(GameUI.show_game_uchip, this.show_game_uchip, this);
+        EventManager.getInstance().removeEventListener(GameUI.on_player_attacked, this.on_player_attacked, this);
     }
 
     async loadData(){
@@ -196,12 +198,12 @@ export default class GameUIControl extends UIControl {
         this.checkout.show_failed();
     }
     
-    on_player_attacked(hurt) {
+    on_player_attacked(data) {
         if (this.game_started === false) {
             return;
         }
         
-        this.blood -= hurt;
+        this.blood -= data.hurt;
         if (this.blood <= 0) {
             this.blood = 0;
             // 游戏失败结束

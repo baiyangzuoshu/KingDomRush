@@ -152,6 +152,7 @@ var GameUIControl = /** @class */ (function (_super) {
                         this.map_tag_root = this.game_map.getChildByName("tag_root");
                         EventManager_1.EventManager.getInstance().addEventListener(EventName_1.GameUI.show_tower_builder, this.show_tower_builder, this);
                         EventManager_1.EventManager.getInstance().addEventListener(EventName_1.GameUI.show_game_uchip, this.show_game_uchip, this);
+                        EventManager_1.EventManager.getInstance().addEventListener(EventName_1.GameUI.on_player_attacked, this.on_player_attacked, this);
                         return [2 /*return*/];
                 }
             });
@@ -160,6 +161,7 @@ var GameUIControl = /** @class */ (function (_super) {
     GameUIControl.prototype.onDestroy = function () {
         EventManager_1.EventManager.getInstance().removeEventListener(EventName_1.GameUI.show_tower_builder, this.show_tower_builder, this);
         EventManager_1.EventManager.getInstance().removeEventListener(EventName_1.GameUI.show_game_uchip, this.show_game_uchip, this);
+        EventManager_1.EventManager.getInstance().removeEventListener(EventName_1.GameUI.on_player_attacked, this.on_player_attacked, this);
     };
     GameUIControl.prototype.loadData = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -261,11 +263,11 @@ var GameUIControl = /** @class */ (function (_super) {
     GameUIControl.prototype.show_game_failed = function () {
         this.checkout.show_failed();
     };
-    GameUIControl.prototype.on_player_attacked = function (hurt) {
+    GameUIControl.prototype.on_player_attacked = function (data) {
         if (this.game_started === false) {
             return;
         }
-        this.blood -= hurt;
+        this.blood -= data.hurt;
         if (this.blood <= 0) {
             this.blood = 0;
             // 游戏失败结束

@@ -100,7 +100,7 @@ export default class ECSManager extends cc.Component {
         this.enemyEntityList.push(entity);
     }
     //
-    public cleanBulletEntity(){
+    public cleanBulletEntity(dt:number){
         for(let i=0;i<this.bulletEntityList.length;++i){
             if(this.bulletEntityList[i].roleComponent.state==RoleState.Dead){
                 this.bulletEntityList[i].baseComponent.gameObject.destroy();
@@ -109,21 +109,27 @@ export default class ECSManager extends cc.Component {
             }
         }
     }
-    public cleanEnemyEntity(){
+    public cleanEnemyEntity(dt:number){
         for(let i=0;i<this.enemyEntityList.length;++i){
             if(this.enemyEntityList[i].roleComponent.state==RoleState.Dead){
-                this.enemyEntityList[i].baseComponent.gameObject.destroy();
-                this.enemyEntityList.splice(i,1);
-                --i;
+                this.enemyEntityList[i].baseComponent.cleanTime-=dt;
+                if(this.enemyEntityList[i].baseComponent.cleanTime<0){
+                    this.enemyEntityList[i].baseComponent.gameObject.destroy();
+                    this.enemyEntityList.splice(i,1);
+                    --i;
+                }
             }
         }
     }
-    public cleanActorEntity(){
+    public cleanActorEntity(dt:number){
         for(let i=0;i<this.actorEntityList.length;++i){
             if(this.actorEntityList[i].roleComponent.state==RoleState.Dead){
-                this.actorEntityList[i].baseComponent.gameObject.destroy();
-                this.actorEntityList.splice(i,1);
-                --i;
+                this.actorEntityList[i].baseComponent.cleanTime-=dt;
+                if(this.actorEntityList[i].baseComponent.cleanTime<0){
+                    this.actorEntityList[i].baseComponent.gameObject.destroy();
+                    this.actorEntityList.splice(i,1);
+                    --i;
+                }
             }
         }
     }
@@ -254,8 +260,8 @@ export default class ECSManager extends cc.Component {
         await this.animateSystemBullet(dt);
         await this.animateSystemArrow(dt);
         //
-        this.cleanBulletEntity();
-        this.cleanEnemyEntity();
-        this.cleanActorEntity();
+        this.cleanBulletEntity(dt);
+        this.cleanEnemyEntity(dt);
+        this.cleanActorEntity(dt);
     }
 }

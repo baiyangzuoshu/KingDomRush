@@ -61,4 +61,24 @@ export default class ECSUtil extends cc.Component {
             }
         }
     }
+
+    public zorderSortNode(node:cc.Node) {
+        var child = node.children;
+        child.sort(function(lhs, rhs) {
+            if (lhs.y > rhs.y) {
+                return -1;
+            }
+            else if(lhs.y < rhs.y) {
+                return 1;
+            }
+            
+            return 0;
+        });
+        
+        // y大的就会排在前面, y小的就会排在后面
+        for(var i = 0; i < child.length; i ++) {
+            child[i].zIndex = (1000 + i);
+        }
+        // end 
+    }
 }

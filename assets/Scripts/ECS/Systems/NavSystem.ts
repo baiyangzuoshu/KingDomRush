@@ -5,6 +5,8 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
+import { EventManager } from "../../../FrameWork/manager/EventManager";
+import { GameUI } from "../../EventName";
 import BaseComponent from "../Components/BaseComponent";
 import NavComponent from "../Components/NavComponent";
 import TransformComponent from "../Components/TransformComponent";
@@ -49,6 +51,9 @@ export default class NavSystem extends cc.Component {
         navComponent.vy=dy/dis*navComponent.speed;
         navComponent.curTime=dis/navComponent.speed;
         navComponent.curIndex++;
+        if(navComponent.curIndex>=navComponent.path.length-1){
+            EventManager.getInstance().emit(GameUI.on_player_attacked,{hurt:1})
+        }
     }
 
     onActorUpdate(dt:number,navComponent:NavComponent,baseComponent:BaseComponent,transformComponent:TransformComponent){

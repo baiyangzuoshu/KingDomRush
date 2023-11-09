@@ -80,6 +80,23 @@ var ECSUtil = /** @class */ (function (_super) {
             }
         }
     };
+    ECSUtil.prototype.zorderSortNode = function (node) {
+        var child = node.children;
+        child.sort(function (lhs, rhs) {
+            if (lhs.y > rhs.y) {
+                return -1;
+            }
+            else if (lhs.y < rhs.y) {
+                return 1;
+            }
+            return 0;
+        });
+        // y大的就会排在前面, y小的就会排在后面
+        for (var i = 0; i < child.length; i++) {
+            child[i].zIndex = (1000 + i);
+        }
+        // end 
+    };
     var ECSUtil_1;
     ECSUtil._instance = null;
     ECSUtil = ECSUtil_1 = __decorate([

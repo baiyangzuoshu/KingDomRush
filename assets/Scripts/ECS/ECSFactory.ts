@@ -9,6 +9,7 @@ import { ResManagerPro } from "../../FrameWork/manager/ResManagerPro";
 import GameDataManager from "../Data/GameDataManager";
 import { AnimateState, Enemy, TowerType } from "../Enum";
 import FrameAnimate from "../Tools/FrameAnimate";
+import ECSUtil from "./ECSUtil";
 import BulletEntity from "./Entities/BulletEntity";
 import EnemyEntity from "./Entities/EnemyEntity";
 import { InfantryActor } from "./Entities/InfantryActor";
@@ -337,5 +338,11 @@ export default class ECSFactory extends cc.Component {
         entity.roleComponent.level=1;
 
         return entity;
+    }
+
+    update(dt){
+        ECSUtil.getInstance().zorderSortNode(this.bulletNode);
+        ECSUtil.getInstance().zorderSortNode(this.enemyNode);
+        ECSUtil.getInstance().zorderSortNode(this.towerNode);
     }
 }

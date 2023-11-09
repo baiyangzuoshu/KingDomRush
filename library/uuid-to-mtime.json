@@ -5064,11 +5064,6 @@
     "meta": 1698385812598,
     "relativePath": "Scripts\\Game\\Checkout.ts"
   },
-  "bb39ae6c-c0c5-4fce-9433-d6a055e04501": {
-    "asset": 1698749490309,
-    "meta": 1698749570302,
-    "relativePath": "Scripts\\EventName.ts"
-  },
   "2fe3646b-6ab1-4d7d-90d8-2be23260de85": {
     "asset": 1699065852641,
     "meta": 1699316704054,
@@ -5134,11 +5129,6 @@
     "meta": 1698881020126,
     "relativePath": "Scripts\\Game\\TowerBuilder.ts"
   },
-  "dba06ff6-61a2-4531-9709-fca6af146229": {
-    "asset": 1698883905661,
-    "meta": 1698883907891,
-    "relativePath": "Scripts\\UI\\GameUIControl.ts"
-  },
   "d0903363-4258-4e1d-8fc8-92c5f6de7f27": {
     "asset": 1698884028657,
     "meta": 1698884041639,
@@ -5199,11 +5189,6 @@
     "meta": 1699185321715,
     "relativePath": "Scripts\\ECS\\Components\\AnimateComponent.ts"
   },
-  "b5f791b2-04ce-4e10-8c22-e69586a6650e": {
-    "asset": 1699186138269,
-    "meta": 1699186465811,
-    "relativePath": "Scripts\\Data\\GameDataManager.ts"
-  },
   "713c621a-1b88-4b96-8cc6-812b27bade59": {
     "asset": 1699361494072,
     "meta": 1699361730028,
@@ -5228,16 +5213,6 @@
     "asset": 1699427398470,
     "meta": 1699428518805,
     "relativePath": "Scripts\\ECS\\Components\\NavComponent.ts"
-  },
-  "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
-    "asset": 1699428116123,
-    "meta": 1699428518912,
-    "relativePath": "Scripts\\ECS\\ECSFactory.ts"
-  },
-  "01deea59-bc5b-4301-a2d1-b0fade47ef3f": {
-    "asset": 1699428925378,
-    "meta": 1699428970879,
-    "relativePath": "Scripts\\ECS\\Systems\\NavSystem.ts"
   },
   "9836134e-b892-4283-b6b2-78b5acf3ed45": {
     "asset": 1685959570623,
@@ -5744,21 +5719,6 @@
     "meta": 1699501178496,
     "relativePath": "Scripts\\ECS\\Components\\RoleComponent.ts"
   },
-  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
-    "asset": 1699501128289,
-    "meta": 1699501178568,
-    "relativePath": "Scripts\\ECS\\ECSManager.ts"
-  },
-  "1a3d2871-327a-40b7-a63a-1047bf336918": {
-    "asset": 1699501043520,
-    "meta": 1699501178585,
-    "relativePath": "Scripts\\ECS\\ECSUtil.ts"
-  },
-  "78d679b3-1c2f-46f3-9a0b-216800cc0857": {
-    "asset": 1699501054877,
-    "meta": 1699501178616,
-    "relativePath": "Scripts\\ECS\\Systems\\AISystem.ts"
-  },
   "fa0c3372-1ff1-493f-9215-70ba3fa96b76": {
     "asset": 1699501081700,
     "meta": 1699501178715,
@@ -5773,5 +5733,45 @@
     "asset": 1699501239321,
     "meta": 1699507850017,
     "relativePath": "Scripts\\ECS\\Components\\BaseComponent.ts"
+  },
+  "e9507f08-b26d-4298-abe7-bd6e2d09dfac": {
+    "asset": 1699508462701,
+    "meta": 1699508472685,
+    "relativePath": "Scripts\\ECS\\ECSManager.ts"
+  },
+  "b5f791b2-04ce-4e10-8c22-e69586a6650e": {
+    "asset": 1699509913324,
+    "meta": 1699512669473,
+    "relativePath": "Scripts\\Data\\GameDataManager.ts"
+  },
+  "bb39ae6c-c0c5-4fce-9433-d6a055e04501": {
+    "asset": 1699509779361,
+    "meta": 1699512669502,
+    "relativePath": "Scripts\\EventName.ts"
+  },
+  "dba06ff6-61a2-4531-9709-fca6af146229": {
+    "asset": 1699509791441,
+    "meta": 1699512669577,
+    "relativePath": "Scripts\\UI\\GameUIControl.ts"
+  },
+  "78d679b3-1c2f-46f3-9a0b-216800cc0857": {
+    "asset": 1699512792191,
+    "meta": 1699512802729,
+    "relativePath": "Scripts\\ECS\\Systems\\AISystem.ts"
+  },
+  "01deea59-bc5b-4301-a2d1-b0fade47ef3f": {
+    "asset": 1699512922239,
+    "meta": 1699512978983,
+    "relativePath": "Scripts\\ECS\\Systems\\NavSystem.ts"
+  },
+  "a0ff227b-5f2a-46c4-9fdf-82d77fd7789c": {
+    "asset": 1699514109827,
+    "meta": 1699514116527,
+    "relativePath": "Scripts\\ECS\\ECSFactory.ts"
+  },
+  "1a3d2871-327a-40b7-a63a-1047bf336918": {
+    "asset": 1699514070099,
+    "meta": 1699514116544,
+    "relativePath": "Scripts\\ECS\\ECSUtil.ts"
   }
 }

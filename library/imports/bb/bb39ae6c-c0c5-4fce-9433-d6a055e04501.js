@@ -13,6 +13,7 @@ var GameUI;
 (function (GameUI) {
     GameUI["show_tower_builder"] = "show_tower_builder";
     GameUI["show_game_uchip"] = "show_game_uchip";
+    GameUI["on_player_attacked"] = "on_player_attacked";
 })(GameUI = exports.GameUI || (exports.GameUI = {}));
 
 cc._RF.pop();
