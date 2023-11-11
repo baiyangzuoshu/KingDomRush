@@ -97,6 +97,37 @@ var ECSUtil = /** @class */ (function (_super) {
         }
         // end 
     };
+    ECSUtil.prototype.position_after_time = function (dt, enemyTransformComponent, enemyNavComponent) {
+        // 表示物体正在运动
+        var prev_pos = cc.v2(enemyTransformComponent.x, enemyTransformComponent.y);
+        var next_step = enemyNavComponent.curIndex;
+        var road_data = enemyNavComponent.path;
+        while (dt > 0 && next_step < road_data.length) {
+            var now_pos = road_data[next_step];
+            // var dir = cc.pSub(now_pos, prev_pos);
+            var dir = now_pos.sub(prev_pos);
+            // var len = cc.pLength(dir);
+            var len = (dir.mag());
+            var t = len / enemyNavComponent.speed;
+            if (dt > t) {
+                dt -= t;
+                prev_pos = now_pos;
+                next_step++;
+            }
+            else {
+                var vx = enemyNavComponent.speed * dir.x / len;
+                var vy = enemyNavComponent.speed * dir.y / len;
+                var sx = vx * dt;
+                var sy = vy * dt;
+                prev_pos.x += sx;
+                prev_pos.y += sy;
+                return prev_pos;
+            }
+        }
+        // 如果跑完所有的地图，我们的估算时间还没有用完，那么使用最后一个点
+        // 作为我们的目标点
+        return road_data[next_step - 1];
+    };
     var ECSUtil_1;
     ECSUtil._instance = null;
     ECSUtil = ECSUtil_1 = __decorate([

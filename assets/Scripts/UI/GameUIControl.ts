@@ -170,7 +170,6 @@ export default class GameUIControl extends UIControl {
         let is_builded = data.is_builded;
         let tower_builder = data.tower_builder;
         var s = cc.scaleTo(0.3, 1).easing(cc.easeBackOut());
-        console.log("show_tower_builder",is_builded)
         if (is_builded === false) { // 还没有塔，所以要show builder
             this.gui_tower_builder.show_tower_builder(tower_builder);
             this.gui_tower_builder.node.scale = 0;

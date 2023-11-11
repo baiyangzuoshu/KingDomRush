@@ -299,9 +299,10 @@ export default class AnimateSystem extends cc.Component {
                 var len = (dir.mag());
                 var time = len / phy_params.speed;
                 // end 
-                var after_pos = cc.v2(0,0);//actor.position_after_time(time);
-                w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
+                var after_pos = ECSUtil.getInstance().position_after_time(time,enemyEntity.transformComponent,enemyEntity.navComponent);
+                w_dst_pos = shoot_enemy.parent.convertToWorldSpaceAR(after_pos);
                 dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
+                
                 // 求贝塞尔曲线的控制点，中点，然后拉高xxxxx
                 var ctrl_x;
                 var ctrl_y;
@@ -392,11 +393,11 @@ export default class AnimateSystem extends cc.Component {
             var len = (dir.mag());
             var time = len / speed;
             
-            var after_pos = cc.v2(0,-30);//actor.position_after_time(time);
-            w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
+            var after_pos = ECSUtil.getInstance().position_after_time(time,enemyEntity.transformComponent,enemyEntity.navComponent);
+            w_dst_pos = shoot_enemy.parent.convertToWorldSpaceAR(after_pos);
             dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
     
-            var m = cc.moveBy(time, w_dst_pos.x - w_start_pos.x, w_dst_pos.y - w_start_pos.y);
+            var m = cc.moveBy(time, w_dst_pos.x - w_start_pos.x, w_dst_pos.y - w_start_pos.y-30);
             let bomb_anim:cc.SpriteFrame[]=[];
             for(let i=0;i<=8;i++){
                 let sf=await ResManagerPro.Instance.IE_GetAsset("textures","game_scene/tower/fashi_tower/bomb/bomb_"+i,cc.SpriteFrame) as cc.SpriteFrame;
@@ -464,8 +465,8 @@ export default class AnimateSystem extends cc.Component {
             var len = (dir.mag());
             var time = len / speed;
 
-            var after_pos = cc.v2(0,-29);//actor.position_after_time(time);
-            let w_dst_pos = shoot_enemy.convertToWorldSpaceAR(after_pos);
+            var after_pos = ECSUtil.getInstance().position_after_time(time,enemyEntity.transformComponent,enemyEntity.navComponent);
+            let w_dst_pos = shoot_enemy.parent.convertToWorldSpaceAR(after_pos);
             dst_pos = bulletBaseComponent.gameObject.parent.convertToNodeSpaceAR(w_dst_pos);
             // end 
             // 求贝塞尔曲线的控制点，中点，然后拉高xxxxx
