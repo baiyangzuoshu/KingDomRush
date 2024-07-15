@@ -1,1 +1,0 @@
-{"version":3,"sources":["assets\\Scripts\\ECS\\Entities\\Tower\\ArrowEntity.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;AAAA,8CAAyC;AAEzC;IAAyC,+BAAW;IAApD;;IAEA,CAAC;IAAD,kBAAC;AAAD,CAFA,AAEC,CAFwC,qBAAW,GAEnD","file":"","sourceRoot":"/","sourcesContent":["import TowerEntity from \"../TowerEntity\";\n\nexport default class ArrowEntity extends TowerEntity{\n    \n}\n"]}
