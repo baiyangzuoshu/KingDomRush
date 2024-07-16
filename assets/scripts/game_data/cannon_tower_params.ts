@@ -1,14 +1,17 @@
-var cannon_tower_params = [
+interface CannonTowerParams {
+    search_R: number;
+    build_chip: number;
+}
+
+const cannon_tower_params: CannonTowerParams[] = [
     {
         search_R: 100,
         build_chip: 200, // 造这个塔的价值
     },
-
     {
         search_R: 120,
         build_chip: 400, // 造这个塔的价值
     },
-
     {
         search_R: 140,
         build_chip: 600, // 造这个塔的价值
@@ -19,4 +22,4 @@ var cannon_tower_params = [
     },
 ];
 
-module.exports = cannon_tower_params;
+export default cannon_tower_params;

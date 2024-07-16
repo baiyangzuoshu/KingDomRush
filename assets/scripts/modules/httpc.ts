@@ -1,26 +1,17 @@
-var httpc = {
-    get: function(url, func) {
-        var xhr = cc.loader.getXMLHttpRequest();
-        
-        console.log(url);
-        
-        xhr.open("GET", url, true);
-        
-        xhr.onreadystatechange = function () {  
-            if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {  
-                err = false;  
-            }
-            else {  
-                err = true;  
-            }  
-            var response = xhr.responseText;  
-            console.log(func);
-            func(err,response);  
-        };  
-        
-        
-        xhr.send(); 
-    }, 
-};
+export const httpc = {
+    get: async (url: string, func: (err: boolean, response: string) => void) => {
+        try {
+            console.log(url);
 
-module.exports = httpc;
+            const response = await fetch(url);
+            const text = await response.text();
+
+            const err = !response.ok;
+            console.log(func);
+            func(err, text);
+        } catch (error) {
+            console.error("Error during fetch:", error);
+            func(true, error.toString());
+        }
+    }
+};

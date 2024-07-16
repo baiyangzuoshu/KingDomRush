@@ -1,220 +1,97 @@
-import { _decorator, Component, SpriteFrame } from 'cc';
+import { _decorator, Component, Sprite, SpriteFrame } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('FrameAnim')
-export class FrameAnim extends Component {
+@ccclass('SpriteAnimation')
+export class SpriteAnimation extends Component {
     @property([SpriteFrame])
-    public sprite_frames = [];
+    public sprite_frames: SpriteFrame[] = [];
+
     @property
-    public duration = 0.1;
+    public duration: number = 0.1;
+
     @property
-    public loop = false;
+    public loop: boolean = false;
+
     @property
-    public play_onload = false;
+    public play_onload: boolean = false;
 
-    onLoad () {
-        // var s_com = this.node.getComponent(cc.Sprite); 
-        // if (!s_com) { // 没有cc.Sprite组件，要显示图片一定要有cc.Sprite组件,所以我们添加一个cc.Sprite组件; 
-            // s_com = this.node.addComponent(cc.Sprite); 
-        // } 
-        // this.sprite = s_com; // 精灵组件 
-        // this.is_playing = false; // 是否正在播放; 
-        // this.play_time = 0; 
-        // this.is_loop = false; 
-        // this.end_func = null; 
-        // if (this.sprite_frames.length > 0) { 
-            // this.sprite.spriteFrame = this.sprite_frames[0];     
-        // } 
-        // if (this.play_onload) { 
-            // if (!this.loop) { 
-                // this.play_once(null);     
-            // } 
-            // else { 
-                // this.play_loop(); 
-            // } 
-        // } 
+    private sprite: Sprite = null;
+    private is_playing: boolean = false;
+    private play_time: number = 0;
+    private is_loop: boolean = false;
+    private end_func: Function = null;
+
+    onLoad() {
+        this.sprite = this.node.getComponent(Sprite);
+        if (!this.sprite) {
+            this.sprite = this.node.addComponent(Sprite);
+        }
+
+        this.is_playing = false;
+        this.play_time = 0;
+        this.is_loop = false;
+        this.end_func = null;
+
+        if (this.sprite_frames.length > 0) {
+            this.sprite.spriteFrame = this.sprite_frames[0];
+        }
+
+        if (this.play_onload) {
+            if (!this.loop) {
+                this.play_once(null);
+            } else {
+                this.play_loop();
+            }
+        }
     }
 
-    play_once (end_func: any) {
-        // this.play_time = 0; 
-        // this.is_playing = true; 
-        // this.is_loop = false; 
-        // this.end_func = end_func; 
+    play_once(end_func: Function) {
+        this.play_time = 0;
+        this.is_playing = true;
+        this.is_loop = false;
+        this.end_func = end_func;
     }
 
-    play_loop () {
-        // this.play_time = 0; 
-        // this.is_playing = true; 
-        // this.is_loop = true; 
+    play_loop() {
+        this.play_time = 0;
+        this.is_playing = true;
+        this.is_loop = true;
     }
 
-    stop_anim () {
-        // this.play_time = 0; 
-        // this.is_playing = false; 
-        // this.is_loop = false; 
+    stop_anim() {
+        this.play_time = 0;
+        this.is_playing = false;
+        this.is_loop = false;
     }
 
-    start () {
-    }
+    update(dt: number) {
+        if (!this.is_playing) {
+            return;
+        }
 
-    update (dt: any) {
-        // if (this.is_playing === false) { // 没有启动播放，不做处理 
-            // return; 
-        // } 
-        // this.play_time += dt; // 累积我们播放的时间; 
-        // var index = Math.floor(this.play_time / this.duration); // 向下取整数 
-        // if (this.is_loop === false) { // 播放一次 
-            // if (index >= this.sprite_frames.length) { // 非循环播放结束 
-                // this.sprite.spriteFrame = this.sprite_frames[this.sprite_frames.length - 1]; 
-                // this.is_playing = false; 
-                // this.play_time = 0; 
-                // if (this.end_func) { // 调用回掉函数 
-                    // this.end_func(); 
-                // } 
-                // return; 
-            // } 
-            // else { 
-                // this.sprite.spriteFrame = this.sprite_frames[index]; 
-            // } 
-        // } 
-        // else { // 循环播放; 
-            // while (index >= this.sprite_frames.length) { 
-                // index -= this.sprite_frames.length; 
-                // this.play_time -= (this.duration * this.sprite_frames.length); 
-            // } 
-            // this.sprite.spriteFrame = this.sprite_frames[index]; 
-        // } 
-    }
+        this.play_time += dt;
 
+        const index = Math.floor(this.play_time / this.duration);
+
+        if (!this.is_loop) {
+            if (index >= this.sprite_frames.length) {
+                this.sprite.spriteFrame = this.sprite_frames[this.sprite_frames.length - 1];
+                this.is_playing = false;
+                this.play_time = 0;
+                if (this.end_func) {
+                    this.end_func();
+                }
+                return;
+            } else {
+                this.sprite.spriteFrame = this.sprite_frames[index];
+            }
+        } else {
+            let loopedIndex = index;
+            while (loopedIndex >= this.sprite_frames.length) {
+                loopedIndex -= this.sprite_frames.length;
+                this.play_time -= this.duration * this.sprite_frames.length;
+            }
+            this.sprite.spriteFrame = this.sprite_frames[loopedIndex];
+        }
+    }
 }
-
-
-/**
- * 注意：已把原脚本注释，由于脚本变动过大，转换的时候可能有遗落，需要自行手动转换
- */
-// cc.Class({
-//     extends: cc.Component,
-// 
-//     properties: {
-//         // foo: {
-//         //    default: null,      // The default value will be used only when the component attaching
-//         //                           to a node for the first time
-//         //    url: cc.Texture2D,  // optional, default is typeof default
-//         //    serializable: true, // optional, default is true
-//         //    visible: true,      // optional, default is true
-//         //    displayName: 'Foo', // optional
-//         //    readonly: false,    // optional, default is false
-//         // },
-//         // ...
-//         sprite_frames : {
-//             default: [],
-//             type: cc.SpriteFrame,
-//         },
-//         
-//         duration: 0.1, // 帧的时间间隔
-//         loop: false, // 是否循环播放
-//         play_onload: false, // 是否在组件加载的时候播放;
-//     },
-// 
-//     // use this for initialization
-//     onLoad: function () {
-//         // 判断一下在组件所挂在的节点上面有没有cc.Sprite组件；
-//         var s_com = this.node.getComponent(cc.Sprite);
-//         if (!s_com) { // 没有cc.Sprite组件，要显示图片一定要有cc.Sprite组件,所以我们添加一个cc.Sprite组件;
-//             s_com = this.node.addComponent(cc.Sprite);
-//         }
-//         this.sprite = s_com; // 精灵组件
-//         // end 
-//         this.is_playing = false; // 是否正在播放;
-//         this.play_time = 0;
-//         this.is_loop = false;
-//         this.end_func = null;
-//         
-//         // 显示第0个frame;
-//         if (this.sprite_frames.length > 0) {
-//             this.sprite.spriteFrame = this.sprite_frames[0];    
-//         }
-//         
-//         if (this.play_onload) {
-//             if (!this.loop) {
-//                 this.play_once(null);    
-//             }
-//             else {
-//                 this.play_loop();
-//             }
-//         }
-//     },
-//     
-//     // 实现播放一次,
-//     play_once: function(end_func) {
-//         this.play_time = 0;
-//         this.is_playing = true;
-//         this.is_loop = false;
-//         this.end_func = end_func;
-//     }, 
-//     // end 
-//     
-//     // 实现循环播放
-//     play_loop: function() {
-//         this.play_time = 0;
-//         this.is_playing = true;
-//         this.is_loop = true;
-//     },
-//     // end 
-//     
-//     stop_anim: function() {
-//         this.play_time = 0;
-//         this.is_playing = false;
-//         this.is_loop = false;
-//     }, 
-//     
-//     start: function() {
-//         
-//     },
-//     
-//     // called every frame, uncomment this function to activate update callback
-//     // 每一次刷新的时候需要调用的函数，dt距离上一次刷新过去的时间;
-//     update: function (dt) {
-//         if (this.is_playing === false) { // 没有启动播放，不做处理
-//             return;
-//         }
-//         
-//         
-//         
-//         this.play_time += dt; // 累积我们播放的时间;
-//         
-//        // 计算时间，应当播放第几帧，而不是随便的下一帧，
-//        // 否则的话，同样的动画1, 60帧，你在30FPS的机器上你会播放2秒，
-//        // 你在60FPS的机器上你会播放1秒，动画就不同步;
-//        
-//         var index = Math.floor(this.play_time / this.duration); // 向下取整数
-//         // index
-//         if (this.is_loop === false) { // 播放一次
-//             if (index >= this.sprite_frames.length) { // 非循环播放结束
-//                 // 精灵显示的是最后一帧;
-//                 this.sprite.spriteFrame = this.sprite_frames[this.sprite_frames.length - 1];
-//                 // end 
-//                 this.is_playing = false;
-//                 this.play_time = 0;
-//                 if (this.end_func) { // 调用回掉函数
-//                     this.end_func();
-//                 }
-//                 return;
-//             }
-//             else {
-//                 this.sprite.spriteFrame = this.sprite_frames[index];
-//             }
-//         }
-//         else { // 循环播放;
-//             
-//             while (index >= this.sprite_frames.length) {
-//                 index -= this.sprite_frames.length;
-//                 this.play_time -= (this.duration * this.sprite_frames.length);
-//             }
-//             
-//             //  在合法的范围之内
-//             this.sprite.spriteFrame = this.sprite_frames[index];
-//             // end 
-//         }
-//     },
-// });

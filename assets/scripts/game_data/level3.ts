@@ -1,172 +1,136 @@
-var Enemy = require("Enemy");
+import { Enemy } from '../modules/Enemy';
 
-var level2_data = [
-    // 1
+interface ActorParams {
+    speed: number;
+    health: number;
+    attack: number;
+    player_hurt: number;
+    bonues_chip: number;
+}
+
+interface LevelData {
+    desic?: string;
+    delay: number;
+    num: number;
+    type: Enemy[];
+    gen_time_set: number[];
+    random_road: boolean;
+    road_set: number[];
+    actor_params: ActorParams;
+}
+
+const level3_data: LevelData[] = [
     {
         desic: "3个哥布林",
-        delay: 0, // 每波怪物的时间间隔
-        num: 3, // 这一波，我们释放多少个怪物
-        
-        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1], // 当前这个怪物的类型
+        delay: 0,
+        num: 3,
+        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1],
         gen_time_set: [0, 0.5, 0.5],
-        
-        random_road: false, // 随机的选择怪物放出的路径
-        road_set: [1, 0, 2], // 规定要走的路劲
-        
+        random_road: false,
+        road_set: [1, 0, 2],
         actor_params: {
-            speed: 50, // 速度
-            health: 30, // 血
-            attack: 10, // 攻击力
-            player_hurt: 1, // 对玩家的伤害值
-            bonues_chip: 10, // 玩家打死怪物的奖励,也可以按照概率来报
+            speed: 50,
+            health: 30,
+            attack: 10,
+            player_hurt: 1,
+            bonues_chip: 10,
         },
-        
     },
-    
-    
-    // 2
     {
         desic: "6个哥布林",
-        delay: 5, // 第一波放出后，间隔多少时间再，放出第二波怪物,
+        delay: 5,
         num: 6,
-        
-        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, 
-              Enemy.Small1, Enemy.Small1, Enemy.Small1],
+        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1],
         gen_time_set: [0, 0.6, 0.6, 3.6, 0.6, 0.6],
-       
-        random_road: true, // 随机的选择怪物放出的路径
+        random_road: true,
         road_set: [0, 1, 2],
-        
-        actor_params: { 
-            speed: 50, // 速度
-            health: 30, // 血
-            attack: 10, // 攻击力
-            player_hurt: 1, // 对玩家的伤害值
-            bonues_chip: 10, // 玩家打死怪物的奖励
+        actor_params: {
+            speed: 50,
+            health: 30,
+            attack: 10,
+            player_hurt: 1,
+            bonues_chip: 10,
         },
     },
-    
-    // 3
     {
         desic: "9个哥布林",
-        delay: 5, // 第一波放出后，间隔多少时间再，放出第二波怪物,
+        delay: 5,
         num: 9,
-        
-        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, 
-               Enemy.Small1, Enemy.Small1, Enemy.Small1, 
-              Enemy.Small1, Enemy.Small1, Enemy.Small1],
+        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1],
         gen_time_set: [0, 0.5, 0.5, 3.0, 0.5, 0.5, 3, 0.5, 0.5],
-       
-        random_road: true, // 随机的选择怪物放出的路径
+        random_road: true,
         road_set: [0, 1, 2],
-        
-        actor_params: { 
-            speed: 50, // 速度
-            health: 30, // 血
-            attack: 10, // 攻击力
-            player_hurt: 1, // 对玩家的伤害值
-            bonues_chip: 10, // 玩家打死怪物的奖励
+        actor_params: {
+            speed: 50,
+            health: 30,
+            attack: 10,
+            player_hurt: 1,
+            bonues_chip: 10,
         },
     },
-    
-    // 4 
     {
         desic: "4个哥布林和1个兽人",
-        delay: 5, // 第一波放出后，间隔多少时间再，放出第二波怪物,
+        delay: 5,
         num: 5,
-        
-        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, 
-              Enemy.Small3],
+        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small3],
         gen_time_set: [0, 0.5, 0.5, 0.5, 3.5],
-       
-        random_road: true, // 随机的选择怪物放出的路径
+        random_road: true,
         road_set: [0, 1, 2],
-        
-        actor_params: { 
-            speed: 50, // 速度
-            health: 30, // 血
-            attack: 10, // 攻击力
-            player_hurt: 1, // 对玩家的伤害值
-            bonues_chip: 10, // 玩家打死怪物的奖励
+        actor_params: {
+            speed: 50,
+            health: 30,
+            attack: 10,
+            player_hurt: 1,
+            bonues_chip: 10,
         },
     },
-    
-    // 5
     {
         desic: "3个兽人",
-        delay: 5, // 每波怪物的时间间隔
-        num: 3, // 这一波，我们释放多少个怪物
-        
-        type: [Enemy.Small3, Enemy.Small3, Enemy.Small3], // 当前这个怪物的类型
+        delay: 5,
+        num: 3,
+        type: [Enemy.Small3, Enemy.Small3, Enemy.Small3],
         gen_time_set: [0, 0.5, 0.5],
-        
-        random_road: true, // 随机的选择怪物放出的路径
-        road_set: [0, 1, 2], // 规定要走的路劲
-        
+        random_road: true,
+        road_set: [0, 1, 2],
         actor_params: {
-            speed: 50, // 速度
-            health: 30, // 血
-            attack: 10, // 攻击力
-            player_hurt: 1, // 对玩家的伤害值
-            bonues_chip: 10,// 玩家打死怪物的奖励
+            speed: 50,
+            health: 30,
+            attack: 10,
+            player_hurt: 1,
+            bonues_chip: 10,
         },
-        
     },
-    
-    // 6
     {
         desic: "10个哥布林和4个兽人",
-        delay: 5, // 第一波放出后，间隔多少时间再，放出第二波怪物,
+        delay: 5,
         num: 14,
-        
-        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, 
-               Enemy.Small3, Enemy.Small3, 
-               Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, 
-               Enemy.Small3, Enemy.Small3],
-        gen_time_set: [0, 0.5, 0.5, 0.5, 0.5, 
-                       3.5, 0.5, 
-                       3.5, 0.5, 0.5, 0.5, 0.5,
-                       3.5, 0.5,
-                    ],
-       
-        random_road: true, // 随机的选择怪物放出的路径
+        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small3, Enemy.Small3, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small3, Enemy.Small3],
+        gen_time_set: [0, 0.5, 0.5, 0.5, 0.5, 3.5, 0.5, 3.5, 0.5, 0.5, 0.5, 0.5, 3.5, 0.5],
+        random_road: true,
         road_set: [0, 1, 2],
-        
-        actor_params: { 
-            speed: 50, // 速度
-            health: 30, // 血
-            attack: 10, // 攻击力
-            player_hurt: 1, // 对玩家的伤害值
-            bonues_chip: 10, // 玩家打死怪物的奖励
+        actor_params: {
+            speed: 50,
+            health: 30,
+            attack: 10,
+            player_hurt: 1,
+            bonues_chip: 10,
         },
     },
-    
-    // 7
     {
-        delay: 5, // 放出第二波怪物
+        delay: 5,
         num: 16,
-        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1,
-               Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, 
-               Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, 
-               Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1],
-        
-        gen_time_set: [0, 0.5, 0.5, 0.5, 
-                       0.5, 0.5, 0.5, 0.5, 
-                       0.5, 0.5, 0.5, 0.5,
-                       0.5, 0.5, 0.5, 0.5,
-                    ],
-        random_road: true, // 随机的选择怪物放出的路径
+        type: [Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1, Enemy.Small1],
+        gen_time_set: [0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+        random_road: true,
         road_set: [0, 1, 2],
-        
         actor_params: {
-            speed: 50, // 速度
-            health: 30, // 血
-            attack: 50, // 攻击力
-            player_hurt: 1, // 对玩家的伤害值
-            bonues_chip: 10, // 玩家打死怪物的奖励
+            speed: 50,
+            health: 30,
+            attack: 50,
+            player_hurt: 1,
+            bonues_chip: 10,
         },
     }
 ];
 
-module.exports = level2_data;
-
+export default level3_data

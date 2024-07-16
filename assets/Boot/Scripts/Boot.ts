@@ -5,12 +5,12 @@ import { ResManager } from '../../Framework/Scripts/Managers/ResManager';
 import { Debug } from '../../Framework/Scripts/Managers/Debug';
 import { EventManager } from '../../Framework/Scripts/Managers/EventManager';
 import { TimerManager } from '../../Framework/Scripts/Managers/TimerManager';
-import { SoundManager } from '../../Framework/Scripts/Managers/SoundManager';
+//import { SoundManager } from '../../Framework/Scripts/Managers/SoundManager';
 import { ExcelManager } from '../../Framework/Scripts/Managers/ExcelManager';
 import { PoolManager } from '../../Framework/Scripts/Managers/PoolManager';
 import { WsNetMgr } from '../../Framework/Scripts/Managers/WsNetMgr';
 import { UIManager } from '../../Framework/Scripts/Managers/UIManager';
-
+import {SoundManager} from "../../scripts/modules/sound_manager";
 
 const { ccclass, property } = _decorator;
 
@@ -53,13 +53,14 @@ export class Boot extends Component {
         this.node.addComponent(EventManager).Init();
         this.node.addComponent(UIManager).Init();
         this.node.addComponent(TimerManager).Init();
-        this.node.addComponent(SoundManager).Init("Musics", "Sounds");
         this.node.addComponent(ExcelManager).Init();
         this.node.addComponent(PoolManager).Init();
         if(this.useWebSocket) {
             this.node.addComponent(WsNetMgr).Init();
         }
         this.node.addComponent(SceneManager).Init();
+        //
+        this.node.addComponent(SoundManager)
         // 初始化我们的日志管理模块
         if(this.isDebug) {
             await this.node.addComponent(Debug).Init();

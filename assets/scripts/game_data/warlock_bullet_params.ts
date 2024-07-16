@@ -1,24 +1,28 @@
-var warlock_bullet_params = [
-    { // 等级1的子弹
+interface BulletParams {
+    speed: number;
+    attack: number;
+}
+
+const warlock_bullet_params: BulletParams[] = [
+    { // Level 1 bullet
         speed: 200,
         attack: 10,
     },
     
-    { // 等级2的子弹
+    { // Level 2 bullet
         speed: 200,
         attack: 10
     },
     
-    { // 等级3的子弹
+    { // Level 3 bullet
         speed: 200,
         attack: 10
     },
     
-    { // 等级4的子弹
+    { // Level 4 bullet
         speed: 200,
         attack: 10
     },
 ];
 
-
-module.exports = warlock_bullet_params;
+export default warlock_bullet_params;

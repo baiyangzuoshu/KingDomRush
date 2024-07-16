@@ -1,77 +1,80 @@
-var websocket = {
-    sock: null, 
-    cmd_handler: null,
-    
-    _on_opened: function(event) {
+type CmdHandler = {
+    [key: string]: (cmd: any) => void;
+};
+
+export class WebSocketManager {
+    private sock: WebSocket | null = null;
+    private cmd_handler: CmdHandler | null = null;
+
+    private _on_opened(event: Event): void {
         console.log("ws connect server success");
-    }, 
-    
-    _on_recv_data: function(cmd_json) {
+    }
+
+    private _on_recv_data(event: MessageEvent): void {
         if (!this.cmd_handler) {
             return;
         }
-        
-        var cmd = JSON.parse(cmd_json);
+
+        const cmd = JSON.parse(event.data);
         if (!cmd) {
             return;
         }
-        
-        var cmd_type = cmd[0];
+
+        const cmd_type = cmd[0];
         if (this.cmd_handler[cmd_type]) {
             this.cmd_handler[cmd_type](cmd);
         }
-    }, 
-    
-    _on_socket_close: function(event) {
+    }
+
+    private _on_socket_close(event: CloseEvent): void {
         if (this.sock) {
             this.close();
         }
-    }, 
-    
-    _on_socket_err: function(event) {
-        console.log("event");
+    }
+
+    private _on_socket_err(event: Event): void {
+        console.log("WebSocket error", event);
         this.close();
-    }, 
-    
-    connect: function(url) {
+    }
+
+    public connect(url: string): void {
         this.sock = new WebSocket(url);
-        
-        this.sock.onopen = this._on_opened;
-        this.sock.onmessage = this._on_recv_data;
-        this.sock.onclose = this._on_socket_close;
-        this.sock.onerror = this._on_socket_err;
-        
-        
-    },
-    
-    send: function(body) {
+
+        this.sock.onopen = this._on_opened.bind(this);
+        this.sock.onmessage = this._on_recv_data.bind(this);
+        this.sock.onclose = this._on_socket_close.bind(this);
+        this.sock.onerror = this._on_socket_err.bind(this);
+    }
+
+    public send(body: string): void {
         if (this.sock) {
             this.sock.send(body);
         }
-    }, 
-    
-    send_object: function(obj) {
+    }
+
+    public send_object(obj: any): void {
         if (this.sock && obj) {
-            var str = JSON.stringify(obj)
+            const str = JSON.stringify(obj);
             if (str) {
-                this.sock.send(str);    
+                this.sock.send(str);
             }
         }
-    },
-    
-    close: function() {
+    }
+
+    public close(): void {
         if (this.sock !== null) {
             this.sock.close();
             this.sock = null;
         }
-    }, 
-    
-    register_cmd_handler: function(cmd_handers) {
-        this.cmd_handler = cmd_handers;
-    },
+    }
+
+    public register_cmd_handler(cmd_handlers: CmdHandler): void {
+        this.cmd_handler = cmd_handlers;
+    }
 }
 
-// websocket.connect("ws://127.0.0.1:8000/ws");
+// Example usage:
+// const websocketManager = new WebSocketManager();
+// websocketManager.connect("ws://127.0.0.1:8000/ws");
 
-module.exports = websocket;
-
+export default WebSocketManager;

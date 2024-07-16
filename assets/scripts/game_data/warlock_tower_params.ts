@@ -1,14 +1,17 @@
-var warlock_tower_params = [
+interface TowerParams {
+    search_R: number;
+    build_chip: number;
+}
+
+const warlock_tower_params: TowerParams[] = [
     {
         search_R: 100,
         build_chip: 150,
     },
-
     {
         search_R: 120,
         build_chip: 300,
     },
-
     {
         search_R: 140,
         build_chip: 450,
@@ -19,4 +22,4 @@ var warlock_tower_params = [
     },
 ];
 
-module.exports = warlock_tower_params;
+export default warlock_tower_params;

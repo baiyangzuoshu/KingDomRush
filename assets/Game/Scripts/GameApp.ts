@@ -1,8 +1,5 @@
 import { Component, Node, TextAsset, find } from 'cc';
 import { SceneManager } from '../../Framework/Scripts/Managers/SceneManager';
-import { TimerManager } from '../../Framework/Scripts/Managers/TimerManager';
-import { UIManager } from '../../Framework/Scripts/Managers/UIManager';
-import { ECSFactory } from './ECS/ECSFactory';
 
 
 export class GameApp extends Component {
